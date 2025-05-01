@@ -6,7 +6,9 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +37,12 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Cita.findByHora", query = "SELECT c FROM Cita c WHERE c.hora = :hora"),
     @NamedQuery(name = "Cita.findByAsunto", query = "SELECT c FROM Cita c WHERE c.asunto = :asunto")})
 public class Cita implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "estado")
+    private String estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCita")
+    private List<Tutoria> tutoriaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -124,6 +133,22 @@ public class Cita implements Serializable {
     @Override
     public String toString() {
         return "modelo.Cita[ idCita=" + idCita + " ]";
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<Tutoria> getTutoriaList() {
+        return tutoriaList;
+    }
+
+    public void setTutoriaList(List<Tutoria> tutoriaList) {
+        this.tutoriaList = tutoriaList;
     }
     
 }

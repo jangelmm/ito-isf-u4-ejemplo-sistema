@@ -6,7 +6,9 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +39,9 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Tutorado.findByDias", query = "SELECT t FROM Tutorado t WHERE t.dias = :dias"),
     @NamedQuery(name = "Tutorado.findByFechaNacimiento", query = "SELECT t FROM Tutorado t WHERE t.fechaNacimiento = :fechaNacimiento")})
 public class Tutorado implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTutorado")
+    private List<Tutoria> tutoriaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -146,6 +152,14 @@ public class Tutorado implements Serializable {
     @Override
     public String toString() {
         return "modelo.Tutorado[ idTutorado=" + idTutorado + " ]";
+    }
+
+    public List<Tutoria> getTutoriaList() {
+        return tutoriaList;
+    }
+
+    public void setTutoriaList(List<Tutoria> tutoriaList) {
+        this.tutoriaList = tutoriaList;
     }
     
 }

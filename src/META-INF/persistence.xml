@@ -5,6 +5,7 @@
     <class>modelo.Cita</class>
     <class>modelo.Tutor</class>
     <class>modelo.Tutorado</class>
+    <class>modelo.Tutoria</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tutorias?serverTimezone=America/Mexico_City&amp;zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
