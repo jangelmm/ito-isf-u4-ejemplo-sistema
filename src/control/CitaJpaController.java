@@ -4,17 +4,20 @@
  */
 package control;
 
+import control.exceptions.IllegalOrphanException;
 import control.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import modelo.Cita;
 import modelo.Tutor;
+import modelo.Tutoria;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import modelo.Cita;
 
 /**
  *
@@ -32,6 +35,9 @@ public class CitaJpaController implements Serializable {
     }
 
     public void create(Cita cita) {
+        if (cita.getTutoriaList() == null) {
+            cita.setTutoriaList(new ArrayList<Tutoria>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -41,10 +47,25 @@ public class CitaJpaController implements Serializable {
                 tutor = em.getReference(tutor.getClass(), tutor.getIdPersona());
                 cita.setTutor(tutor);
             }
+            List<Tutoria> attachedTutoriaList = new ArrayList<Tutoria>();
+            for (Tutoria tutoriaListTutoriaToAttach : cita.getTutoriaList()) {
+                tutoriaListTutoriaToAttach = em.getReference(tutoriaListTutoriaToAttach.getClass(), tutoriaListTutoriaToAttach.getIdTutoria());
+                attachedTutoriaList.add(tutoriaListTutoriaToAttach);
+            }
+            cita.setTutoriaList(attachedTutoriaList);
             em.persist(cita);
             if (tutor != null) {
                 tutor.getCitaList().add(cita);
                 tutor = em.merge(tutor);
+            }
+            for (Tutoria tutoriaListTutoria : cita.getTutoriaList()) {
+                Cita oldIdCitaOfTutoriaListTutoria = tutoriaListTutoria.getIdCita();
+                tutoriaListTutoria.setIdCita(cita);
+                tutoriaListTutoria = em.merge(tutoriaListTutoria);
+                if (oldIdCitaOfTutoriaListTutoria != null) {
+                    oldIdCitaOfTutoriaListTutoria.getTutoriaList().remove(tutoriaListTutoria);
+                    oldIdCitaOfTutoriaListTutoria = em.merge(oldIdCitaOfTutoriaListTutoria);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -54,7 +75,7 @@ public class CitaJpaController implements Serializable {
         }
     }
 
-    public void edit(Cita cita) throws NonexistentEntityException, Exception {
+    public void edit(Cita cita) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -62,10 +83,31 @@ public class CitaJpaController implements Serializable {
             Cita persistentCita = em.find(Cita.class, cita.getIdCita());
             Tutor tutorOld = persistentCita.getTutor();
             Tutor tutorNew = cita.getTutor();
+            List<Tutoria> tutoriaListOld = persistentCita.getTutoriaList();
+            List<Tutoria> tutoriaListNew = cita.getTutoriaList();
+            List<String> illegalOrphanMessages = null;
+            for (Tutoria tutoriaListOldTutoria : tutoriaListOld) {
+                if (!tutoriaListNew.contains(tutoriaListOldTutoria)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Tutoria " + tutoriaListOldTutoria + " since its idCita field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (tutorNew != null) {
                 tutorNew = em.getReference(tutorNew.getClass(), tutorNew.getIdPersona());
                 cita.setTutor(tutorNew);
             }
+            List<Tutoria> attachedTutoriaListNew = new ArrayList<Tutoria>();
+            for (Tutoria tutoriaListNewTutoriaToAttach : tutoriaListNew) {
+                tutoriaListNewTutoriaToAttach = em.getReference(tutoriaListNewTutoriaToAttach.getClass(), tutoriaListNewTutoriaToAttach.getIdTutoria());
+                attachedTutoriaListNew.add(tutoriaListNewTutoriaToAttach);
+            }
+            tutoriaListNew = attachedTutoriaListNew;
+            cita.setTutoriaList(tutoriaListNew);
             cita = em.merge(cita);
             if (tutorOld != null && !tutorOld.equals(tutorNew)) {
                 tutorOld.getCitaList().remove(cita);
@@ -74,6 +116,17 @@ public class CitaJpaController implements Serializable {
             if (tutorNew != null && !tutorNew.equals(tutorOld)) {
                 tutorNew.getCitaList().add(cita);
                 tutorNew = em.merge(tutorNew);
+            }
+            for (Tutoria tutoriaListNewTutoria : tutoriaListNew) {
+                if (!tutoriaListOld.contains(tutoriaListNewTutoria)) {
+                    Cita oldIdCitaOfTutoriaListNewTutoria = tutoriaListNewTutoria.getIdCita();
+                    tutoriaListNewTutoria.setIdCita(cita);
+                    tutoriaListNewTutoria = em.merge(tutoriaListNewTutoria);
+                    if (oldIdCitaOfTutoriaListNewTutoria != null && !oldIdCitaOfTutoriaListNewTutoria.equals(cita)) {
+                        oldIdCitaOfTutoriaListNewTutoria.getTutoriaList().remove(tutoriaListNewTutoria);
+                        oldIdCitaOfTutoriaListNewTutoria = em.merge(oldIdCitaOfTutoriaListNewTutoria);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -92,7 +145,7 @@ public class CitaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -103,6 +156,17 @@ public class CitaJpaController implements Serializable {
                 cita.getIdCita();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cita with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Tutoria> tutoriaListOrphanCheck = cita.getTutoriaList();
+            for (Tutoria tutoriaListOrphanCheckTutoria : tutoriaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Cita (" + cita + ") cannot be destroyed since the Tutoria " + tutoriaListOrphanCheckTutoria + " in its tutoriaList field has a non-nullable idCita field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Tutor tutor = cita.getTutor();
             if (tutor != null) {
