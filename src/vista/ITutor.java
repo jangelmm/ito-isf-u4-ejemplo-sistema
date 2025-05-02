@@ -1,5 +1,6 @@
 package vista;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import modelo.MTtutor;
 import control.AdmDatos;
 import control.Conexion;
@@ -7,6 +8,8 @@ import control.TutorJpaController;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Tutor;
 
 public class ITutor extends javax.swing.JDialog {
@@ -25,6 +28,8 @@ public class ITutor extends javax.swing.JDialog {
         super(parent, modal);
         
         initComponents();
+        
+        setLocationRelativeTo(null);
         
         adm = new AdmDatos();
         cTutor = new TutorJpaController(adm.getEnf());
@@ -64,6 +69,7 @@ public class ITutor extends javax.swing.JDialog {
         btnAgregarTutor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         ttutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,7 +157,7 @@ public class ITutor extends javax.swing.JDialog {
         mtt.fireTableDataChanged();
     }//GEN-LAST:event_btnAgregarTutorActionPerformed
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -175,6 +181,8 @@ public class ITutor extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
+        
+        UIManager.setLookAndFeel(new FlatLightLaf());
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
