@@ -14,17 +14,21 @@ public class ITutor extends javax.swing.JDialog {
 //Creamos una conexión
     private Tutor tutor;
     private TutorJpaController cTutor;
+    private AdmDatos adm;
     private List<Tutor> tutores;
-    
+    private MTtutor  mtt;
 
 
     public ITutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
-        cTutor = new TutorJpaController(AdmDatos.getEnf());
-        tutores = cTutor.findTutorEntities();
-        
         initComponents();
+        
+        adm = new AdmDatos();
+        cTutor = new TutorJpaController(adm.getEnf());
+        tutores = cTutor.findTutorEntities();
+        mtt = new MTtutor(tutores);
+        ttutores.setModel(mtt);
          
     }
     
@@ -37,7 +41,7 @@ public class ITutor extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ttutores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -46,7 +50,7 @@ public class ITutor extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ttutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,7 +61,7 @@ public class ITutor extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ttutores);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Tutores");
@@ -155,7 +159,7 @@ public class ITutor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable ttutores;
     // End of variables declaration//GEN-END:variables
 }
