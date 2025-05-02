@@ -14,7 +14,7 @@ import modelo.Tutor;
 
 public class ITutor extends javax.swing.JDialog {
 
-//Creamos una conexión
+//Creamos una conexión a la base de datos
     private Tutor tutor;
     private TutorJpaController cTutor;
     private AdmDatos adm;
