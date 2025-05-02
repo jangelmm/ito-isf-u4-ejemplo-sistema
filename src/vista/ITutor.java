@@ -17,6 +17,8 @@ public class ITutor extends javax.swing.JDialog {
     private AdmDatos adm;
     private List<Tutor> tutores;
     private MTtutor  mtt;
+    private SpinnerNumberModel msn;
+    private final int NMAX = 20;  //El numero de máximo de Numeros de Tarjetas
 
 
     public ITutor(java.awt.Frame parent, boolean modal) {
@@ -29,7 +31,19 @@ public class ITutor extends javax.swing.JDialog {
         tutores = cTutor.findTutorEntities();
         mtt = new MTtutor(tutores);
         ttutores.setModel(mtt);
-         
+        
+        // Cálculo de rango para el Spinner
+        int ultimaTarjeta = tutores.get(tutores.size() - 1).getNumTarjeta();
+        int min = ultimaTarjeta + 1;
+        int max = NMAX;
+        int paso = 1;
+
+        msn = new SpinnerNumberModel();
+        msn.setMinimum(min);
+        msn.setMaximum(max);
+        msn.setValue(min);
+
+        JspiNumTarjeta.setModel(msn);
     }
     
     //Pasar datos a la nueva tabla
