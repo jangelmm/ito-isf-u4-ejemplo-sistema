@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import control.AdmDatos;
 import control.TutorJpaController;
 import control.TutoradoJpaController;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -317,30 +318,68 @@ public class ITutorado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarTutoradoActionPerformed
 
-    private char obtenerGenero(){
-        char opcion = 'O';
-            
-        String mensaje = cobGenero.getSelectedItem().toString();
-        
-        if(mensaje.equals("Masculino")){
-            opcion = 'M';
-        }
-        if(mensaje.equals("Femenino")){
-            opcion = 'F';
-        }
-        if(mensaje.equals("Otro")){
-            opcion = 'O';
-        }
-        
-        return opcion;
-    }
-    
     private void btnLimpiarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarDatosActionPerformed
-        
+        limpiarDatos();
     }//GEN-LAST:event_btnLimpiarDatosActionPerformed
 
     private void btnActualizarTutoradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTutoradoActionPerformed
-        
+        int fila = tablaTutorados.getSelectedRow();
+    
+        if(fila == -1){
+            JOptionPane.showMessageDialog(this, 
+                "Seleccione un tutorado de la tabla", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Tutorado tutoradoSeleccionado = tutores.get(fila);
+
+            // Validar campos
+            if (txtNumeroControl.getText().trim().isEmpty() || 
+                txtNombre.getText().trim().isEmpty() || 
+                jDfecha.getDate() == null) {
+
+                JOptionPane.showMessageDialog(this, 
+                    "Campos obligatorios faltantes", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Actualizar datos
+            tutoradoSeleccionado.setNc(txtNumeroControl.getText().trim());
+            tutoradoSeleccionado.setNombre(txtNombre.getText().trim());
+            tutoradoSeleccionado.setGenero(obtenerGenero());
+            tutoradoSeleccionado.setDias(generarCadenaDias());
+            tutoradoSeleccionado.setFechaNacimiento(jDfecha.getDate());
+
+            // Actualizar tutor
+            TutorJpaController cTutor = new TutorJpaController(adm.getEnf());
+            Tutor tutor = cTutor.findTutor(Integer.parseInt(txtNumTarjeta.getText()));
+
+            if(tutor == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "Tutor no encontrado", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            tutoradoSeleccionado.setTutor(tutor);
+
+            cTutorado.edit(tutoradoSeleccionado);
+            mtt.fireTableRowsUpdated(fila, fila);
+            limpiarDatos();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al actualizar: " + ex.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btnActualizarTutoradoActionPerformed
 
     private void btnEliminarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTutorActionPerformed
@@ -348,7 +387,16 @@ public class ITutorado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarTutorActionPerformed
 
     private void tablaTutoradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTutoradosMouseClicked
-        limpiarDatos();
+        
+        int fila = tablaTutorados.getSelectedRow();
+        
+        txtNumeroControl.setText(tablaTutorados.getValueAt(fila, 0).toString());
+        txtNombre.setText(tablaTutorados.getValueAt(fila, 1).toString());
+        cobGenero.setSelectedIndex(construirGenero());
+        marcarDiasDesdeCadena(tablaTutorados.getValueAt(fila, 3).toString());
+        jDfecha.setDate((Date) tablaTutorados.getValueAt(fila, 4));
+        txtNumTarjeta.setText(tablaTutorados.getValueAt(fila, 5).toString());
+        
     }//GEN-LAST:event_tablaTutoradosMouseClicked
     
     private void limpiarDatos() {
@@ -382,10 +430,81 @@ public class ITutorado extends javax.swing.JFrame {
 
         return dias.toString();
     }
+    private char obtenerGenero(){
+        char opcion = 'O';
+            
+        String mensaje = cobGenero.getSelectedItem().toString();
+        
+        if(mensaje.equals("Masculino")){
+            opcion = 'M';
+        }
+        if(mensaje.equals("Femenino")){
+            opcion = 'F';
+        }
+        if(mensaje.equals("Otro")){
+            opcion = 'O';
+        }
+        
+        return opcion;
+    }
+    private int construirGenero(){
+        int opcion = 2;
+        
+        int fila = tablaTutorados.getSelectedRow();
+        char c = (char) tablaTutorados.getValueAt(fila, 2);
+        
+        switch (c){
+            case 'M': opcion = 0;
+                break;
+            case 'F': opcion = 1;
+                break;
+            case 'O': opcion = 2;
+                break;
+            default: opcion = 2;
+        }
+        
+        return opcion;
+    }
+    public void marcarDiasDesdeCadena(String cadenaDias) {
+        // Limpiar primero todas las selecciones
+        jCLunes.setSelected(false);
+        jCMartes.setSelected(false);
+        jCMiercoles.setSelected(false);
+        jCJueves.setSelected(false);
+        jCViernes.setSelected(false);
+        jCSabado.setSelected(false);
+
+        if (cadenaDias == null || cadenaDias.isEmpty()) {
+            return;
+        }
+
+        // Separar los días usando el guión como delimitador
+        String[] dias = cadenaDias.split("-");
+
+        for (String dia : dias) {
+            switch (dia.trim().toUpperCase()) {
+                case "L":
+                    jCLunes.setSelected(true);
+                    break;
+                case "M":
+                    jCMartes.setSelected(true);
+                    break;
+                case "X":
+                    jCMiercoles.setSelected(true);
+                    break;
+                case "J":
+                    jCJueves.setSelected(true);
+                    break;
+                case "V":
+                    jCViernes.setSelected(true);
+                    break;
+                case "S":
+                    jCSabado.setSelected(true);
+                    break;
+            }
+        }
+    }
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
