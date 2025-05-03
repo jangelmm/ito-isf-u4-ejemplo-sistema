@@ -24,6 +24,9 @@ public class Conexion <T>{
         else if (control instanceof TutoradoJpaController) {
             control = (T) (TutoradoJpaController) new TutoradoJpaController(emf);
         }
+        else if (control instanceof TutoriaJpaController) {
+            control = (T) (TutoriaJpaController) new TutoriaJpaController(emf);
+        }
     }
     
     public T getControl(){

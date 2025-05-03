@@ -7,10 +7,12 @@ import control.TutorJpaController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Tutor;
+import java.lang.Exception;
 
 public class ITutor extends javax.swing.JDialog {
 
@@ -22,7 +24,6 @@ public class ITutor extends javax.swing.JDialog {
     private MTtutor  mtt;
     private SpinnerNumberModel msn;
     private final int NMAX = 20;  //El numero de máximo de Numeros de Tarjetas
-
 
     public ITutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -90,7 +91,7 @@ public class ITutor extends javax.swing.JDialog {
         jCh17 = new javax.swing.JCheckBox();
         jCh18 = new javax.swing.JCheckBox();
         jCh19 = new javax.swing.JCheckBox();
-        btnCargarTutor = new javax.swing.JButton();
+        btnLimpiarDatos = new javax.swing.JButton();
         btnActualizarTutor = new javax.swing.JButton();
         btnEliminarTutor = new javax.swing.JButton();
 
@@ -108,6 +109,11 @@ public class ITutor extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ttutores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ttutoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ttutores);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -168,11 +174,26 @@ public class ITutor extends javax.swing.JDialog {
 
         jCh19.setText("19:00-20:00");
 
-        btnCargarTutor.setText("Cargar Tutor");
+        btnLimpiarDatos.setText("Limpiar Datos");
+        btnLimpiarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarDatosActionPerformed(evt);
+            }
+        });
 
         btnActualizarTutor.setText("Actualizar Tutor");
+        btnActualizarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTutorActionPerformed(evt);
+            }
+        });
 
         btnEliminarTutor.setText("Eliminar Tutor");
+        btnEliminarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarTutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,7 +218,7 @@ public class ITutor extends javax.swing.JDialog {
                             .addComponent(jCJueves)
                             .addComponent(jCViernes)
                             .addComponent(jCSabado)
-                            .addComponent(btnCargarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLimpiarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAgregarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +328,7 @@ public class ITutor extends javax.swing.JDialog {
                             .addComponent(btnActualizarTutor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCargarTutor)
+                            .addComponent(btnLimpiarDatos)
                             .addComponent(btnEliminarTutor))
                         .addGap(0, 12, Short.MAX_VALUE))))
         );
@@ -328,6 +349,216 @@ public class ITutor extends javax.swing.JDialog {
         mtt.fireTableDataChanged();
     }//GEN-LAST:event_btnAgregarTutorActionPerformed
 
+    private void btnLimpiarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarDatosActionPerformed
+        limpiarDatos();
+    }//GEN-LAST:event_btnLimpiarDatosActionPerformed
+
+    private void ttutoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ttutoresMouseClicked
+        int fila = ttutores.getSelectedRow();
+        
+        //Agregar los Valores
+        JspiNumTarjeta.setValue(ttutores.getValueAt(fila, 0)); 
+        txtNombre.setText(ttutores.getValueAt(fila, 1).toString());
+        txtCarrera.setText(ttutores.getValueAt(fila, 2).toString());
+        marcarDiasDesdeCadena(ttutores.getValueAt(fila, 3).toString());
+        marcarHorasDesdeCadena(ttutores.getValueAt(fila, 4).toString());
+        
+    }//GEN-LAST:event_ttutoresMouseClicked
+
+    private void btnActualizarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTutorActionPerformed
+        int fila = ttutores.getSelectedRow();
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(this, "Seleccione un tutor de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try{
+            Tutor tutor = tutores.get(fila);
+            
+            tutor.setNumTarjeta((Integer) JspiNumTarjeta.getValue());
+            tutor.setNombre(txtNombre.getText().trim());
+            tutor.setCarrera(txtCarrera.getText().trim());
+            tutor.setDias(generarCadenaDias());
+            tutor.setHoras(generarIntervalosHorarios());
+            
+            cTutor.edit(tutor);
+            
+            mtt.fireTableCellUpdated(fila, fila);
+            
+            JOptionPane.showMessageDialog(this, "Tutor actualizado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarDatos();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "Error al actualizar tutor: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnActualizarTutorActionPerformed
+
+    private void btnEliminarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTutorActionPerformed
+        int fila = ttutores.getSelectedRow();
+        
+        if( fila == -1){
+            JOptionPane.showMessageDialog(this, "Seleccione un tutor de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este tutor?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        
+        if(confirmacion != JOptionPane.YES_OPTION){
+            return;
+        }
+        
+        try{
+            Tutor tutor = tutores.get(fila);
+            cTutor.destroy(tutor.getNumTarjeta());
+            tutores.remove(fila);
+            mtt.fireTableRowsDeleted(fila, fila);
+            
+            limpiarDatos();
+            
+            JOptionPane.showMessageDialog(this, "Tutor eliminado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch (Exception ex){
+            JOptionPane.showMessageDialog(this, "Tutor eliminado correctamente", "Éxito", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnEliminarTutorActionPerformed
+
+    public void marcarHorasDesdeCadena(String intervalo) {
+        // Limpiar primero todas las horas
+        jCh7.setSelected(false);
+        jCh8.setSelected(false);
+        jCh9.setSelected(false);
+        jCh10.setSelected(false);
+        jCh11.setSelected(false);
+        jCh12.setSelected(false);
+        jCh13.setSelected(false);
+        jCh14.setSelected(false);
+        jCh15.setSelected(false);
+        jCh16.setSelected(false);
+        jCh17.setSelected(false);
+        jCh18.setSelected(false);
+        jCh19.setSelected(false);
+
+        if (intervalo == null || intervalo.isEmpty()) {
+            return;
+        }
+
+        try {
+            String[] partes = intervalo.split("-");
+            int horaInicio = Integer.parseInt(partes[0].trim());
+            int horaFin = Integer.parseInt(partes[1].trim());
+
+            // Validar rango correcto (7-19 para checkboxes existentes)
+            if (horaInicio > horaFin || horaInicio < 7 || horaFin > 20) {
+                return;
+            }
+
+            // Marcar cada hora en el intervalo
+            for (int hora = horaInicio; hora < horaFin; hora++) {
+                switch (hora) {
+                    case 7: jCh7.setSelected(true); break;
+                    case 8: jCh8.setSelected(true); break;
+                    case 9: jCh9.setSelected(true); break;
+                    case 10: jCh10.setSelected(true); break;
+                    case 11: jCh11.setSelected(true); break;
+                    case 12: jCh12.setSelected(true); break;
+                    case 13: jCh13.setSelected(true); break;
+                    case 14: jCh14.setSelected(true); break;
+                    case 15: jCh15.setSelected(true); break;
+                    case 16: jCh16.setSelected(true); break;
+                    case 17: jCh17.setSelected(true); break;
+                    case 18: jCh18.setSelected(true); break;
+                    case 19: jCh19.setSelected(true); break;
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Formato de intervalo inválido: " + intervalo);
+        }
+    }
+    public void marcarDiasDesdeCadena(String cadenaDias) {
+        // Limpiar primero todas las selecciones
+        jCLunes.setSelected(false);
+        jCMartes.setSelected(false);
+        jCMiercoles.setSelected(false);
+        jCJueves.setSelected(false);
+        jCViernes.setSelected(false);
+        jCSabado.setSelected(false);
+
+        if (cadenaDias == null || cadenaDias.isEmpty()) {
+            return;
+        }
+
+        // Separar los días usando el guión como delimitador
+        String[] dias = cadenaDias.split("-");
+
+        for (String dia : dias) {
+            switch (dia.trim().toUpperCase()) {
+                case "L":
+                    jCLunes.setSelected(true);
+                    break;
+                case "M":
+                    jCMartes.setSelected(true);
+                    break;
+                case "X":
+                    jCMiercoles.setSelected(true);
+                    break;
+                case "J":
+                    jCJueves.setSelected(true);
+                    break;
+                case "V":
+                    jCViernes.setSelected(true);
+                    break;
+                case "S":
+                    jCSabado.setSelected(true);
+                    break;
+            }
+        }
+    }
+    public SpinnerNumberModel modeloSpinner(){
+        // Cálculo de rango para el Spinner
+        int ultimaTarjeta = tutores.get(tutores.size() - 1).getNumTarjeta();
+        int min = ultimaTarjeta + 1;
+        int max = NMAX;
+        int paso = 1;
+
+        msn = new SpinnerNumberModel();
+        msn.setMinimum(min);
+        msn.setMaximum(max);
+        msn.setValue(min);
+        
+        return msn;
+    }
+    public void limpiarDatos(){
+        txtCarrera.setText(null);
+        txtNombre.setText(null);
+        
+        JspiNumTarjeta.setModel(modeloSpinner());
+        
+        // Limpiar días de la semana
+        jCLunes.setSelected(false);
+        jCMartes.setSelected(false);
+        jCMiercoles.setSelected(false);
+        jCJueves.setSelected(false);
+        jCViernes.setSelected(false);
+        jCSabado.setSelected(false);
+
+        // Limpiar horas
+        jCh7.setSelected(false);
+        jCh8.setSelected(false);
+        jCh9.setSelected(false);
+        jCh10.setSelected(false);
+        jCh11.setSelected(false);
+        jCh12.setSelected(false);
+        jCh13.setSelected(false);
+        jCh14.setSelected(false);
+        jCh15.setSelected(false);
+        jCh16.setSelected(false);
+        jCh17.setSelected(false);
+        jCh18.setSelected(false);
+        jCh19.setSelected(false);     
+    }
     public String generarCadenaDias() {
         StringBuilder dias = new StringBuilder();
 
@@ -345,7 +576,6 @@ public class ITutor extends javax.swing.JDialog {
 
         return dias.toString();
     }
-    
     public String generarIntervalosHorarios() {
         List<Integer> horasSeleccionadas = new ArrayList<>();
 
@@ -364,36 +594,18 @@ public class ITutor extends javax.swing.JDialog {
         if (jCh18.isSelected()) horasSeleccionadas.add(18);
         if (jCh19.isSelected()) horasSeleccionadas.add(19);
 
-        // Ordenar las horas
-        Collections.sort(horasSeleccionadas);
-
-        // Generar intervalos continuos
-        StringBuilder resultado = new StringBuilder();
-        if (!horasSeleccionadas.isEmpty()) {
-            int inicio = horasSeleccionadas.get(0);
-            int fin = inicio;
-
-            for (int i = 1; i < horasSeleccionadas.size(); i++) {
-                if (horasSeleccionadas.get(i) == fin + 1) {
-                    fin = horasSeleccionadas.get(i);
-                } else {
-                    // Agregar el intervalo actual
-                    if (resultado.length() > 0) resultado.append(",");
-                    resultado.append(inicio).append("-").append(fin);
-
-                    // Comenzar nuevo intervalo
-                    inicio = horasSeleccionadas.get(i);
-                    fin = inicio;
-                }
-            }
-
-            // Agregar el último intervalo
-            if (resultado.length() > 0) resultado.append(",");
-            resultado.append(inicio).append("-").append(fin);
+        if (horasSeleccionadas.isEmpty()) {
+            return "";
         }
 
-        // Limitar a 10 caracteres si es necesario
-        return resultado.length() <= 10 ? resultado.toString() : resultado.substring(0, 10);
+        // Calcular mínimo y máximo
+        int min = Collections.min(horasSeleccionadas);
+        int max = Collections.max(horasSeleccionadas);
+
+        // Crear intervalo único (hora final = max + 1)
+        String intervalo = min + "-" + (max + 1);
+
+        return intervalo.length() <= 10 ? intervalo : intervalo.substring(0, 10);
     }
     
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
@@ -442,8 +654,8 @@ public class ITutor extends javax.swing.JDialog {
     private javax.swing.JSpinner JspiNumTarjeta;
     private javax.swing.JButton btnActualizarTutor;
     private javax.swing.JButton btnAgregarTutor;
-    private javax.swing.JButton btnCargarTutor;
     private javax.swing.JButton btnEliminarTutor;
+    private javax.swing.JButton btnLimpiarDatos;
     private javax.swing.JCheckBox jCJueves;
     private javax.swing.JCheckBox jCLunes;
     private javax.swing.JCheckBox jCMartes;
