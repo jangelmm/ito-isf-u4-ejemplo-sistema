@@ -27,56 +27,173 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                      <Component id="JspiNumTarjeta" min="-2" pref="194" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCLunes" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCMartes" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCMiercoles" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCJueves" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCViernes" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCSabado" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCargarTutor" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAgregarTutor" alignment="0" pref="120" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="375" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jCh11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jCh18" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jCh10" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jCh17" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jCh9" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jCh16" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jCh7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="txtNombre" min="-2" pref="194" max="-2" attributes="0"/>
+                                          <Component id="txtCarrera" min="-2" pref="194" max="-2" attributes="0"/>
+                                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtNombre" pref="194" max="32767" attributes="0"/>
-                                      <Component id="JspiNumTarjeta" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jCh8" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                  <Component id="jCh15" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jCh14" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jCh12" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jCh19" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jCh13" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnActualizarTutor" pref="125" max="32767" attributes="0"/>
+                                  <Component id="btnEliminarTutor" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnAgregarTutor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="515" max="-2" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JspiNumTarjeta" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="JspiNumTarjeta" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCarrera" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jCLunes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh14" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jCMartes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh15" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jCMiercoles" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCh16" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jCh10" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCh17" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jCJueves" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jCViernes" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jCh11" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCh18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jCSabado" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jCh12" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCh19" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCh13" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnAgregarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnActualizarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnCargarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEliminarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
-              <Component id="btnAgregarTutor" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="275" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -132,6 +249,133 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarTutorActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Carrera:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtCarrera">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dias:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCLunes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lunes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCMartes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Martes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCMiercoles">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Miercoles"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCJueves">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jueves"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCViernes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Viernes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCSabado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sabado"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Horas:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="7:00-8:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="8:00-9:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="9:00-10:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="10:00-11:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="11:00-12:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh12">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="12:00-13:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh13">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="13:00-14:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh14">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="14:00-15:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh15">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="15:00-16:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh16">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="16:00-17:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh17">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="17:00-18:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh18">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="18:00-19:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCh19">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="19:00-20:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCargarTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cargar Tutor"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnActualizarTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Actualizar Tutor"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnEliminarTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar Tutor"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
