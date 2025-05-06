@@ -1,6 +1,7 @@
 package vista;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import modelo.MTtutor;
 import control.AdmDatos;
 import control.TutorJpaController;
@@ -69,7 +70,6 @@ public class ITutor extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         btnAgregarTutor = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        txtCarrera = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jCLunes = new javax.swing.JCheckBox();
         jCMartes = new javax.swing.JCheckBox();
@@ -94,6 +94,7 @@ public class ITutor extends javax.swing.JDialog {
         btnLimpiarDatos = new javax.swing.JButton();
         btnActualizarTutor = new javax.swing.JButton();
         btnEliminarTutor = new javax.swing.JButton();
+        cboCarrera = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -195,6 +196,8 @@ public class ITutor extends javax.swing.JDialog {
             }
         });
 
+        cboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingeniería Electrónica", "Ingeniería Civil", "Ingeniería Mecánica", "Ingeniería Industrial", "Ingeniería Química", "Ingeniería Electrica", "Ingeniería en Gestión Empresarial", "Ingeniería en Sis. Computacionales", "Licenciatura en Administración", "Contador Público" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,44 +225,41 @@ public class ITutor extends javax.swing.JDialog {
                             .addComponent(btnAgregarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCh11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jCh18))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCh10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jCh17))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCh9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jCh16))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jCh7, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jCh8)
-                                    .addGap(42, 42, 42)
-                                    .addComponent(jCh15))
-                                .addComponent(jCh14, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCh12)
-                                .addGap(30, 30, 30)
-                                .addComponent(jCh19))
                             .addComponent(jCh13)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnActualizarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                    .addComponent(btnEliminarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                    .addComponent(btnEliminarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jCh12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCh19))
+                                .addComponent(jCh14)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jCh8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCh15))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jCh11)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCh18))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jCh10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCh17))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jCh9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCh16))
+                                .addComponent(jCh7, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cboCarrera, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,10 +280,10 @@ public class ITutor extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                            .addComponent(cboCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
@@ -326,11 +326,11 @@ public class ITutor extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAgregarTutor)
                             .addComponent(btnActualizarTutor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnLimpiarDatos)
                             .addComponent(btnEliminarTutor))
-                        .addGap(0, 12, Short.MAX_VALUE))))
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
 
         pack();
@@ -340,7 +340,7 @@ public class ITutor extends javax.swing.JDialog {
         tutor = new Tutor();
         tutor.setNumTarjeta((Integer) JspiNumTarjeta.getValue());
         tutor.setNombre(txtNombre.getText());
-        tutor.setCarrera(txtCarrera.getText());
+        tutor.setCarrera(cboCarrera.getSelectedItem().toString());
         tutor.setDias(generarCadenaDias());
         tutor.setHoras(generarIntervalosHorarios());
         
@@ -359,7 +359,7 @@ public class ITutor extends javax.swing.JDialog {
         //Agregar los Valores
         JspiNumTarjeta.setValue(ttutores.getValueAt(fila, 0)); 
         txtNombre.setText(ttutores.getValueAt(fila, 1).toString());
-        txtCarrera.setText(ttutores.getValueAt(fila, 2).toString());
+        cboCarrera.setSelectedItem(ttutores.getValueAt(fila, 2).toString());
         marcarDiasDesdeCadena(ttutores.getValueAt(fila, 3).toString());
         marcarHorasDesdeCadena(ttutores.getValueAt(fila, 4).toString());
         
@@ -377,7 +377,7 @@ public class ITutor extends javax.swing.JDialog {
             
             tutor.setNumTarjeta((Integer) JspiNumTarjeta.getValue());
             tutor.setNombre(txtNombre.getText().trim());
-            tutor.setCarrera(txtCarrera.getText().trim());
+            tutor.setCarrera(cboCarrera.getSelectedItem().toString());
             tutor.setDias(generarCadenaDias());
             tutor.setHoras(generarIntervalosHorarios());
             
@@ -531,7 +531,7 @@ public class ITutor extends javax.swing.JDialog {
         return msn;
     }
     public void limpiarDatos(){
-        txtCarrera.setText(null);
+        cboCarrera.setSelectedIndex(0);
         txtNombre.setText(null);
         
         JspiNumTarjeta.setModel(modeloSpinner());
@@ -633,7 +633,7 @@ public class ITutor extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         
-        UIManager.setLookAndFeel(new FlatDarkLaf());
+        UIManager.setLookAndFeel(new FlatLightLaf());
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -656,6 +656,7 @@ public class ITutor extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregarTutor;
     private javax.swing.JButton btnEliminarTutor;
     private javax.swing.JButton btnLimpiarDatos;
+    private javax.swing.JComboBox<String> cboCarrera;
     private javax.swing.JCheckBox jCJueves;
     private javax.swing.JCheckBox jCLunes;
     private javax.swing.JCheckBox jCMartes;
@@ -683,7 +684,6 @@ public class ITutor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable ttutores;
-    private javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
