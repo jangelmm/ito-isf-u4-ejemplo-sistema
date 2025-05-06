@@ -18,7 +18,7 @@ import modelo.Tutor;
 import modelo.Tutorado;
 
 
-public class ICita extends javax.swing.JFrame {
+public class IPCita extends javax.swing.JFrame {
 
     private Cita cita;
     private CitaJpaController cCita;
@@ -26,7 +26,7 @@ public class ICita extends javax.swing.JFrame {
     private List<Cita> citas;
     private MTcita mtc;
     
-    public ICita() {
+    public IPCita() {
         initComponents();
         setLocationRelativeTo(null);
         
@@ -434,20 +434,20 @@ public class ICita extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ICita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IPCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ICita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IPCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ICita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IPCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ICita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IPCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         UIManager.setLookAndFeel(new FlatDarkLaf());
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ICita().setVisible(true);
+                new IPCita().setVisible(true);
             }
         });
     }

@@ -317,9 +317,8 @@ public class ITutor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCSabado)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCh12)
-                                .addComponent(jCh19)))
+                            .addComponent(jCh19)
+                            .addComponent(jCh12))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCh13)
                         .addGap(14, 14, 14)
@@ -396,30 +395,44 @@ public class ITutor extends javax.swing.JDialog {
 
     private void btnEliminarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTutorActionPerformed
         int fila = ttutores.getSelectedRow();
-        
-        if( fila == -1){
+
+        if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione un tutor de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este tutor?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        
-        if(confirmacion != JOptionPane.YES_OPTION){
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar este tutor?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
             return;
         }
-        
-        try{
+
+        try {
             Tutor tutor = tutores.get(fila);
-            cTutor.destroy(tutor.getNumTarjeta());
-            tutores.remove(fila);
-            mtt.fireTableRowsDeleted(fila, fila);
-            
+
+            // Usar el ID correcto (id_persona)
+            cTutor.destroy(tutor.getIdPersona());  // Cambio clave aquí
+
+            // Actualizar la lista desde la base de datos
+            tutores = cTutor.findTutorEntities();
+            mtt = new MTtutor(tutores);
+            ttutores.setModel(mtt);
+
             limpiarDatos();
-            
-            JOptionPane.showMessageDialog(this, "Tutor eliminado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
-        }
-        catch (Exception ex){
-            JOptionPane.showMessageDialog(this, "Tutor eliminado correctamente", "Éxito", JOptionPane.ERROR_MESSAGE);
+
+            JOptionPane.showMessageDialog(this,
+                    "Tutor eliminado correctamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al eliminar tutor: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }//GEN-LAST:event_btnEliminarTutorActionPerformed
