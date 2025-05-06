@@ -8,10 +8,15 @@ import com.formdev.flatlaf.FlatLightLaf;
 import control.AdmDatos;
 import control.TutorJpaController;
 import control.TutoradoJpaController;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.SelectionModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.MTtutor;
@@ -39,6 +44,8 @@ public class ITutorado extends javax.swing.JFrame {
     private DefaultListModel mTutoradosDisponibles;
     private DefaultListModel mTutoradosSeleccionados;
     
+    private Map<String, Tutorado> tutorado_nom = new HashMap<>();
+    
     public ITutorado() {
         initComponents();
         setLocationRelativeTo(null);
@@ -58,6 +65,9 @@ public class ITutorado extends javax.swing.JFrame {
         
         lisTutoradosSeleccionados.setModel(mTutoradosSeleccionados);
         
+        btnMarcar.setEnabled(false);
+        btnDesmarcar.setEnabled(false);
+        
     }
     
     public void cargarTutores(){
@@ -72,12 +82,13 @@ public class ITutorado extends javax.swing.JFrame {
     public void cargarTutorado(){
         mTutoradosDisponibles = new DefaultListModel();
         mTutoradosSeleccionados = new DefaultListModel();
-        
-        mTutoradosDisponibles.clear();
-        
+        tutorado_nom.clear(); // Limpiar el mapa anterior
+
         for(Tutorado dTutorado : tutorados){
             if(dTutorado.getTutor() == null){
-                mTutoradosDisponibles.addElement(dTutorado.getNombre());
+                String nombre = dTutorado.getNombre();
+                mTutoradosDisponibles.addElement(nombre);
+                tutorado_nom.put(nombre, dTutorado); // Usar nombre como clave
             }
         }
     }
@@ -97,7 +108,7 @@ public class ITutorado extends javax.swing.JFrame {
         lisTutoradosSeleccionados = new javax.swing.JList<>();
         btnMarcar = new javax.swing.JButton();
         btnDesmarcar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAceptarSeleccion = new javax.swing.JButton();
         btnAceptarTutor = new javax.swing.JButton();
         panel2 = new javax.swing.JPanel();
 
@@ -133,10 +144,25 @@ public class ITutorado extends javax.swing.JFrame {
         });
 
         btnDesmarcar.setText("<--");
+        btnDesmarcar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesmarcarActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Aceptar");
+        btnAceptarSeleccion.setText("Aceptar");
+        btnAceptarSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarSeleccionActionPerformed(evt);
+            }
+        });
 
         btnAceptarTutor.setText("AceptarTutor");
+        btnAceptarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarTutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnAceptarLayout = new javax.swing.GroupLayout(btnAceptar);
         btnAceptar.setLayout(btnAceptarLayout);
@@ -158,7 +184,7 @@ public class ITutorado extends javax.swing.JFrame {
                         .addGroup(btnAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnMarcar, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                             .addComponent(btnDesmarcar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnAceptarSeleccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnAceptarLayout.createSequentialGroup()
@@ -188,7 +214,7 @@ public class ITutorado extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(btnDesmarcar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnAceptarSeleccion)
                 .addGap(15, 15, 15))
         );
 
@@ -225,6 +251,59 @@ public class ITutorado extends javax.swing.JFrame {
             mTutoradosDisponibles.remove(indEstudiantesSeleccionados[i]);
         }
     }//GEN-LAST:event_btnMarcarActionPerformed1
+
+    private void btnAceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarTutorActionPerformed
+        if(cboTutores.getSelectedItem().equals("Seleccione Tutor")){
+            JOptionPane.showMessageDialog(this, "Seleccione Tutor", "Adevertencia", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            if(JOptionPane.showConfirmDialog(this, "Seleccione al tutor " + cboTutores.getSelectedItem() + "?") == 0){
+                tutor = tutores.get(cboTutores.getSelectedIndex()-1);
+                cboTutores.setEnabled(false);
+                btnAceptarTutor.setText("Seleccionado");
+                btnAceptarTutor.setEnabled(false);
+                
+                btnMarcar.setEnabled(true);
+                btnDesmarcar.setEnabled(true);
+                
+                if(!mTutoradosDisponibles.isEmpty()){
+                    btnMarcar.setEnabled(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAceptarTutorActionPerformed
+
+    private void btnAceptarSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarSeleccionActionPerformed
+        // Iterar sobre los elementos del modelo, no por índices
+        for(int i = 0; i < mTutoradosSeleccionados.getSize(); i++){
+            String nombreTutorado = (String) mTutoradosSeleccionados.getElementAt(i);
+            Tutorado t = tutorado_nom.get(nombreTutorado); // Usar el nombre como clave
+
+            if(t != null){
+                t.setTutor(tutor);
+                try{
+                    cTutorado.edit(t);
+                } 
+                catch (Exception ex){
+                    Logger.getLogger(ITutorado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        // Actualizar la lista de disponibles
+        cargarTutorado();
+        JOptionPane.showMessageDialog(this, "Tutorados asignados correctamente");
+    }//GEN-LAST:event_btnAceptarSeleccionActionPerformed
+
+    private void btnDesmarcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesmarcarActionPerformed
+        int[] indices = lisTutoradosSeleccionados.getSelectedIndices();
+
+        for(int i = indices.length - 1; i >= 0; i--){
+            String nombre = (String) mTutoradosSeleccionados.getElementAt(indices[i]);
+            mTutoradosDisponibles.addElement(nombre);
+            mTutoradosSeleccionados.remove(indices[i]);
+        }
+    }//GEN-LAST:event_btnDesmarcarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,11 +342,11 @@ public class ITutorado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAceptar;
+    private javax.swing.JButton btnAceptarSeleccion;
     private javax.swing.JButton btnAceptarTutor;
     private javax.swing.JButton btnDesmarcar;
     private javax.swing.JButton btnMarcar;
     private javax.swing.JComboBox<String> cboTutores;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

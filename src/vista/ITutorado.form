@@ -63,7 +63,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnMarcar" pref="86" max="32767" attributes="0"/>
                                   <Component id="btnDesmarcar" max="32767" attributes="0"/>
-                                  <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnAceptarSeleccion" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" min="-2" pref="221" max="-2" attributes="0"/>
@@ -104,7 +104,7 @@
                           </Group>
                       </Group>
                       <EmptySpace pref="14" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAceptarSeleccion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -198,16 +198,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&lt;--"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDesmarcarActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnAceptarSeleccion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Aceptar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAceptarSeleccionActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAceptarTutor">
               <Properties>
                 <Property name="text" type="java.lang.String" value="AceptarTutor"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAceptarTutorActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
