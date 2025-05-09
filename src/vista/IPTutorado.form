@@ -45,10 +45,8 @@
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtNumeroControl" max="32767" attributes="0"/>
-                          <Component id="cobGenero" pref="192" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtNumeroControl" max="32767" attributes="0"/>
+                      <Component id="cobGenero" pref="192" max="32767" attributes="0"/>
                       <Component id="jDfecha" alignment="1" max="32767" attributes="0"/>
                       <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNumTarjeta" alignment="1" max="32767" attributes="0"/>
@@ -61,39 +59,33 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCLunes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCMartes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCMiercoles" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCJueves" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCViernes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCSabado" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAgregarTutorado" pref="140" max="32767" attributes="0"/>
+                                  <Component id="btnLimpiarDatos" alignment="0" pref="140" max="32767" attributes="0"/>
+                              </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCLunes" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCMartes" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCMiercoles" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCJueves" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCViernes" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCSabado" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnAgregarTutorado" pref="140" max="32767" attributes="0"/>
-                                          <Component id="btnLimpiarDatos" alignment="0" pref="140" max="32767" attributes="0"/>
+                                          <Component id="btnActualizarTutorado" max="32767" attributes="0"/>
+                                          <Component id="btnEliminarTutor" pref="134" max="32767" attributes="0"/>
                                       </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="btnActualizarTutorado" max="32767" attributes="0"/>
-                                                  <Component id="btnEliminarTutor" pref="134" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                              <Component id="txtNombre" min="-2" pref="190" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Component id="txtNombre" min="-2" pref="190" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>

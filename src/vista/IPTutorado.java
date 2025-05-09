@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package vista;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -291,18 +288,21 @@ public class IPTutorado extends javax.swing.JFrame {
         tutorado.setFechaNacimiento(jDfecha.getDate());
         
         // Obtener tutor por número de tarjeta
-        TutorJpaController cTutor = new TutorJpaController(adm.getEnf());
-        Tutor tutor = cTutor.findTutor(Integer.parseInt(txtNumTarjeta.getText()));
         
-        if(tutor == null) {
-            JOptionPane.showMessageDialog(this, 
-                "No existe un tutor con ese número de tarjeta", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
+        if(!txtNumTarjeta.getText().trim().equals("")){
+            TutorJpaController cTutor = new TutorJpaController(adm.getEnf());
+            Tutor tutor = cTutor.findTutor(Integer.parseInt(txtNumTarjeta.getText()));
+
+            if(tutor == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "No existe un tutor con ese número de tarjeta", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            tutorado.setTutor(tutor);
         }
-        
-        tutorado.setTutor(tutor);
         
         cTutorado.create(tutorado);
         tutores.add(tutorado);
