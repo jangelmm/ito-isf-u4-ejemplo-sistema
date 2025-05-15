@@ -13,15 +13,19 @@ import javax.swing.JTextField;
  */
 public class DatosTablaCitas {
     private Tutorado tutorado;
-    private JCheckBox asistencia;
-    private JTextField accion;
-    
+    //private JCheckBox asistencia; //boolean
+   //    private JCheckBox asistencia;
+    private String accion; //String
+    //private JCheckBox asistencia; 
+    private boolean asistencia; 
     //Voy a llenar un arreglo de datos tutoria, los cuales estarán formados de lo anterior
     
     public DatosTablaCitas(Tutorado tutorado){
         this.tutorado = tutorado;
-        this.asistencia = new JCheckBox();
-        this.accion = new JTextField();
+        //this.asistencia = new JCheckBox();
+        this.asistencia = false;
+        //this.accion = new JTextField();
+        this.accion = new String();
     }
 
     public Tutorado getTutorado() {
@@ -32,20 +36,20 @@ public class DatosTablaCitas {
         this.tutorado = tutorado;
     }
 
-    public JCheckBox getAsistencia() {
-        return asistencia;
-    }
-
-    public void setAsistencia(JCheckBox asistencia) {
-        this.asistencia = asistencia;
-    }
-
-    public JTextField getAccion() {
+    public String getAccion() {
         return accion;
     }
 
-    public void setAccion(JTextField accion) {
+    public void setAccion(String accion) {
         this.accion = accion;
+    }
+
+    public boolean isAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(boolean asistencia) {
+        this.asistencia = asistencia;
     }
     
     
