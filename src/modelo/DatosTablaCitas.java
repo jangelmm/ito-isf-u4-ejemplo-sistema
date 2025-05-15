@@ -51,6 +51,7 @@ public class DatosTablaCitas {
     public void setAsistencia(boolean asistencia) {
         this.asistencia = asistencia;
     }
-    
-    
+    public boolean getAsistencia(){
+        return asistencia;
+    }
 }
