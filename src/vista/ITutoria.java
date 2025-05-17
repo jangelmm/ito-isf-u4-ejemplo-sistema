@@ -10,6 +10,7 @@ import control.CitaJpaController;
 import control.TutorJpaController; // No se usa directamente aquí, pero es parte del contexto
 import control.TutoradoJpaController; // No se usa directamente aquí
 import control.TutoriaJpaController;
+import control.exceptions.IllegalOrphanException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,36 +84,12 @@ public class ITutoria extends javax.swing.JFrame {
         modeloTablaTutoradosEnCita = new MTablaCita((ArrayList) datosParaTablaTutorados); // Usar la variable de instancia
         tabTutorados.setModel(modeloTablaTutoradosEnCita); // Nombre original del JTable
 
-        configurarTablaListener();
+        //configurarTablaListener();
         cargarTutoresComboBox();
         actualizarEstadoComponentes(); // Estado inicial de la UI
     }
     
-    private void configurarTablaListener() {
-        tabTutorados.getModel().addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getType() == TableModelEvent.UPDATE) {
-                    int row = e.getFirstRow();
-                    int column = e.getColumn();
 
-                    // Si el cambio fue en la columna de "Asistencia" (asumo columna 1)
-                    if (column == 1) {
-                        Boolean asistencia = (Boolean) tabTutorados.getValueAt(row, 1);
-                        if (asistencia != null && !asistencia) {
-                            // Si se desmarca la asistencia, limpiar la acción (asumo columna 2)
-                            String accionActual = (String) tabTutorados.getValueAt(row, 2);
-                            if (accionActual != null && !accionActual.trim().isEmpty() && !accionActual.equals("Sin acción")) {
-                                tabTutorados.setValueAt("Sin acción", row, 2); // O null, dependiendo de MTablaCita
-                                // Forzar la actualización visual si es necesario (a veces Swing lo necesita)
-                                modeloTablaTutoradosEnCita.fireTableCellUpdated(row, 2);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
     
     private void actualizarEstadoComponentes() {
         boolean tutorHaSidoAceptado = (tutorSeleccionado != null);
@@ -189,29 +166,32 @@ public class ITutoria extends javax.swing.JFrame {
     }
     
     private void popularTablaTutorados(Tutor tutorDeLaCita) {
-        datosParaTablaTutorados.clear(); // Limpiar datos anteriores
+        datosParaTablaTutorados.clear();
 
-        if (tutorDeLaCita == null) {
-             modeloTablaTutoradosEnCita.fireTableDataChanged();
-             actualizarEstadoComponentes();
-            return;
-        }
-        // Llenar 'datosParaTablaTutorados' con los tutorados asignados al tutor de la cita
-        for (Tutorado unTutorado : listaTotalTutoradosGeneral) {
-            if (unTutorado.getTutor() != null && unTutorado.getTutor().equals(tutorDeLaCita)) {
-                datosParaTablaTutorados.add(new DatosTablaCitas(unTutorado));
+        if (tutorDeLaCita != null) {
+            for (Tutorado unTutorado : listaTotalTutoradosGeneral) {
+                if (unTutorado.getTutor() != null && unTutorado.getTutor().equals(tutorDeLaCita)) {
+                    datosParaTablaTutorados.add(new DatosTablaCitas(unTutorado));
+                }
             }
         }
+        
+        // En lugar de asignar una nueva instancia al modelo, actualiza su lista interna y notifica.
+        // O, si MTablaCita tiene un método para actualizar su lista interna y notificar:
+        modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados);
 
-        modeloTablaTutoradosEnCita.fireTableDataChanged(); // Notificar a la tabla
 
-        // Configurar el editor de ComboBox para la columna "Acción"
-        if (tabTutorados.getColumnCount() > 2) { // Asegurarse de que la columna existe
+        // Re-configurar el editor de ComboBox para la columna "Acción"
+        // Esto es importante porque el modelo se está actualizando significativamente.
+        if (tabTutorados.getColumnCount() > 2) { // Columna "Acción" es la tercera (índice 2)
             TableColumn accionesColumn = tabTutorados.getColumnModel().getColumn(2);
-            JComboBox<String> comboBox = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
-            accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
+            JComboBox<String> comboBoxEditor = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
+            accionesColumn.setCellEditor(new DefaultCellEditor(comboBoxEditor));
+            System.out.println("Editor de JComboBox para columna 'Acción' re-configurado.");
+        } else {
+            System.out.println("Advertencia: La tabla no tiene suficientes columnas para configurar el editor de 'Acción'. Columnas: " + tabTutorados.getColumnCount());
         }
-        actualizarEstadoComponentes();
+        actualizarEstadoComponentes(); // Actualizar estado de botones, etc.
     }
     
     @SuppressWarnings("unchecked")
@@ -390,52 +370,97 @@ public class ITutoria extends javax.swing.JFrame {
 
     private void btnRegistrarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTutoriaActionPerformed
         if (tutorSeleccionado == null || citaSeleccionada == null || datosParaTablaTutorados.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un tutor, una cita válida y debe haber tutorados listados.", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe tener un tutor y una cita aceptados, y tutorados listados para registrar la tutoría.", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Asegurar que la cita tiene el tutor seleccionado (aunque ya debería ser así por la lógica de carga)
-        if (!citaSeleccionada.getTutor().equals(tutorSeleccionado)) {
-            JOptionPane.showMessageDialog(this, "La cita seleccionada no corresponde al tutor actualmente seleccionado. Por favor, re-seleccione.", "Error de Consistencia", JOptionPane.ERROR_MESSAGE);
+        if (citaSeleccionada.getTutor() == null || !citaSeleccionada.getTutor().equals(tutorSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Inconsistencia: La cita procesada no pertenece al tutor seleccionado activamente. Abortando.", "Error Crítico", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int tutoriasRegistradas = 0;
+        int tutoriasRegistradasExitosamente = 0;
+        List<Tutoria> tutoriasCreadasEnEstaOperacion = new ArrayList<>(); // Para potencialmente añadirlas a la cita en memoria si fuera necesario
+
         for (int i = 0; i < modeloTablaTutoradosEnCita.getRowCount(); i++) {
-            // Obtener el objeto Tutorado de la fila actual desde datosParaTablaTutorados
-            DatosTablaCitas datosFila = datosParaTablaTutorados.get(i); // Usar la fuente de datos original
-            Tutorado tutoradoActual = datosFila.getTutorado(); // Asumiendo que DatosTablaCitas tiene getTutorado()
+            DatosTablaCitas datosFila = datosParaTablaTutorados.get(i);
+            Tutorado tutoradoDeLaFila = datosFila.getTutorado();
 
-            Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1); // Columna de asistencia
-            String accion = (String) modeloTablaTutoradosEnCita.getValueAt(i, 2); // Columna de acción
+            Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
+            String accion = (String) modeloTablaTutoradosEnCita.getValueAt(i, 2);
 
-            if (tutoradoActual != null && asistencia != null && asistencia) { // Solo registrar si hubo asistencia
+            if (tutoradoDeLaFila != null && asistencia != null && asistencia) {
                 Tutoria nuevaTutoria = new Tutoria();
-                nuevaTutoria.setIdCita(citaSeleccionada);
-                nuevaTutoria.setIdTutorado(tutoradoActual);
-                nuevaTutoria.setAcciones((accion == null || accion.equals("Sin acción")) ? "Asistencia registrada." : accion);
+                nuevaTutoria.setIdCita(citaSeleccionada); // Establece la relación
+                nuevaTutoria.setIdTutorado(tutoradoDeLaFila);
+                nuevaTutoria.setAcciones((accion == null || accion.equals("Sin acción") || accion.trim().isEmpty()) ? "Asistencia registrada." : accion);
 
                 try {
-                    cTutoria.create(nuevaTutoria);
-                    tutoriasRegistradas++;
+                    cTutoria.create(nuevaTutoria); // Persiste la nueva tutoría
+                    tutoriasCreadasEnEstaOperacion.add(nuevaTutoria);
+                    tutoriasRegistradasExitosamente++;
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error al guardar tutoría para " + tutoradoActual.getNombre() + ": " + ex.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
-                    // Considerar si continuar con los demás o detenerse
+                    JOptionPane.showMessageDialog(this, "Error al guardar tutoría para " + tutoradoDeLaFila.getNombre() + ": " + ex.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace(); // Siempre es bueno tener el stack trace para desarrollo
                 }
             }
         }
 
-        if (tutoriasRegistradas > 0) {
-             // Actualizar estado de la cita a "Realizada"
-            citaSeleccionada.setEstado("Realizada");
+        if (tutoriasRegistradasExitosamente > 0) {
             try {
-                cCita.edit(citaSeleccionada);
-                JOptionPane.showMessageDialog(this, tutoriasRegistradas + " tutoría(s) registrada(s) exitosamente y cita marcada como 'Realizada'.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                // ---- INICIO DE LA MODIFICACIÓN IMPORTANTE ----
+                // Volver a obtener la instancia más reciente de Cita desde la BD
+                // antes de modificar y guardar.
+                Cita citaParaActualizar = cCita.findCita(citaSeleccionada.getIdCita());
+
+                if (citaParaActualizar != null) {
+                    citaParaActualizar.setEstado("Realizada");
+
+                    cCita.edit(citaParaActualizar); // Editar la instancia fresca
+
+                    // Actualizar la lista maestra de citas para que la UI refleje el cambio de estado
+                    // si se vuelve a cargar esta cita en algún momento.
+                    int indexEnListaMaestra = listaTotalCitas.indexOf(citaSeleccionada); // Busca por referencia o equals
+                    if (indexEnListaMaestra != -1) {
+                        listaTotalCitas.set(indexEnListaMaestra, citaParaActualizar); // Reemplazar con la instancia actualizada
+                    }
+                    citaSeleccionada = citaParaActualizar; // Asegurar que nuestra variable de instancia también está actualizada
+
+                    JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente + " tutoría(s) registrada(s) exitosamente. La cita ha sido marcada como 'Realizada'.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                     JOptionPane.showMessageDialog(this, "Error: No se pudo recargar la cita para actualizar su estado.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+                }
+                // ---- FIN DE LA MODIFICACIÓN IMPORTANTE ----
+
+            } catch (IllegalOrphanException ioe) {
+                JOptionPane.showMessageDialog(this, "Error de relación al actualizar cita (IllegalOrphanException): " +
+                    ioe.getMessage() + (ioe.getMessages() != null ? "\nDetalles: " + String.join(", ", ioe.getMessages()) : ""),
+                    "Error de Datos", JOptionPane.ERROR_MESSAGE);
+                ioe.printStackTrace();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Tutorías registradas, pero hubo un error al actualizar el estado de la cita: " + ex.getMessage(), "Error Parcial", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente +
+                    " tutoría(s) registrada(s), pero hubo un error al actualizar el estado de la cita: " + ex.getMessage(),
+                    "Error Parcial al Actualizar Cita", JOptionPane.WARNING_MESSAGE);
+                ex.printStackTrace();
             }
-        } else {
-             JOptionPane.showMessageDialog(this, "No se registraron tutorías. Verifique la asistencia de los tutorados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else if (tutoriasRegistradasExitosamente == 0 && modeloTablaTutoradosEnCita.getRowCount() > 0) {
+            // Si había tutorados en la tabla pero ninguno tuvo asistencia marcada.
+            boolean algunaAsistenciaMarcada = false;
+             for (int i = 0; i < modeloTablaTutoradosEnCita.getRowCount(); i++) {
+                Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
+                if (asistencia != null && asistencia) {
+                    algunaAsistenciaMarcada = true;
+                    break;
+                }
+            }
+            if(!algunaAsistenciaMarcada && modeloTablaTutoradosEnCita.getRowCount() > 0){
+                 JOptionPane.showMessageDialog(this, "No se marcaron asistencias. La cita no se marcará como 'Realizada'.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Este caso es si hubo asistencias pero algo falló y no se registró ninguna tutoría.
+                 JOptionPane.showMessageDialog(this, "No se registraron tutorías. Verifique la asistencia y las acciones de los tutorados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else { // No había tutorados en la tabla para empezar, o ningún error/registro previo.
+             JOptionPane.showMessageDialog(this, "No había tutorados con asistencia marcada para registrar.", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
 
         limpiarCamposYInterfaz();
