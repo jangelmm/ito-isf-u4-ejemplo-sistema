@@ -1,108 +1,9 @@
-# Estructura del proyecto
+# Estructura del Proyecto: tutorias
+
+## Árbol de Directorios
 
 ```
-tutorias
-├── build
-│   ├── classes
-│   │   ├── META-INF
-│   │   │   └── persistence.xml
-│   │   ├── control
-│   │   │   ├── exceptions
-│   │   │   │   ├── IllegalOrphanException.class
-│   │   │   │   ├── NonexistentEntityException.class
-│   │   │   │   └── PreexistingEntityException.class
-│   │   │   ├── AdmDatos.class
-│   │   │   ├── CitaJpaController.class
-│   │   │   ├── Conexion.class
-│   │   │   ├── TutorJpaController.class
-│   │   │   ├── TutoradoJpaController.class
-│   │   │   └── TutoriaJpaController.class
-│   │   ├── modelo
-│   │   │   ├── Cita.class
-│   │   │   ├── Cita_.class
-│   │   │   ├── DatosTablaCitas.class
-│   │   │   ├── MTablaCita.class
-│   │   │   ├── MTcita.class
-│   │   │   ├── MTtutor.class
-│   │   │   ├── MTtutor.rapt
-│   │   │   ├── MTtutorado.class
-│   │   │   ├── MTtutoria.class
-│   │   │   ├── Tutor.class
-│   │   │   ├── Tutor_.class
-│   │   │   ├── Tutorado.class
-│   │   │   ├── Tutorado_.class
-│   │   │   ├── Tutoria.class
-│   │   │   └── Tutoria_.class
-│   │   ├── vista
-│   │   │   ├── IPCita$1.class
-│   │   │   ├── IPCita$2.class
-│   │   │   ├── IPCita$3.class
-│   │   │   ├── IPCita$4.class
-│   │   │   ├── IPCita$5.class
-│   │   │   ├── IPCita$6.class
-│   │   │   ├── IPCita.class
-│   │   │   ├── IPCita.form
-│   │   │   ├── IPTutorado$1.class
-│   │   │   ├── IPTutorado$2.class
-│   │   │   ├── IPTutorado$3.class
-│   │   │   ├── IPTutorado$4.class
-│   │   │   ├── IPTutorado$5.class
-│   │   │   ├── IPTutorado$6.class
-│   │   │   ├── IPTutorado.class
-│   │   │   ├── IPTutorado.form
-│   │   │   ├── IPTutoria$1.class
-│   │   │   ├── IPTutoria$2.class
-│   │   │   ├── IPTutoria$3.class
-│   │   │   ├── IPTutoria$4.class
-│   │   │   ├── IPTutoria$5.class
-│   │   │   ├── IPTutoria$6.class
-│   │   │   ├── IPTutoria.class
-│   │   │   ├── IPTutoria.form
-│   │   │   ├── ITutor$1.class
-│   │   │   ├── ITutor$2.class
-│   │   │   ├── ITutor$3.class
-│   │   │   ├── ITutor$4.class
-│   │   │   ├── ITutor$5.class
-│   │   │   ├── ITutor$6$1.class
-│   │   │   ├── ITutor$6.class
-│   │   │   ├── ITutor.class
-│   │   │   ├── ITutor.form
-│   │   │   ├── ITutorado$1.class
-│   │   │   ├── ITutorado$2.class
-│   │   │   ├── ITutorado$3.class
-│   │   │   ├── ITutorado.class
-│   │   │   ├── ITutorado.form
-│   │   │   ├── ITutoria$1.class
-│   │   │   ├── ITutoria$2.class
-│   │   │   ├── ITutoria.class
-│   │   │   └── ITutoria.form
-│   │   ├── MTablaCita.class
-│   │   └── resouces.res
-│   ├── empty
-│   ├── generated-sources
-│   │   └── ap-source-output
-│   │       └── modelo
-│   │           ├── Cita_.java
-│   │           ├── Tutor_.java
-│   │           ├── Tutorado_.java
-│   │           └── Tutoria_.java
-│   └── built-jar.properties
-├── dist
-│   ├── lib
-│   │   ├── AbsoluteLayout.jar
-│   │   ├── dual-list-transfer.jar
-│   │   ├── flatlaf-demo-3.6.jar
-│   │   ├── jakarta.persistence-2.2.3.jar
-│   │   ├── jcalendar-1.4.jar
-│   │   ├── mysql-connector-java-8.0.17.jar
-│   │   ├── org.eclipse.persistence.antlr-2.7.12.jar
-│   │   ├── org.eclipse.persistence.asm-9.4.0.jar
-│   │   ├── org.eclipse.persistence.core-2.7.12.jar
-│   │   ├── org.eclipse.persistence.jpa-2.7.12.jar
-│   │   ├── org.eclipse.persistence.jpa.jpql-2.7.12.jar
-│   │   └── org.eclipse.persistence.moxy-2.7.12.jar
-│   ├── README.TXT
-│   └── tutorias.jar
+tutorias/
 ├── lib
 │   ├── CopyLibs
 │   │   └── org-netbeans-modules-java-j2seproject-copylibstask.jar
@@ -179,249 +80,270 @@ tutorias
 └── script.py
 ```
 
-## `.gitignore`
+## Contenido de Archivos
+
+### `.gitignore`
 
 ```text
 /dist/
+
 ```
 
-## `script.py`
+### `script.py`
 
 ```python
 import os
 import argparse
+from pathlib import Path # Usaremos pathlib para un manejo de rutas más moderno
 
-# Directorios a ignorar (incluye caches de Python)
-IGNORE_DIRS = {'.web', 'venv', '__pycache__'}
+# Directorios a ignorar (incluye caches de Python, VCS, y otros comunes)
+IGNORE_DIRS = {
+    # Control de versiones
+    '.git', '.hg', '.svn',
+    # Entornos virtuales de Python
+    'venv', '.venv', 'env', '.env', 'ENV',
+    # Caches y artefactos de Python
+    '__pycache__', '.pytest_cache', '.mypy_cache', 'build', 'dist', '*.egg-info',
+    # Node.js
+    'node_modules',
+    # Archivos de sistema operativo
+    '.DS_Store', 'Thumbs.db',
+    # Específicos del usuario original
+    '.web',
+    # Otros comunes
+    '.vscode', '.idea',
+}
 
-# Extensiones de archivo permitidas
-ALLOWED_EXTS = {'.py', '.java', '.cpp', '.c'}
+# Extensiones de archivo cuyo contenido se incluirá
+ALLOWED_EXTS = {'.py', '.java', '.cpp', '.c', '.js', '.ts', '.md', '.txt', '.json', '.yaml', '.yml', '.html', '.css', '.sh', '.rb', '.go'}
 
 # Archivos específicos a incluir siempre (aunque empiecen con '.'
-# o tengan extensión fuera de ALLOWED_EXTS)
-INCLUDED_FILES = {'requirements.txt', 'rxconfig.py', '.gitignore'}
+# o tengan extensión fuera de ALLOWED_EXTS), su contenido será extraído.
+# Y se mostrarán en el árbol incluso si empiezan con '.'
+INCLUDED_FILES = {'requirements.txt', 'rxconfig.py', '.gitignore', 'Dockerfile', 'docker-compose.yml', 'README.md'}
 
 # Prefijos para el tree
 TREE_PREFIXES = {
     'branch': '├── ',
     'last':   '└── ',
-    'indent': '    ',
+    'indent': '    ', # Cuatro espacios para la indentación
     'pipe':   '│   '
 }
 
 
-def build_tree(root_path):
+def is_likely_binary(filepath, block_size=1024):
     """
-    Genera una lista de líneas representando la estructura de directorios,
-    ignorando IGNORE_DIRS, pero incluyendo archivos en INCLUDED_FILES.
+    Detecta si un archivo es probablemente binario o no es texto legible.
+    Devuelve True si el archivo parece binario o si no se puede leer.
+    """
+    try:
+        with open(filepath, 'rb') as f:
+            block = f.read(block_size)
+        if not block:  # Archivo vacío
+            return False
+        # Heurística común: presencia de byte nulo.
+        # Una prueba más robusta podría implicar comprobar un umbral de caracteres no imprimibles.
+        return b'\0' in block
+    except IOError: # Captura FileNotFoundError, PermissionError, etc.
+        return True # Si no se puede abrir/leer, trátalo como problemático
+
+
+def build_tree(root_path_obj: Path):
+    """
+    Genera una lista de líneas representando la estructura de directorios.
+    - Omite directorios en IGNORE_DIRS.
+    - Muestra archivos que no comiencen con '.' o estén en INCLUDED_FILES.
+    - Ordena directorios primero, luego archivos, ambos alfabéticamente.
     """
     tree_lines = []
 
-    def _tree(dir_path, prefix=''):
-        entries = sorted(os.listdir(dir_path))
-        # Filtrar: ignora los directorios deseados; oculta dot-files salvo INCLUDED_FILES
-        entries = [
-            e for e in entries
-            if e not in IGNORE_DIRS
-               and (not e.startswith('.') or e in INCLUDED_FILES)
-        ]
+    def _tree(current_dir_obj: Path, prefix=''):
+        # Manejo de errores al listar el directorio
+        try:
+            # Obtener todos los elementos, manejar enlaces simbólicos con cuidado si es necesario
+            # Path.iterdir() no falla en enlaces rotos por defecto, pero os.path.isdir/isfile sí lo haría.
+            # Usaremos os.path.isdir/isfile para consistencia con el chequeo de enlaces.
+            raw_entry_names = sorted(os.listdir(current_dir_obj))
+        except OSError as e:
+            tree_lines.append(f"{prefix}{TREE_PREFIXES['branch']} [Error al leer directorio: {current_dir_obj.name} - {e.strerror}]")
+            return
 
-        dirs = [e for e in entries if os.path.isdir(os.path.join(dir_path, e))]
-        files = [e for e in entries if os.path.isfile(os.path.join(dir_path, e))]
-        total = len(dirs) + len(files)
+        current_level_dirs = []
+        current_level_files = []
 
-        for idx, name in enumerate(dirs + files):
-            path = os.path.join(dir_path, name)
-            connector = TREE_PREFIXES['last'] if idx == total - 1 else TREE_PREFIXES['branch']
+        for name in raw_entry_names:
+            path_obj = current_dir_obj / name
+            
+            # Chequeo básico para evitar problemas con enlaces rotos al determinar tipo
+            try:
+                is_dir = path_obj.is_dir()
+            except OSError: # p.ej. Enlace simbólico roto al llamar a stat()
+                continue 
+
+
+            if is_dir:
+                if name not in IGNORE_DIRS:
+                    current_level_dirs.append(name)
+            else: # Es un archivo (o enlace a archivo)
+                if name not in IGNORE_DIRS and \
+                   (not name.startswith('.') or name in INCLUDED_FILES):
+                    current_level_files.append(name)
+        
+        # Combinar: directorios primero, luego archivos. Ambos ya están ordenados.
+        items_to_display = current_level_dirs + current_level_files
+        
+        total_items = len(items_to_display)
+        for idx, name in enumerate(items_to_display):
+            item_path_obj = current_dir_obj / name
+            is_dir_item = item_path_obj.is_dir() # Re-evaluar o usar 'name in current_level_dirs'
+
+            connector = TREE_PREFIXES['last'] if idx == total_items - 1 else TREE_PREFIXES['branch']
             tree_lines.append(f"{prefix}{connector}{name}")
-            if os.path.isdir(path):
-                extension = TREE_PREFIXES['indent'] if idx == total - 1 else TREE_PREFIXES['pipe']
-                _tree(path, prefix + extension)
 
-    tree_lines.append(os.path.basename(root_path) or root_path)
-    _tree(root_path)
+            if is_dir_item:
+                extension = TREE_PREFIXES['indent'] if idx == total_items - 1 else TREE_PREFIXES['pipe']
+                _tree(item_path_obj, prefix + extension)
+
+    # Añadir el nombre del directorio raíz al inicio del árbol
+    tree_lines.append(root_path_obj.name + ("/" if root_path_obj.is_dir() else ""))
+    _tree(root_path_obj)
     return tree_lines
 
 
-def collect_files(root_path):
+def collect_files(root_path_obj: Path):
     """
-    Recorre el árbol e incluye:
-    - Archivos con extensiones en ALLOWED_EXTS
-    - Archivos listados en INCLUDED_FILES (en cualquier carpeta)
+    Recorre el árbol de directorios y recolecta rutas de archivos para incluir su contenido.
+    - Omite directorios en IGNORE_DIRS.
+    - Incluye archivos con extensiones en ALLOWED_EXTS.
+    - Incluye archivos listados en INCLUDED_FILES.
+    Devuelve una lista de objetos Path.
     """
-    paths = []
-    for dirpath, dirnames, filenames in os.walk(root_path):
-        # Excluir carpetas no deseadas
+    paths_to_collect = []
+    for dirpath, dirnames, filenames in os.walk(root_path_obj, topdown=True):
+        # Excluir directorios no deseados para no descender en ellos
         dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS]
 
         for fname in sorted(filenames):
-            rel = os.path.relpath(os.path.join(dirpath, fname), root_path)
-            ext = os.path.splitext(fname)[1]
+            # Comprobar si el propio nombre del archivo está en IGNORE_DIRS (menos común pero posible)
+            if fname in IGNORE_DIRS:
+                continue
+
+            file_path_obj = Path(dirpath) / fname
+            ext = file_path_obj.suffix.lower() # Obtener extensión con pathlib
+
             if ext in ALLOWED_EXTS or fname in INCLUDED_FILES:
-                paths.append(os.path.join(dirpath, fname))
+                paths_to_collect.append(file_path_obj)
+                
+    return sorted(paths_to_collect) # Ordenar la lista final de archivos
 
-    return paths
 
-
-def ext_to_lang(ext):
-    """Mapea extensión de archivo a lenguaje para Markdown."""
+def ext_to_lang(ext: str):
+    """Mapea extensión de archivo a lenguaje para bloques de código Markdown."""
+    # Normalizar: quitar el punto y convertir a minúsculas
+    norm_ext = ext.lstrip('.').lower()
     return {
-        '.py': 'python',
-        '.java': 'java',
-        '.cpp': 'cpp',
-        '.c': 'c',
-        '.txt': 'text',
-        '': 'text'   # Para archivos como .gitignore
-    }.get(ext, 'text')
+        'py': 'python',
+        'java': 'java',
+        'cpp': 'cpp',
+        'c': 'c',
+        'js': 'javascript',
+        'ts': 'typescript',
+        'md': 'markdown',
+        'txt': 'text',
+        'json': 'json',
+        'yaml': 'yaml',
+        'yml': 'yaml',
+        'html': 'html',
+        'css': 'css',
+        'sh': 'bash', # o 'shell'
+        'rb': 'ruby',
+        'go': 'go',
+        'gitignore': 'text', # Caso especial para .gitignore
+        'dockerfile': 'dockerfile',
+        # Añade más mapeos según sea necesario
+    }.get(norm_ext, 'text') # Default a 'text' si no se encuentra
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Genera un Markdown con la estructura tipo tree y el código fuente.")
+        description="Genera un archivo Markdown con la estructura de directorios tipo 'tree' y el código fuente de archivos seleccionados de un proyecto.",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
     parser.add_argument(
-        'output', nargs='?', default='project_overview.md',
-        help='Nombre del archivo Markdown de salida. (default: project_overview.md)')
+        'project_root', nargs='?', default=os.getcwd(),
+        help='Ruta al directorio raíz del proyecto. (default: directorio actual)'
+    )
+    parser.add_argument(
+        '-o', '--output', default='project_overview.md',
+        help='Nombre del archivo Markdown de salida. (default: project_overview.md)'
+    )
     args = parser.parse_args()
 
-    root = os.getcwd()
-    tree_lines = build_tree(root)
-    code_files = collect_files(root)
+    root_path = Path(args.project_root).resolve() # Usar Path y resolver a ruta absoluta
 
-    with open(args.output, 'w', encoding='utf-8') as md:
-        # Título
-        md.write("# Estructura del proyecto\n\n")
+    if not root_path.is_dir():
+        print(f"Error: La ruta especificada '{args.project_root}' no es un directorio o no existe.")
+        return
 
-        # Árbol de directorios
-        md.write("```\n")
-        md.write("\n".join(tree_lines))
-        md.write("\n```\n\n")
+    print(f"Analizando proyecto en: {root_path}")
+    print(f"Generando resumen en: {Path(args.output).resolve()}")
 
-        # Contenido de cada archivo
-        for path in code_files:
-            rel_path = os.path.relpath(path, root)
-            ext = os.path.splitext(path)[1]
-            lang = ext_to_lang(ext)
-            md.write(f"## `{rel_path}`\n\n")
-            md.write(f"```{lang}\n")
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    md.write(f.read())
-            except Exception as e:
-                md.write(f"# Error al leer el archivo: {e}\n")
-            md.write("```\n\n")
+    tree_lines = build_tree(root_path)
+    code_files_paths = collect_files(root_path)
 
-    print(f"Archivo Markdown generado: {args.output}")
+    try:
+        with open(args.output, 'w', encoding='utf-8') as md:
+            md.write(f"# Estructura del Proyecto: {root_path.name}\n\n")
+
+            md.write("## Árbol de Directorios\n\n")
+            md.write("```\n")
+            md.write("\n".join(tree_lines))
+            md.write("\n```\n\n")
+
+            if not code_files_paths:
+                md.write("## Contenido de Archivos\n\n")
+                md.write("No se encontraron archivos para incluir según los criterios definidos (ALLOWED_EXTS, INCLUDED_FILES).\n")
+            else:
+                md.write("## Contenido de Archivos\n\n")
+                for path_obj in code_files_paths:
+                    # Crear ruta relativa desde la raíz del proyecto para mostrarla
+                    try:
+                        rel_path_str = str(path_obj.relative_to(root_path))
+                    except ValueError: # Si path_obj no está bajo root_path (no debería pasar con collect_files)
+                        rel_path_str = str(path_obj)
+
+                    # Determinar el lenguaje para el bloque de código
+                    # Usar el nombre del archivo si la extensión está vacía (ej. Dockerfile)
+                    lang_key = path_obj.name if not path_obj.suffix else path_obj.suffix
+                    lang = ext_to_lang(lang_key)
+                    
+                    md.write(f"### `{rel_path_str}`\n\n")
+                    
+                    if is_likely_binary(path_obj):
+                        md.write(f"```\n[Contenido de archivo binario o no legible omitido: {path_obj.name}]\n```\n\n")
+                        continue
+                    
+                    md.write(f"```{lang}\n")
+                    try:
+                        with open(path_obj, 'r', encoding='utf-8', errors='replace') as f_content:
+                            md.write(f_content.read())
+                    except Exception as e:
+                        md.write(f"\n# Error al leer el archivo: {e}\n")
+                    md.write("\n```\n\n")
+
+        print(f"Archivo Markdown generado exitosamente: {Path(args.output).resolve()}")
+
+    except IOError as e:
+        print(f"Error al escribir el archivo de salida '{args.output}': {e}")
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
 
 
 if __name__ == '__main__':
     main()
 ```
 
-## `build\generated-sources\ap-source-output\modelo\Cita_.java`
-
-```java
-package modelo;
-
-import java.util.Date;
-import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import modelo.Tutor;
-import modelo.Tutoria;
-
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-09T14:53:38")
-@StaticMetamodel(Cita.class)
-public class Cita_ { 
-
-    public static volatile SingularAttribute<Cita, Integer> idCita;
-    public static volatile SingularAttribute<Cita, Date> fecha;
-    public static volatile SingularAttribute<Cita, String> estado;
-    public static volatile SingularAttribute<Cita, Integer> hora;
-    public static volatile SingularAttribute<Cita, String> asunto;
-    public static volatile ListAttribute<Cita, Tutoria> tutoriaList;
-    public static volatile SingularAttribute<Cita, Tutor> tutor;
-
-}```
-
-## `build\generated-sources\ap-source-output\modelo\Tutor_.java`
-
-```java
-package modelo;
-
-import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import modelo.Cita;
-import modelo.Tutorado;
-
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-09T14:53:37")
-@StaticMetamodel(Tutor.class)
-public class Tutor_ { 
-
-    public static volatile SingularAttribute<Tutor, String> horas;
-    public static volatile SingularAttribute<Tutor, Integer> numTarjeta;
-    public static volatile SingularAttribute<Tutor, String> dias;
-    public static volatile ListAttribute<Tutor, Tutorado> tutoradoList;
-    public static volatile SingularAttribute<Tutor, String> carrera;
-    public static volatile SingularAttribute<Tutor, String> nombre;
-    public static volatile SingularAttribute<Tutor, Integer> idPersona;
-    public static volatile ListAttribute<Tutor, Cita> citaList;
-
-}```
-
-## `build\generated-sources\ap-source-output\modelo\Tutorado_.java`
-
-```java
-package modelo;
-
-import java.util.Date;
-import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import modelo.Tutor;
-import modelo.Tutoria;
-
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-09T14:53:37")
-@StaticMetamodel(Tutorado.class)
-public class Tutorado_ { 
-
-    public static volatile SingularAttribute<Tutorado, String> nc;
-    public static volatile SingularAttribute<Tutorado, Date> fechaNacimiento;
-    public static volatile SingularAttribute<Tutorado, Character> genero;
-    public static volatile ListAttribute<Tutorado, Tutoria> tutoriaList;
-    public static volatile SingularAttribute<Tutorado, String> dias;
-    public static volatile SingularAttribute<Tutorado, Integer> idTutorado;
-    public static volatile SingularAttribute<Tutorado, String> nombre;
-    public static volatile SingularAttribute<Tutorado, Tutor> tutor;
-
-}```
-
-## `build\generated-sources\ap-source-output\modelo\Tutoria_.java`
-
-```java
-package modelo;
-
-import javax.annotation.Generated;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import modelo.Cita;
-import modelo.Tutorado;
-
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-09T14:53:37")
-@StaticMetamodel(Tutoria.class)
-public class Tutoria_ { 
-
-    public static volatile SingularAttribute<Tutoria, Cita> idCita;
-    public static volatile SingularAttribute<Tutoria, Integer> idTutoria;
-    public static volatile SingularAttribute<Tutoria, String> acciones;
-    public static volatile SingularAttribute<Tutoria, Tutorado> idTutorado;
-
-}```
-
-## `src\control\AdmDatos.java`
+### `src\control\AdmDatos.java`
 
 ```java
 //Este se usa en lugar de conexión
@@ -440,9 +362,10 @@ public class AdmDatos {
         return enf;
     }
 }
+
 ```
 
-## `src\control\CitaJpaController.java`
+### `src\control\CitaJpaController.java`
 
 ```java
 /*
@@ -676,9 +599,10 @@ public class CitaJpaController implements Serializable {
     }
     
 }
+
 ```
 
-## `src\control\Conexion.java`
+### `src\control\Conexion.java`
 
 ```java
 package control;
@@ -717,9 +641,507 @@ public class Conexion <T>{
     }
     
 }
+
 ```
 
-## `src\control\TutorJpaController.java`
+### `src\control\exceptions\IllegalOrphanException.java`
+
+```java
+package control.exceptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class IllegalOrphanException extends Exception {
+    private List<String> messages;
+    public IllegalOrphanException(List<String> messages) {
+        super((messages != null && messages.size() > 0 ? messages.get(0) : null));
+        if (messages == null) {
+            this.messages = new ArrayList<String>();
+        }
+        else {
+            this.messages = messages;
+        }
+    }
+    public List<String> getMessages() {
+        return messages;
+    }
+}
+
+```
+
+### `src\control\exceptions\NonexistentEntityException.java`
+
+```java
+package control.exceptions;
+
+public class NonexistentEntityException extends Exception {
+    public NonexistentEntityException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    public NonexistentEntityException(String message) {
+        super(message);
+    }
+}
+
+```
+
+### `src\control\exceptions\PreexistingEntityException.java`
+
+```java
+package control.exceptions;
+
+public class PreexistingEntityException extends Exception {
+    public PreexistingEntityException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    public PreexistingEntityException(String message) {
+        super(message);
+    }
+}
+
+```
+
+### `src\control\TutoradoJpaController.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package control;
+
+import control.exceptions.IllegalOrphanException;
+import control.exceptions.NonexistentEntityException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import modelo.Tutor;
+import modelo.Tutoria;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import modelo.Tutorado;
+
+/**
+ *
+ * @author jesus
+ */
+public class TutoradoJpaController implements Serializable {
+
+    public TutoradoJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(Tutorado tutorado) {
+        if (tutorado.getTutoriaList() == null) {
+            tutorado.setTutoriaList(new ArrayList<Tutoria>());
+        }
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Tutor tutor = tutorado.getTutor();
+            if (tutor != null) {
+                tutor = em.getReference(tutor.getClass(), tutor.getIdPersona());
+                tutorado.setTutor(tutor);
+            }
+            List<Tutoria> attachedTutoriaList = new ArrayList<Tutoria>();
+            for (Tutoria tutoriaListTutoriaToAttach : tutorado.getTutoriaList()) {
+                tutoriaListTutoriaToAttach = em.getReference(tutoriaListTutoriaToAttach.getClass(), tutoriaListTutoriaToAttach.getIdTutoria());
+                attachedTutoriaList.add(tutoriaListTutoriaToAttach);
+            }
+            tutorado.setTutoriaList(attachedTutoriaList);
+            em.persist(tutorado);
+            if (tutor != null) {
+                tutor.getTutoradoList().add(tutorado);
+                tutor = em.merge(tutor);
+            }
+            for (Tutoria tutoriaListTutoria : tutorado.getTutoriaList()) {
+                Tutorado oldIdTutoradoOfTutoriaListTutoria = tutoriaListTutoria.getIdTutorado();
+                tutoriaListTutoria.setIdTutorado(tutorado);
+                tutoriaListTutoria = em.merge(tutoriaListTutoria);
+                if (oldIdTutoradoOfTutoriaListTutoria != null) {
+                    oldIdTutoradoOfTutoriaListTutoria.getTutoriaList().remove(tutoriaListTutoria);
+                    oldIdTutoradoOfTutoriaListTutoria = em.merge(oldIdTutoradoOfTutoriaListTutoria);
+                }
+            }
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(Tutorado tutorado) throws IllegalOrphanException, NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Tutorado persistentTutorado = em.find(Tutorado.class, tutorado.getIdTutorado());
+            Tutor tutorOld = persistentTutorado.getTutor();
+            Tutor tutorNew = tutorado.getTutor();
+            List<Tutoria> tutoriaListOld = persistentTutorado.getTutoriaList();
+            List<Tutoria> tutoriaListNew = tutorado.getTutoriaList();
+            List<String> illegalOrphanMessages = null;
+            for (Tutoria tutoriaListOldTutoria : tutoriaListOld) {
+                if (!tutoriaListNew.contains(tutoriaListOldTutoria)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Tutoria " + tutoriaListOldTutoria + " since its idTutorado field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (tutorNew != null) {
+                tutorNew = em.getReference(tutorNew.getClass(), tutorNew.getIdPersona());
+                tutorado.setTutor(tutorNew);
+            }
+            List<Tutoria> attachedTutoriaListNew = new ArrayList<Tutoria>();
+            for (Tutoria tutoriaListNewTutoriaToAttach : tutoriaListNew) {
+                tutoriaListNewTutoriaToAttach = em.getReference(tutoriaListNewTutoriaToAttach.getClass(), tutoriaListNewTutoriaToAttach.getIdTutoria());
+                attachedTutoriaListNew.add(tutoriaListNewTutoriaToAttach);
+            }
+            tutoriaListNew = attachedTutoriaListNew;
+            tutorado.setTutoriaList(tutoriaListNew);
+            tutorado = em.merge(tutorado);
+            if (tutorOld != null && !tutorOld.equals(tutorNew)) {
+                tutorOld.getTutoradoList().remove(tutorado);
+                tutorOld = em.merge(tutorOld);
+            }
+            if (tutorNew != null && !tutorNew.equals(tutorOld)) {
+                tutorNew.getTutoradoList().add(tutorado);
+                tutorNew = em.merge(tutorNew);
+            }
+            for (Tutoria tutoriaListNewTutoria : tutoriaListNew) {
+                if (!tutoriaListOld.contains(tutoriaListNewTutoria)) {
+                    Tutorado oldIdTutoradoOfTutoriaListNewTutoria = tutoriaListNewTutoria.getIdTutorado();
+                    tutoriaListNewTutoria.setIdTutorado(tutorado);
+                    tutoriaListNewTutoria = em.merge(tutoriaListNewTutoria);
+                    if (oldIdTutoradoOfTutoriaListNewTutoria != null && !oldIdTutoradoOfTutoriaListNewTutoria.equals(tutorado)) {
+                        oldIdTutoradoOfTutoriaListNewTutoria.getTutoriaList().remove(tutoriaListNewTutoria);
+                        oldIdTutoradoOfTutoriaListNewTutoria = em.merge(oldIdTutoradoOfTutoriaListNewTutoria);
+                    }
+                }
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = tutorado.getIdTutorado();
+                if (findTutorado(id) == null) {
+                    throw new NonexistentEntityException("The tutorado with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Tutorado tutorado;
+            try {
+                tutorado = em.getReference(Tutorado.class, id);
+                tutorado.getIdTutorado();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The tutorado with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Tutoria> tutoriaListOrphanCheck = tutorado.getTutoriaList();
+            for (Tutoria tutoriaListOrphanCheckTutoria : tutoriaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Tutorado (" + tutorado + ") cannot be destroyed since the Tutoria " + tutoriaListOrphanCheckTutoria + " in its tutoriaList field has a non-nullable idTutorado field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Tutor tutor = tutorado.getTutor();
+            if (tutor != null) {
+                tutor.getTutoradoList().remove(tutorado);
+                tutor = em.merge(tutor);
+            }
+            em.remove(tutorado);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<Tutorado> findTutoradoEntities() {
+        return findTutoradoEntities(true, -1, -1);
+    }
+
+    public List<Tutorado> findTutoradoEntities(int maxResults, int firstResult) {
+        return findTutoradoEntities(false, maxResults, firstResult);
+    }
+
+    private List<Tutorado> findTutoradoEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Tutorado.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Tutorado findTutorado(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Tutorado.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getTutoradoCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Tutorado> rt = cq.from(Tutorado.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}
+
+```
+
+### `src\control\TutoriaJpaController.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package control;
+
+import control.exceptions.NonexistentEntityException;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import modelo.Cita;
+import modelo.Tutorado;
+import modelo.Tutoria;
+
+/**
+ *
+ * @author jesus
+ */
+public class TutoriaJpaController implements Serializable {
+
+    public TutoriaJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(Tutoria tutoria) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Cita idCita = tutoria.getIdCita();
+            if (idCita != null) {
+                idCita = em.getReference(idCita.getClass(), idCita.getIdCita());
+                tutoria.setIdCita(idCita);
+            }
+            Tutorado idTutorado = tutoria.getIdTutorado();
+            if (idTutorado != null) {
+                idTutorado = em.getReference(idTutorado.getClass(), idTutorado.getIdTutorado());
+                tutoria.setIdTutorado(idTutorado);
+            }
+            em.persist(tutoria);
+            if (idCita != null) {
+                idCita.getTutoriaList().add(tutoria);
+                idCita = em.merge(idCita);
+            }
+            if (idTutorado != null) {
+                idTutorado.getTutoriaList().add(tutoria);
+                idTutorado = em.merge(idTutorado);
+            }
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(Tutoria tutoria) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Tutoria persistentTutoria = em.find(Tutoria.class, tutoria.getIdTutoria());
+            Cita idCitaOld = persistentTutoria.getIdCita();
+            Cita idCitaNew = tutoria.getIdCita();
+            Tutorado idTutoradoOld = persistentTutoria.getIdTutorado();
+            Tutorado idTutoradoNew = tutoria.getIdTutorado();
+            if (idCitaNew != null) {
+                idCitaNew = em.getReference(idCitaNew.getClass(), idCitaNew.getIdCita());
+                tutoria.setIdCita(idCitaNew);
+            }
+            if (idTutoradoNew != null) {
+                idTutoradoNew = em.getReference(idTutoradoNew.getClass(), idTutoradoNew.getIdTutorado());
+                tutoria.setIdTutorado(idTutoradoNew);
+            }
+            tutoria = em.merge(tutoria);
+            if (idCitaOld != null && !idCitaOld.equals(idCitaNew)) {
+                idCitaOld.getTutoriaList().remove(tutoria);
+                idCitaOld = em.merge(idCitaOld);
+            }
+            if (idCitaNew != null && !idCitaNew.equals(idCitaOld)) {
+                idCitaNew.getTutoriaList().add(tutoria);
+                idCitaNew = em.merge(idCitaNew);
+            }
+            if (idTutoradoOld != null && !idTutoradoOld.equals(idTutoradoNew)) {
+                idTutoradoOld.getTutoriaList().remove(tutoria);
+                idTutoradoOld = em.merge(idTutoradoOld);
+            }
+            if (idTutoradoNew != null && !idTutoradoNew.equals(idTutoradoOld)) {
+                idTutoradoNew.getTutoriaList().add(tutoria);
+                idTutoradoNew = em.merge(idTutoradoNew);
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = tutoria.getIdTutoria();
+                if (findTutoria(id) == null) {
+                    throw new NonexistentEntityException("The tutoria with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Tutoria tutoria;
+            try {
+                tutoria = em.getReference(Tutoria.class, id);
+                tutoria.getIdTutoria();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The tutoria with id " + id + " no longer exists.", enfe);
+            }
+            Cita idCita = tutoria.getIdCita();
+            if (idCita != null) {
+                idCita.getTutoriaList().remove(tutoria);
+                idCita = em.merge(idCita);
+            }
+            Tutorado idTutorado = tutoria.getIdTutorado();
+            if (idTutorado != null) {
+                idTutorado.getTutoriaList().remove(tutoria);
+                idTutorado = em.merge(idTutorado);
+            }
+            em.remove(tutoria);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<Tutoria> findTutoriaEntities() {
+        return findTutoriaEntities(true, -1, -1);
+    }
+
+    public List<Tutoria> findTutoriaEntities(int maxResults, int firstResult) {
+        return findTutoriaEntities(false, maxResults, firstResult);
+    }
+
+    private List<Tutoria> findTutoriaEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Tutoria.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Tutoria findTutoria(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Tutoria.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getTutoriaCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Tutoria> rt = cq.from(Tutoria.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}
+
+```
+
+### `src\control\TutorJpaController.java`
 
 ```java
 /*
@@ -961,501 +1383,10 @@ public class TutorJpaController implements Serializable {
     }
     
 }
+
 ```
 
-## `src\control\TutoradoJpaController.java`
-
-```java
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package control;
-
-import control.exceptions.IllegalOrphanException;
-import control.exceptions.NonexistentEntityException;
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import modelo.Tutor;
-import modelo.Tutoria;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import modelo.Tutorado;
-
-/**
- *
- * @author jesus
- */
-public class TutoradoJpaController implements Serializable {
-
-    public TutoradoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
-    public void create(Tutorado tutorado) {
-        if (tutorado.getTutoriaList() == null) {
-            tutorado.setTutoriaList(new ArrayList<Tutoria>());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Tutor tutor = tutorado.getTutor();
-            if (tutor != null) {
-                tutor = em.getReference(tutor.getClass(), tutor.getIdPersona());
-                tutorado.setTutor(tutor);
-            }
-            List<Tutoria> attachedTutoriaList = new ArrayList<Tutoria>();
-            for (Tutoria tutoriaListTutoriaToAttach : tutorado.getTutoriaList()) {
-                tutoriaListTutoriaToAttach = em.getReference(tutoriaListTutoriaToAttach.getClass(), tutoriaListTutoriaToAttach.getIdTutoria());
-                attachedTutoriaList.add(tutoriaListTutoriaToAttach);
-            }
-            tutorado.setTutoriaList(attachedTutoriaList);
-            em.persist(tutorado);
-            if (tutor != null) {
-                tutor.getTutoradoList().add(tutorado);
-                tutor = em.merge(tutor);
-            }
-            for (Tutoria tutoriaListTutoria : tutorado.getTutoriaList()) {
-                Tutorado oldIdTutoradoOfTutoriaListTutoria = tutoriaListTutoria.getIdTutorado();
-                tutoriaListTutoria.setIdTutorado(tutorado);
-                tutoriaListTutoria = em.merge(tutoriaListTutoria);
-                if (oldIdTutoradoOfTutoriaListTutoria != null) {
-                    oldIdTutoradoOfTutoriaListTutoria.getTutoriaList().remove(tutoriaListTutoria);
-                    oldIdTutoradoOfTutoriaListTutoria = em.merge(oldIdTutoradoOfTutoriaListTutoria);
-                }
-            }
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(Tutorado tutorado) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Tutorado persistentTutorado = em.find(Tutorado.class, tutorado.getIdTutorado());
-            Tutor tutorOld = persistentTutorado.getTutor();
-            Tutor tutorNew = tutorado.getTutor();
-            List<Tutoria> tutoriaListOld = persistentTutorado.getTutoriaList();
-            List<Tutoria> tutoriaListNew = tutorado.getTutoriaList();
-            List<String> illegalOrphanMessages = null;
-            for (Tutoria tutoriaListOldTutoria : tutoriaListOld) {
-                if (!tutoriaListNew.contains(tutoriaListOldTutoria)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Tutoria " + tutoriaListOldTutoria + " since its idTutorado field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            if (tutorNew != null) {
-                tutorNew = em.getReference(tutorNew.getClass(), tutorNew.getIdPersona());
-                tutorado.setTutor(tutorNew);
-            }
-            List<Tutoria> attachedTutoriaListNew = new ArrayList<Tutoria>();
-            for (Tutoria tutoriaListNewTutoriaToAttach : tutoriaListNew) {
-                tutoriaListNewTutoriaToAttach = em.getReference(tutoriaListNewTutoriaToAttach.getClass(), tutoriaListNewTutoriaToAttach.getIdTutoria());
-                attachedTutoriaListNew.add(tutoriaListNewTutoriaToAttach);
-            }
-            tutoriaListNew = attachedTutoriaListNew;
-            tutorado.setTutoriaList(tutoriaListNew);
-            tutorado = em.merge(tutorado);
-            if (tutorOld != null && !tutorOld.equals(tutorNew)) {
-                tutorOld.getTutoradoList().remove(tutorado);
-                tutorOld = em.merge(tutorOld);
-            }
-            if (tutorNew != null && !tutorNew.equals(tutorOld)) {
-                tutorNew.getTutoradoList().add(tutorado);
-                tutorNew = em.merge(tutorNew);
-            }
-            for (Tutoria tutoriaListNewTutoria : tutoriaListNew) {
-                if (!tutoriaListOld.contains(tutoriaListNewTutoria)) {
-                    Tutorado oldIdTutoradoOfTutoriaListNewTutoria = tutoriaListNewTutoria.getIdTutorado();
-                    tutoriaListNewTutoria.setIdTutorado(tutorado);
-                    tutoriaListNewTutoria = em.merge(tutoriaListNewTutoria);
-                    if (oldIdTutoradoOfTutoriaListNewTutoria != null && !oldIdTutoradoOfTutoriaListNewTutoria.equals(tutorado)) {
-                        oldIdTutoradoOfTutoriaListNewTutoria.getTutoriaList().remove(tutoriaListNewTutoria);
-                        oldIdTutoradoOfTutoriaListNewTutoria = em.merge(oldIdTutoradoOfTutoriaListNewTutoria);
-                    }
-                }
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Integer id = tutorado.getIdTutorado();
-                if (findTutorado(id) == null) {
-                    throw new NonexistentEntityException("The tutorado with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Tutorado tutorado;
-            try {
-                tutorado = em.getReference(Tutorado.class, id);
-                tutorado.getIdTutorado();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The tutorado with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<Tutoria> tutoriaListOrphanCheck = tutorado.getTutoriaList();
-            for (Tutoria tutoriaListOrphanCheckTutoria : tutoriaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Tutorado (" + tutorado + ") cannot be destroyed since the Tutoria " + tutoriaListOrphanCheckTutoria + " in its tutoriaList field has a non-nullable idTutorado field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Tutor tutor = tutorado.getTutor();
-            if (tutor != null) {
-                tutor.getTutoradoList().remove(tutorado);
-                tutor = em.merge(tutor);
-            }
-            em.remove(tutorado);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public List<Tutorado> findTutoradoEntities() {
-        return findTutoradoEntities(true, -1, -1);
-    }
-
-    public List<Tutorado> findTutoradoEntities(int maxResults, int firstResult) {
-        return findTutoradoEntities(false, maxResults, firstResult);
-    }
-
-    private List<Tutorado> findTutoradoEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Tutorado.class));
-            Query q = em.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public Tutorado findTutorado(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Tutorado.class, id);
-        } finally {
-            em.close();
-        }
-    }
-
-    public int getTutoradoCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Tutorado> rt = cq.from(Tutorado.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
-    }
-    
-}
-```
-
-## `src\control\TutoriaJpaController.java`
-
-```java
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package control;
-
-import control.exceptions.NonexistentEntityException;
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import modelo.Cita;
-import modelo.Tutorado;
-import modelo.Tutoria;
-
-/**
- *
- * @author jesus
- */
-public class TutoriaJpaController implements Serializable {
-
-    public TutoriaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
-    public void create(Tutoria tutoria) {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Cita idCita = tutoria.getIdCita();
-            if (idCita != null) {
-                idCita = em.getReference(idCita.getClass(), idCita.getIdCita());
-                tutoria.setIdCita(idCita);
-            }
-            Tutorado idTutorado = tutoria.getIdTutorado();
-            if (idTutorado != null) {
-                idTutorado = em.getReference(idTutorado.getClass(), idTutorado.getIdTutorado());
-                tutoria.setIdTutorado(idTutorado);
-            }
-            em.persist(tutoria);
-            if (idCita != null) {
-                idCita.getTutoriaList().add(tutoria);
-                idCita = em.merge(idCita);
-            }
-            if (idTutorado != null) {
-                idTutorado.getTutoriaList().add(tutoria);
-                idTutorado = em.merge(idTutorado);
-            }
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(Tutoria tutoria) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Tutoria persistentTutoria = em.find(Tutoria.class, tutoria.getIdTutoria());
-            Cita idCitaOld = persistentTutoria.getIdCita();
-            Cita idCitaNew = tutoria.getIdCita();
-            Tutorado idTutoradoOld = persistentTutoria.getIdTutorado();
-            Tutorado idTutoradoNew = tutoria.getIdTutorado();
-            if (idCitaNew != null) {
-                idCitaNew = em.getReference(idCitaNew.getClass(), idCitaNew.getIdCita());
-                tutoria.setIdCita(idCitaNew);
-            }
-            if (idTutoradoNew != null) {
-                idTutoradoNew = em.getReference(idTutoradoNew.getClass(), idTutoradoNew.getIdTutorado());
-                tutoria.setIdTutorado(idTutoradoNew);
-            }
-            tutoria = em.merge(tutoria);
-            if (idCitaOld != null && !idCitaOld.equals(idCitaNew)) {
-                idCitaOld.getTutoriaList().remove(tutoria);
-                idCitaOld = em.merge(idCitaOld);
-            }
-            if (idCitaNew != null && !idCitaNew.equals(idCitaOld)) {
-                idCitaNew.getTutoriaList().add(tutoria);
-                idCitaNew = em.merge(idCitaNew);
-            }
-            if (idTutoradoOld != null && !idTutoradoOld.equals(idTutoradoNew)) {
-                idTutoradoOld.getTutoriaList().remove(tutoria);
-                idTutoradoOld = em.merge(idTutoradoOld);
-            }
-            if (idTutoradoNew != null && !idTutoradoNew.equals(idTutoradoOld)) {
-                idTutoradoNew.getTutoriaList().add(tutoria);
-                idTutoradoNew = em.merge(idTutoradoNew);
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Integer id = tutoria.getIdTutoria();
-                if (findTutoria(id) == null) {
-                    throw new NonexistentEntityException("The tutoria with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(Integer id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Tutoria tutoria;
-            try {
-                tutoria = em.getReference(Tutoria.class, id);
-                tutoria.getIdTutoria();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The tutoria with id " + id + " no longer exists.", enfe);
-            }
-            Cita idCita = tutoria.getIdCita();
-            if (idCita != null) {
-                idCita.getTutoriaList().remove(tutoria);
-                idCita = em.merge(idCita);
-            }
-            Tutorado idTutorado = tutoria.getIdTutorado();
-            if (idTutorado != null) {
-                idTutorado.getTutoriaList().remove(tutoria);
-                idTutorado = em.merge(idTutorado);
-            }
-            em.remove(tutoria);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public List<Tutoria> findTutoriaEntities() {
-        return findTutoriaEntities(true, -1, -1);
-    }
-
-    public List<Tutoria> findTutoriaEntities(int maxResults, int firstResult) {
-        return findTutoriaEntities(false, maxResults, firstResult);
-    }
-
-    private List<Tutoria> findTutoriaEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Tutoria.class));
-            Query q = em.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public Tutoria findTutoria(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Tutoria.class, id);
-        } finally {
-            em.close();
-        }
-    }
-
-    public int getTutoriaCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Tutoria> rt = cq.from(Tutoria.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
-    }
-    
-}
-```
-
-## `src\control\exceptions\IllegalOrphanException.java`
-
-```java
-package control.exceptions;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class IllegalOrphanException extends Exception {
-    private List<String> messages;
-    public IllegalOrphanException(List<String> messages) {
-        super((messages != null && messages.size() > 0 ? messages.get(0) : null));
-        if (messages == null) {
-            this.messages = new ArrayList<String>();
-        }
-        else {
-            this.messages = messages;
-        }
-    }
-    public List<String> getMessages() {
-        return messages;
-    }
-}
-```
-
-## `src\control\exceptions\NonexistentEntityException.java`
-
-```java
-package control.exceptions;
-
-public class NonexistentEntityException extends Exception {
-    public NonexistentEntityException(String message, Throwable cause) {
-        super(message, cause);
-    }
-    public NonexistentEntityException(String message) {
-        super(message);
-    }
-}
-```
-
-## `src\control\exceptions\PreexistingEntityException.java`
-
-```java
-package control.exceptions;
-
-public class PreexistingEntityException extends Exception {
-    public PreexistingEntityException(String message, Throwable cause) {
-        super(message, cause);
-    }
-    public PreexistingEntityException(String message) {
-        super(message);
-    }
-}
-```
-
-## `src\modelo\Cita.java`
+### `src\modelo\Cita.java`
 
 ```java
 /*
@@ -1612,9 +1543,10 @@ public class Cita implements Serializable {
     }
     
 }
+
 ```
 
-## `src\modelo\DatosTablaCitas.java`
+### `src\modelo\DatosTablaCitas.java`
 
 ```java
 /*
@@ -1670,17 +1602,19 @@ public class DatosTablaCitas {
     public void setAsistencia(boolean asistencia) {
         this.asistencia = asistencia;
     }
-    
-    
+    public boolean getAsistencia(){
+        return asistencia;
+    }
 }
+
 ```
 
-## `src\modelo\MTablaCita.java`
+### `src\modelo\MTablaCita.java`
 
 ```java
-c
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -1690,32 +1624,70 @@ import javax.swing.table.AbstractTableModel;
  */
 public class MTablaCita extends AbstractTableModel{
 
-    private List<Tutor> lt;
-    private String encabezados[] = {"No. de Tarjeta", " Nombre ", " Carrera ", " Dias ", " Horario "};
+    private ArrayList<DatosTablaCitas> datosCitas;
+    String encabezados[] = {" Tutorado ", " Asistencia ", " Acción "};
+    Class clasesC[] = {String.class, Boolean.class, String.class};
+
+    public MTablaCita(ArrayList mtc){
+        datosCitas = mtc;
+    }
     
-    public MTtutor(List<Tutor> tutores){
-        lt = tutores;
+    public boolean isCellEditable(int r, int c){
+        if(c == 1){
+            return true;
+        }
+        if(c == 2 && datosCitas.get(r).getAsistencia() == true){
+            return true;
+        }
+        return false;
     }
             
     @Override
+    public String getColumnName(int c){
+        return encabezados[c];
+    }
+    
+    @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return datosCitas.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return encabezados.length;
+    }
+    
+    @Override
+    public Class getColumnClass(int c){
+        return clasesC[c];
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Object getValueAt(int r, int c) {
+        switch(c){
+            case 0:
+                return datosCitas.get(r).getTutorado().getNombre();
+            case 1:
+                return datosCitas.get(r).getAsistencia();
+            case 2:
+                return datosCitas.get(r).getAccion();
+            default: 
+                return null;
+        }
     }
     
+    public void getValueAt(Object dato, int r, int c){
+        if(c == 1){
+            datosCitas.get(r).setAsistencia((Boolean) dato);
+        }  
+    }
+    
+    
 }
+
 ```
 
-## `src\modelo\MTcita.java`
+### `src\modelo\MTcita.java`
 
 ```java
 package modelo;
@@ -1793,9 +1765,10 @@ public class MTcita extends AbstractTableModel {
         if(cita.getTutor() == null) return 0;
         return cita.getTutor().getNumTarjeta();
     }
-}```
+}
+```
 
-## `src\modelo\MTtutor.java`
+### `src\modelo\MTtutor.java`
 
 ```java
 package modelo;
@@ -1848,9 +1821,10 @@ public class MTtutor extends AbstractTableModel{
         return encabezados[column];
     }
 }
+
 ```
 
-## `src\modelo\MTtutorado.java`
+### `src\modelo\MTtutorado.java`
 
 ```java
 package modelo;
@@ -1898,9 +1872,10 @@ public class MTtutorado extends AbstractTableModel {
     public String getColumnName(int column) {
         return encabezados[column];
     }
-}```
+}
+```
 
-## `src\modelo\MTtutoria.java`
+### `src\modelo\MTtutoria.java`
 
 ```java
 package modelo;
@@ -1965,9 +1940,10 @@ public class MTtutoria extends AbstractTableModel {
         this.tutorias = nuevasTutorias;
         fireTableDataChanged();
     }
-}```
+}
+```
 
-## `src\modelo\Tutor.java`
+### `src\modelo\Tutor.java`
 
 ```java
 /*
@@ -2123,9 +2099,10 @@ public class Tutor implements Serializable {
     }
     
 }
+
 ```
 
-## `src\modelo\Tutorado.java`
+### `src\modelo\Tutorado.java`
 
 ```java
 /*
@@ -2293,9 +2270,10 @@ public class Tutorado implements Serializable {
     }
     
 }
+
 ```
 
-## `src\modelo\Tutoria.java`
+### `src\modelo\Tutoria.java`
 
 ```java
 /*
@@ -2416,9 +2394,10 @@ public class Tutoria implements Serializable {
     }
     
 }
+
 ```
 
-## `src\vista\IPCita.java`
+### `src\vista\IPCita.java`
 
 ```java
 /*
@@ -2897,9 +2876,10 @@ public class IPCita extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumTargetaTutor;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 
-## `src\vista\IPTutorado.java`
+### `src\vista\IPTutorado.java`
 
 ```java
 
@@ -3500,9 +3480,10 @@ public class IPTutorado extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumeroControl;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 
-## `src\vista\IPTutoria.java`
+### `src\vista\IPTutoria.java`
 
 ```java
 /*
@@ -3932,9 +3913,10 @@ public class IPTutoria extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdTutorado;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 
-## `src\vista\ITutor.java`
+### `src\vista\ITutor.java`
 
 ```java
 package vista;
@@ -4638,9 +4620,10 @@ public class ITutor extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 
-## `src\vista\ITutorado.java`
+### `src\vista\ITutorado.java`
 
 ```java
 /*
@@ -4944,9 +4927,10 @@ public class ITutorado extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 
-## `src\vista\ITutoria.java`
+### `src\vista\ITutoria.java`
 
 ```java
 /*
@@ -4955,10 +4939,31 @@ public class ITutorado extends javax.swing.JFrame {
  */
 package vista;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import control.AdmDatos;
+import control.CitaJpaController;
 import control.TutorJpaController;
+import control.TutoradoJpaController;
+import control.TutoriaJpaController;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import modelo.Cita;
+import modelo.DatosTablaCitas;
+import modelo.MTablaCita;
+import modelo.MTtutor;
 import modelo.Tutor;
+import modelo.Tutorado;
+import modelo.Tutoria;
 
 /**
  *
@@ -4966,23 +4971,85 @@ import modelo.Tutor;
  */
 public class ITutoria extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ITutoria
-     */
-    public ITutoria() {
-        initComponents();
-    }
-    
+    private Tutor tutor;
     private TutorJpaController cTutor;
     private List<Tutor> tutores;
-    TableModel mod_tutor;
+    private Tutorado tutorado;
+    private Cita cita;
+    private List<Cita> citas;
+    private TutoradoJpaController cTutorado;
+    private AdmDatos adm;
+    private List<Tutorado> tutorados;
+    private List<Tutorado> tutorados_a;
+    private Map<String, Tutor> tutor_nom = new HashMap<>();
+    private Map<String, Cita> cita_nom = new HashMap<>();
+    private MTtutor mtt;
+    private MTablaCita modTablaCita;
+    private ArrayList<DatosTablaCitas> datosCitas;
+    private CitaJpaController cCita;
+    private final String SELECCIONA = "Selecciona Tutor";
+    private final String SELECCIONADO = "Tutor Seleccionado";
+    private Tutoria tutoria;
+    private TutoriaJpaController cTutoria;
     
+    // Añade estas variables adicionales
+    private Map<String, Tutor> tutorMap = new HashMap<>();
+    private Map<String, Cita> citaMap = new HashMap<>();
+    private MTablaCita tableModel;
+    private List<Tutorado> currentTutorados = new ArrayList<>();
+    
+            
+    public ITutoria() {
+        initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        adm = new AdmDatos();
+        cTutor = new TutorJpaController(adm.getEnf());
+        tutores = cTutor.findTutorEntities();
+        cTutorado = new TutoradoJpaController(adm.getEnf());
+        tutorados = cTutorado.findTutoradoEntities();
+        cCita = new CitaJpaController(adm.getEnf());
+        citas = cCita.findCitaEntities();
+        cTutoria = new TutoriaJpaController(adm.getEnf());
+        cargarTutores();
+    }
+    public void cargarTutores(){
+        cboTutores.removeAllItems();
+        cboTutores.addItem(SELECCIONA);
+        tutorMap.clear();
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+        for(Tutor t : tutores) {
+            cboTutores.addItem(t.getNombre());
+            tutorMap.put(t.getNombre(), t);
+        }
+    }
+    public void cargarCitas(Tutor tutor) {
+        cboCitas.removeAllItems();
+        citaMap.clear();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for(Cita c : citas) {
+            // Corregir la verificación del tutor y estado
+            if(c.getTutor().equals(tutor) && !"Realizada".equals(c.getEstado())) {
+                String fecha = sdf.format(c.getFecha());
+                cboCitas.addItem(fecha);
+                citaMap.put(fecha, c);
+            }
+        }
+    }
+    
+    private void actualizarTabla() {
+        tableModel = new MTablaCita((ArrayList) currentTutorados);
+        jTable1.setModel(tableModel);
+
+        // Configurar combo box de acciones
+        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
+        accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
+    }
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -4991,13 +5058,14 @@ public class ITutoria extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lTutor = new javax.swing.JComboBox<>();
+        cboTutores = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lCitas = new javax.swing.JComboBox<>();
+        cboCitas = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         btnAceptarTutor = new javax.swing.JButton();
         btnAceptarCita = new javax.swing.JButton();
+        btnRegistrarTutoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -5016,18 +5084,23 @@ public class ITutoria extends javax.swing.JFrame {
 
         jLabel1.setText("Tutor:");
 
-        lTutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboTutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Tutorados");
 
         jLabel3.setText("Cita:");
 
-        lCitas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCitas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Realizando una Tutoria");
 
         btnAceptarTutor.setText("Aceptar");
+        btnAceptarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarTutorActionPerformed(evt);
+            }
+        });
 
         btnAceptarCita.setText("Aceptar");
         btnAceptarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -5036,37 +5109,51 @@ public class ITutoria extends javax.swing.JFrame {
             }
         });
 
+        btnRegistrarTutoria.setText("Registrar Tutoria");
+        btnRegistrarTutoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarTutoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAceptarTutor)
-                    .addComponent(btnAceptarCita))
-                .addGap(25, 25, 25))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
-                .addContainerGap(203, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAceptarTutor)
+                            .addComponent(btnAceptarCita))
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRegistrarTutoria)
+                        .addGap(162, 162, 162))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -5075,20 +5162,22 @@ public class ITutoria extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(btnAceptarTutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAceptarCita)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(18, 18, 18)
+                .addComponent(btnRegistrarTutoria)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -5108,13 +5197,122 @@ public class ITutoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarCitaActionPerformed
-        
+        String selectedFecha = (String) cboCitas.getSelectedItem();
+        if (selectedFecha == null || selectedFecha.equals(SELECCIONA)) {
+            JOptionPane.showMessageDialog(this, "Selecciona una cita válida.");
+            return;
+        }
+
+        cita = citaMap.get(selectedFecha);
+        if (cita == null) {
+            JOptionPane.showMessageDialog(this, "Cita no encontrada.");
+            return;
+        }
+
+        // Obtener tutorados asociados al tutor
+        currentTutorados = new ArrayList<>();
+        for (Tutorado t : tutorados) {
+            if (t.getTutor() != null && t.getTutor().equals(tutor)) {
+                currentTutorados.add(t);
+            }
+        }
+
+        // Actualizar modelo de tabla
+        datosCitas = new ArrayList<>();
+        for (Tutorado t : currentTutorados) {
+            datosCitas.add(new DatosTablaCitas(t));
+        }
+
+        modTablaCita = new MTablaCita(datosCitas);
+        jTable1.setModel(modTablaCita);
+
+        // Configurar combo de acciones
+        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
+        JComboBox<String> comboBox = new JComboBox<>(
+            new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"}
+        );
+        accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
     }//GEN-LAST:event_btnAceptarCitaActionPerformed
 
+    private void btnRegistrarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTutoriaActionPerformed
+        if (tutor == null || cita == null || currentTutorados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos primero.");
+            return;
+        }
+
+        // Asegurar que la cita tiene el tutor asignado
+        cita.setTutor(tutor);  // Asumiendo que Cita tiene un campo Tutor con setTutor()
+
+        TableModel model = jTable1.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String nombre = (String) model.getValueAt(i, 0);
+            String accion = (String) model.getValueAt(i, 2);
+
+            Tutorado tutoradoActual = null;
+            for (Tutorado t : currentTutorados) {
+                if (t.getNombre().equals(nombre)) {
+                    tutoradoActual = t;
+                    break;
+                }
+            }
+
+            if (tutoradoActual != null) {
+                Tutoria nuevaTutoria = new Tutoria();
+                nuevaTutoria.setIdCita(cita);  // Método correcto
+                nuevaTutoria.setIdTutorado(tutoradoActual);  // Método correcto
+                nuevaTutoria.setAcciones(accion);  // Método correcto
+
+                try {
+                    cTutoria.create(nuevaTutoria);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al guardar tutoría: " + ex.getMessage());
+                }
+            }
+        }
+
+        // Actualizar estado de la cita
+        cita.setEstado("Realizada");
+        try {
+            cCita.edit(cita);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar cita: " + ex.getMessage());
+        }
+
+        JOptionPane.showMessageDialog(this, "Tutoría registrada exitosamente!");
+        limpiarCampos();
+    }//GEN-LAST:event_btnRegistrarTutoriaActionPerformed
+
+    private void btnAceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarTutorActionPerformed
+        if (cboTutores.getSelectedItem().equals(SELECCIONA)) {
+            JOptionPane.showMessageDialog(this, "Selecciona un tutor válido.");
+            return;
+        }
+
+        String nombreTutor = (String) cboTutores.getSelectedItem();
+        tutor = tutorMap.get(nombreTutor);
+
+        if (tutor != null) {
+            cargarCitas(tutor);
+        } else {
+            JOptionPane.showMessageDialog(this, "Tutor no encontrado.");
+        }
+    }//GEN-LAST:event_btnAceptarTutorActionPerformed
+
+    // Método auxiliar para limpiar campos después de guardar
+    private void limpiarCampos() {
+        cboTutores.setSelectedIndex(0);
+        cboCitas.removeAllItems();
+        currentTutorados.clear();
+        datosCitas.clear();
+        modTablaCita = new MTablaCita(new ArrayList<>());
+        jTable1.setModel(modTablaCita);
+        tutor = null;
+        cita = null;
+    }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -5137,7 +5335,7 @@ public class ITutoria extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ITutoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        UIManager.setLookAndFeel(new FlatLightLaf());
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -5149,6 +5347,9 @@ public class ITutoria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarCita;
     private javax.swing.JButton btnAceptarTutor;
+    private javax.swing.JButton btnRegistrarTutoria;
+    private javax.swing.JComboBox<String> cboCitas;
+    private javax.swing.JComboBox<String> cboTutores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -5156,9 +5357,8 @@ public class ITutoria extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> lCitas;
-    private javax.swing.JComboBox<String> lTutor;
     // End of variables declaration//GEN-END:variables
 }
+
 ```
 

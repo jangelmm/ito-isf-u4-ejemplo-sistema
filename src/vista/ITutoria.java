@@ -106,10 +106,10 @@ public class ITutoria extends javax.swing.JFrame {
     
     private void actualizarTabla() {
         tableModel = new MTablaCita((ArrayList) currentTutorados);
-        jTable1.setModel(tableModel);
+        tblTutoradosEnCita.setModel(tableModel);
 
         // Configurar combo box de acciones
-        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
+        TableColumn accionesColumn = tblTutoradosEnCita.getColumnModel().getColumn(2);
         JComboBox<String> comboBox = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
         accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
     }
@@ -121,7 +121,7 @@ public class ITutoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblTutoradosEnCita = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         cboTutores = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -134,7 +134,7 @@ public class ITutoria extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTutoradosEnCita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -145,7 +145,7 @@ public class ITutoria extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblTutoradosEnCita);
 
         jLabel1.setText("Tutor:");
 
@@ -289,10 +289,10 @@ public class ITutoria extends javax.swing.JFrame {
         }
 
         modTablaCita = new MTablaCita(datosCitas);
-        jTable1.setModel(modTablaCita);
+        tblTutoradosEnCita.setModel(modTablaCita);
 
         // Configurar combo de acciones
-        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
+        TableColumn accionesColumn = tblTutoradosEnCita.getColumnModel().getColumn(2);
         JComboBox<String> comboBox = new JComboBox<>(
             new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"}
         );
@@ -308,7 +308,7 @@ public class ITutoria extends javax.swing.JFrame {
         // Asegurar que la cita tiene el tutor asignado
         cita.setTutor(tutor);  // Asumiendo que Cita tiene un campo Tutor con setTutor()
 
-        TableModel model = jTable1.getModel();
+        TableModel model = tblTutoradosEnCita.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             String nombre = (String) model.getValueAt(i, 0);
             String accion = (String) model.getValueAt(i, 2);
@@ -370,7 +370,7 @@ public class ITutoria extends javax.swing.JFrame {
         currentTutorados.clear();
         datosCitas.clear();
         modTablaCita = new MTablaCita(new ArrayList<>());
-        jTable1.setModel(modTablaCita);
+        tblTutoradosEnCita.setModel(modTablaCita);
         tutor = null;
         cita = null;
     }
@@ -421,6 +421,6 @@ public class ITutoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblTutoradosEnCita;
     // End of variables declaration//GEN-END:variables
 }
