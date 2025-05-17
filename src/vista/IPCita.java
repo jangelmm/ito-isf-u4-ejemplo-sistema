@@ -124,7 +124,7 @@ public class IPCita extends javax.swing.JFrame {
 
         jLabel2.setText("Asunto");
 
-        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PENDIENTE", "COMPLETADA", "CANCELADA" }));
+        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "REALIZADA", "CANCELADA", "PENDIENTE" }));
 
         jLabel3.setText("Num. Tarjeta de Tutor");
 

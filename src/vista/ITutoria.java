@@ -84,7 +84,6 @@ public class ITutoria extends javax.swing.JFrame {
         modeloTablaTutoradosEnCita = new MTablaCita((ArrayList) datosParaTablaTutorados); // Usar la variable de instancia
         tabTutorados.setModel(modeloTablaTutoradosEnCita); // Nombre original del JTable
 
-        //configurarTablaListener();
         cargarTutoresComboBox();
         actualizarEstadoComponentes(); // Estado inicial de la UI
     }
@@ -147,16 +146,24 @@ public class ITutoria extends javax.swing.JFrame {
         }
 
         System.out.println("Cargando citas para tutor: " + tutor.getNombre()); // DEBUG
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy 'a las' HH:mm");
+        
+        SimpleDateFormat sdfFechaUnicamente = new SimpleDateFormat("dd/MM/yyyy");
         boolean hayCitasDisponibles = false;
+
         for (Cita c : listaTotalCitas) {
-            if (c.getTutor() != null && c.getTutor().equals(tutor) && !"Realizada".equalsIgnoreCase(c.getEstado()) && !"Cancelada".equalsIgnoreCase(c.getEstado())) {
-                String displayText = String.format("%s (%s)", sdf.format(c.getFecha()), c.getAsunto());
+            // Comprueba que la cita pertenezca al tutor seleccionado Y que su estado sea "PENDIENTE"
+            if (c.getTutor() != null && c.getTutor().equals(tutor) && "PENDIENTE".equalsIgnoreCase(c.getEstado())) {
+                // ... el resto de la lógica para formatear displayText y añadir a cboCitas y citaMap permanece igual ...
+                String fechaFormateada = (c.getFecha() != null) ? sdfFechaUnicamente.format(c.getFecha()) : "Fecha N/A";
+                String horaFormateada = (c.getHora() != null) ? String.format("%02d:00", c.getHora()) : "Hora N/A";
+                String displayText = String.format("%s a las %s (%s)", fechaFormateada, horaFormateada, c.getAsunto());
+
                 cboCitas.addItem(displayText);
                 citaMap.put(displayText, c);
                 hayCitasDisponibles = true;
             }
         }
+        
         System.out.println("Items en cboCitas después de cargar: " + cboCitas.getItemCount()); // DEBUG
         if (!hayCitasDisponibles && cboCitas.getItemCount() <=1 ) { // Si solo queda el "Seleccione Cita"
             cboCitas.addItem("No hay citas pendientes para este tutor");
@@ -414,7 +421,7 @@ public class ITutoria extends javax.swing.JFrame {
                 Cita citaParaActualizar = cCita.findCita(citaSeleccionada.getIdCita());
 
                 if (citaParaActualizar != null) {
-                    citaParaActualizar.setEstado("Realizada");
+                    citaParaActualizar.setEstado("REALIZADA");
 
                     cCita.edit(citaParaActualizar); // Editar la instancia fresca
 

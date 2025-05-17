@@ -11,6 +11,7 @@ public class MTablaCita extends AbstractTableModel {
     private final Class<?>[] clasesColumnas = {String.class, Boolean.class, String.class};
 
     public MTablaCita(ArrayList<DatosTablaCitas> listaDatosCitas) {
+        // Es mejor trabajar con una copia o asegurar que la lista no sea null
         this.datosCitas = (listaDatosCitas != null) ? listaDatosCitas : new ArrayList<>();
     }
 
@@ -36,15 +37,17 @@ public class MTablaCita extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (rowIndex < 0 || rowIndex >= datosCitas.size()) return null;
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return null;
+        }
         DatosTablaCitas fila = datosCitas.get(rowIndex);
         switch (columnIndex) {
             case 0: // Tutorado
                 return (fila.getTutorado() != null) ? fila.getTutorado().getNombre() : "N/A";
             case 1: // Asistencia
-                return fila.getAsistencia(); // Método que devuelve boolean
+                return fila.getAsistencia(); // Asume que getAsistencia() devuelve boolean
             case 2: // Acción
-                return fila.getAccion(); // Método que devuelve String
+                return fila.getAccion();   // Asume que getAccion() devuelve String
             default:
                 return null;
         }
@@ -52,66 +55,67 @@ public class MTablaCita extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if (rowIndex < 0 || rowIndex >= datosCitas.size()) return false;
-
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return false;
+        }
         if (columnIndex == 1) { // Columna "Asistencia" (JCheckBox)
             return true; // Siempre editable
         }
         if (columnIndex == 2) { // Columna "Acción" (JComboBox)
             // Solo editable si la asistencia para ESTA fila está marcada
-            // Asumimos que getAsistencia() devuelve el estado actual del modelo para esa fila
             Boolean asistenciaMarcada = datosCitas.get(rowIndex).getAsistencia();
             return asistenciaMarcada != null && asistenciaMarcada;
         }
-        return false; // Columna de Tutorado (0) no editable desde la tabla
+        return false; // Columna de Tutorado (0) no es editable desde la tabla
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (rowIndex < 0 || rowIndex >= datosCitas.size()) return;
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return;
+        }
 
         DatosTablaCitas fila = datosCitas.get(rowIndex);
+        boolean seRealizoCambio = false;
 
         if (columnIndex == 1) { // Cambió la "Asistencia"
             if (aValue instanceof Boolean) {
                 boolean nuevaAsistencia = (Boolean) aValue;
-                // Solo actuar si el valor realmente cambió para evitar bucles o trabajo innecesario
-                if (fila.getAsistencia() != nuevaAsistencia) {
+                if (fila.getAsistencia() != nuevaAsistencia) { // Solo si el valor realmente cambió
                     fila.setAsistencia(nuevaAsistencia);
-                    fireTableCellUpdated(rowIndex, columnIndex); // Notificar el cambio de la celda de asistencia
+                    fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambio en celda de asistencia
+                    seRealizoCambio = true;
 
                     if (!nuevaAsistencia) { // Si se DESMARCÓ la asistencia
-                        // Borrar la acción si no es el valor por defecto
                         String accionActual = fila.getAccion();
-                        String valorPorDefectoAccion = "Sin acción"; // O tu valor por defecto
+                        String valorPorDefectoAccion = "Sin acción"; // O el valor por defecto de tu JComboBox
                         if (accionActual != null && !accionActual.equals(valorPorDefectoAccion)) {
                             fila.setAccion(valorPorDefectoAccion);
-                            // Notificar que la celda de acción también cambió
-                            fireTableCellUpdated(rowIndex, 2);
+                            fireTableCellUpdated(rowIndex, 2); // Notificar cambio en celda de Acción
                         }
                     }
-                    // IMPORTANTE: Notificar a la tabla que la fila entera pudo haber cambiado
-                    // su estado de editabilidad, especialmente la columna de Acción.
-                    // Esto fuerza al JTable a re-consultar isCellEditable para las celdas de esta fila.
-                    fireTableRowsUpdated(rowIndex, rowIndex);
                 }
             }
         } else if (columnIndex == 2) { // Cambió la "Acción"
             if (aValue instanceof String) {
-                // Solo actualizar si el valor realmente cambió
-                if (!aValue.equals(fila.getAccion())) {
+                if (!aValue.equals(fila.getAccion())) { // Solo si el valor realmente cambió
                     fila.setAccion((String) aValue);
-                    fireTableCellUpdated(rowIndex, columnIndex); // Notificar el cambio de la celda de acción
+                    fireTableCellUpdated(rowIndex, columnIndex); // Notificar cambio en celda de acción
+                    // No es necesario 'seRealizoCambio = true;' aquí a menos que afecte otros estados.
                 }
             }
         }
+
+        // Si la asistencia cambió, la editabilidad de la columna de Acción pudo haber cambiado.
+        // Notificar a la JTable para que re-evalúe la fila.
+        if (seRealizoCambio && columnIndex == 1) {
+            fireTableRowsUpdated(rowIndex, rowIndex);
+        }
     }
 
-    // Método para refrescar la tabla con nuevos datos si es necesario
+    // Método para actualizar la lista de datos y notificar a la tabla
     public void actualizarListaDatos(ArrayList<DatosTablaCitas> nuevosDatos) {
         this.datosCitas = (nuevosDatos != null) ? nuevosDatos : new ArrayList<>();
-        // Notificar a la tabla que todos los datos cambiaron.
-        // Esto es útil cuando cargas datos completamente nuevos (ej. al seleccionar una nueva cita).
-        fireTableDataChanged();
+        fireTableDataChanged(); // Notifica que toda la estructura/datos de la tabla pudieron haber cambiado
     }
 }
