@@ -185,7 +185,7 @@ public class ITutoria extends javax.swing.JFrame {
         // Esto es importante porque el modelo se está actualizando significativamente.
         if (tabTutorados.getColumnCount() > 2) { // Columna "Acción" es la tercera (índice 2)
             TableColumn accionesColumn = tabTutorados.getColumnModel().getColumn(2);
-            JComboBox<String> comboBoxEditor = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
+            JComboBox<String> comboBoxEditor = new JComboBox<>(new String[]{"Sin acción", "Asesoría", "Trámite", "Atención Médica / Psicológica"});
             accionesColumn.setCellEditor(new DefaultCellEditor(comboBoxEditor));
             System.out.println("Editor de JComboBox para columna 'Acción' re-configurado.");
         } else {
