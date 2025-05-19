@@ -108,7 +108,17 @@ public class Tutor implements Serializable {
     public void setHoras(String horas) {
         this.horas = horas;
     }
-
+    
+    // Metodo en clase tutor que regresa el Num de tutorados
+    public int getNumeroDeTutorados() {
+        if (tutoradoList != null) {
+            return tutoradoList.size();
+        } else {
+            return 0;
+        }
+    }
+    
+    // Regresa la lista de tutorados que tiene el tutor
     public List<Tutorado> getTutoradoList() {
         return tutoradoList;
     }
