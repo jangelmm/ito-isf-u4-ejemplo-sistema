@@ -40,98 +40,134 @@ import modelo.Tutoria;
 public class ITutoria extends javax.swing.JFrame {
 
     //<editor-fold defaultstate="collapsed" desc="Variables de instancia y constantes">
-    private Tutor tutorSeleccionado; // Renombrado para claridad
-    private Cita citaSeleccionada; // Renombrado para claridad
+    private Tutor tutorSeleccionado; // Sigue siendo útil para saber con qué tutor se está trabajando una vez se selecciona una cita
+    private Cita citaSeleccionada;
 
-    private final TutorJpaController cTutor;
     private final CitaJpaController cCita;
-    private final TutoradoJpaController cTutoradoController; // Para obtener todos los tutorados
+    private final TutoradoJpaController cTutoradoController;
     private final TutoriaJpaController cTutoria;
     private final AdmDatos adm;
 
-    private List<Tutor> listaTotalTutores;
-    private List<Cita> listaTotalCitas;
-    private List<Tutorado> listaTotalTutoradosGeneral; // Lista de TODOS los tutorados del sistema
+    private List<Cita> listaTotalCitas; // Cargar todas las citas al inicio
+    private List<Tutorado> listaTotalTutoradosGeneral;
 
-    private final Map<String, Tutor> tutorMap = new HashMap<>();
+    // citaMap ahora usará un String que puede incluir el nombre del tutor y la fecha para ser único
     private final Map<String, Cita> citaMap = new HashMap<>();
 
-    private MTablaCita modeloTablaTutoradosEnCita; // Renombrado para claridad
-    private List<DatosTablaCitas> datosParaTablaTutorados; // Lista que alimenta MTablaCita
+    private MTablaCita modeloTablaTutoradosEnCita;
+    private List<DatosTablaCitas> datosParaTablaTutorados;
 
-    private final String SELECCIONA_TUTOR_TEXT = "Seleccione Tutor";
-    private final String SELECCIONA_CITA_TEXT = "Seleccione Cita";
+    private final String SELECCIONA_CITA_TEXT = "Seleccione Cita de Hoy"; // O un texto similar
+    private final String NO_HAY_CITAS_TEXT = "No hay citas para esta fecha";
+    
+    private boolean uiInicializada = false; // Nueva bandera
+    
     //</editor-fold>
     
     public ITutoria() {
         initComponents();
-        
         setLocationRelativeTo(null);
-        
+
+        // 2. Controladores y datos maestros
         adm = new AdmDatos();
-        cTutor = new TutorJpaController(adm.getEnf());
         cCita = new CitaJpaController(adm.getEnf());
         cTutoradoController = new TutoradoJpaController(adm.getEnf());
         cTutoria = new TutoriaJpaController(adm.getEnf());
-
-        // Cargar datos maestros
-        listaTotalTutores = cTutor.findTutorEntities();
-        listaTotalCitas = cCita.findCitaEntities(); // Cargar todas las citas una vez
+        listaTotalCitas = cCita.findCitaEntities();
         listaTotalTutoradosGeneral = cTutoradoController.findTutoradoEntities();
 
+        // 3. Modelo de la tabla y asignación a JTable
+        datosParaTablaTutorados = new ArrayList<>();
+        modeloTablaTutoradosEnCita = new MTablaCita((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); // Aquí ya no necesitas el cast (ArrayList) si datosParaTablaTutorados es ArrayList
+        tabTutorados.setModel(modeloTablaTutoradosEnCita);
 
-        datosParaTablaTutorados = new ArrayList<>(); // Inicializar la lista
-        modeloTablaTutoradosEnCita = new MTablaCita((ArrayList) datosParaTablaTutorados); // Usar la variable de instancia
-        tabTutorados.setModel(modeloTablaTutoradosEnCita); // Nombre original del JTable
+        // 4. Configuración inicial de otros componentes UI
+        cboCitas.removeAllItems();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT);
+        dateSeleccionarFecha.setDate(null);
 
-        cargarTutoresComboBox();
-        actualizarEstadoComponentes(); // Estado inicial de la UI
+        // 5. Añadir Listeners DESPUÉS de que todo lo referenciado por ellos esté inicializado
+        dateSeleccionarFecha.getDateEditor().addPropertyChangeListener(evt -> {
+            if (uiInicializada && "date".equals(evt.getPropertyName())) {
+                dateSeleccionarFechaPropertyChange(evt);
+            }
+        });
+        // Considera si necesitas action listener para cboCitas aquí, o si btnAceptarCita es suficiente.
+        // cboCitas.addActionListener(evt -> cboCitasActionPerformed(evt));
+
+
+        // 6. Establecer estado inicial de la UI
+        actualizarEstadoComponentes();
+
+        // 7. Marcar UI como completamente inicializada
+        uiInicializada = true;
     }
     
 
     
     private void actualizarEstadoComponentes() {
-        boolean tutorHaSidoAceptado = (tutorSeleccionado != null);
-        boolean citaHaSidoAceptada = (citaSeleccionada != null && tutorHaSidoAceptado);
+        boolean fechaHaSidoSeleccionada = (dateSeleccionarFecha.getDate() != null);
 
-        // Componentes relacionados con la selección de Cita
-        jLabel3.setEnabled(tutorHaSidoAceptado); // "Cita:"
-        cboCitas.setEnabled(tutorHaSidoAceptado);
-        
-        //btnAceptarCita.setEnabled(tutorHaSidoAceptado && cboCitas.getItemCount() > 0 && cboCitas.getSelectedIndex() > 0);
-        btnAceptarCita.setEnabled(tutorHaSidoAceptado);
-        
-        // Componentes relacionados con la tabla de Tutorados y registro de Tutoría
-        jLabel2.setEnabled(citaHaSidoAceptada); // "Tutorados"
-        jScrollPane1.setEnabled(citaHaSidoAceptada); // El scrollpane de la tabla
-        tabTutorados.setEnabled(citaHaSidoAceptada);
-        btnRegistrarTutoria.setEnabled(citaHaSidoAceptada && tabTutorados.getRowCount() > 0);
+        boolean citaValidaSeleccionableEnCombo = false;
+        if (fechaHaSidoSeleccionada && cboCitas.getItemCount() > 0 && cboCitas.getSelectedIndex() > 0) {
+            Object selectedItemObj = cboCitas.getSelectedItem();
+            if (selectedItemObj != null) {
+                String selectedItemText = selectedItemObj.toString();
+                if (!SELECCIONA_CITA_TEXT.equals(selectedItemText) && !NO_HAY_CITAS_TEXT.equals(selectedItemText)) {
+                    citaValidaSeleccionableEnCombo = true;
+                }
+            }
+        }
 
-        // Si no hay tutor aceptado, limpiar y deshabilitar combobox de citas
-        if (!tutorHaSidoAceptado) {
-            cboCitas.removeAllItems();
-            cboCitas.addItem(SELECCIONA_CITA_TEXT); // Añadir item por defecto
-            citaSeleccionada = null; // Resetear cita seleccionada
-        }
-        // Si no hay cita aceptada, limpiar tabla
-        if(!citaHaSidoAceptada){
-            datosParaTablaTutorados.clear();
-            modeloTablaTutoradosEnCita.fireTableDataChanged();
-        }
-    }
-    
-    private void cargarTutoresComboBox() {
-        cboTutores.removeAllItems();
-        cboTutores.addItem(SELECCIONA_TUTOR_TEXT);
-        tutorMap.clear();
+        // Una cita está "confirmada" si this.citaSeleccionada y this.tutorSeleccionado tienen valor
+        // (lo que ocurre DESPUÉS de presionar btnAceptarCita)
+        boolean citaHaSidoConfirmada = (this.citaSeleccionada != null && this.tutorSeleccionado != null);
 
-        for (Tutor t : listaTotalTutores) {
-            cboTutores.addItem(t.getNombre());
-            tutorMap.put(t.getNombre(), t);
+        // Habilitar ComboBox de Citas si hay fecha
+        cboCitas.setEnabled(fechaHaSidoSeleccionada);
+        jLabel3.setEnabled(fechaHaSidoSeleccionada); // Etiqueta "Cita:"
+
+        // Habilitar botón AceptarCita si hay una cita válida seleccionable en el combo
+        btnAceptarCita.setEnabled(dateSeleccionarFecha.getDate() != null);
+
+        // Componentes que dependen de que una cita haya sido confirmada
+        jLabel2.setEnabled(citaHaSidoConfirmada); // "Tutorados"
+        jScrollPane1.setEnabled(citaHaSidoConfirmada);
+        tabTutorados.setEnabled(citaHaSidoConfirmada);
+        // Considerar si el rowCount de la tabla es > 0 para habilitar registrar.
+        // Si la tabla está vacía porque el tutor no tiene tutorados, igual se debe poder registrar
+        // la tutoría (aunque no haya acciones individuales). Esto depende de tu lógica de negocio.
+        // Por ahora, lo mantendremos así:
+        btnRegistrarTutoria.setEnabled(citaHaSidoConfirmada && tabTutorados.getRowCount() > 0);
+
+
+        // Lógica de limpieza si los prerrequisitos no se cumplen
+        if (!fechaHaSidoSeleccionada) {
+            // Si no hay fecha, cboCitas ya debería estar reseteado por dateSeleccionarFechaPropertyChange
+            // pero podemos asegurarlo.
+            if (cboCitas.getItemCount() == 0 || !SELECCIONA_CITA_TEXT.equals(cboCitas.getItemAt(0))) {
+                cboCitas.removeAllItems();
+                cboCitas.addItem(SELECCIONA_CITA_TEXT);
+            } else if (cboCitas.getSelectedIndex() !=0 && cboCitas.getItemCount() > 0) {
+                 cboCitas.setSelectedIndex(0);
+            }
+            // Si no hay fecha, no puede haber cita ni tutor seleccionado confirmados
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
         }
-        // Resetear selección si es necesario
-        tutorSeleccionado = null;
-        citaSeleccionada = null;
+
+        if (!citaHaSidoConfirmada) {
+            // Si no hay cita confirmada, la tabla de tutorados debe estar vacía.
+            // popularTablaTutorados(null) ya se encarga de limpiar 'datosParaTablaTutorados'
+            // y llamar a actualizarListaDatos en el modelo.
+            // Así que esta limpieza aquí podría ser redundante si popularTablaTutorados(null) se llama correctamente.
+            if (datosParaTablaTutorados != null && !datosParaTablaTutorados.isEmpty()) {
+                datosParaTablaTutorados.clear();
+                 if (modeloTablaTutoradosEnCita != null) { // Comprobar si el modelo está inicializado
+                    modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados);
+                }
+            }
+        }
     }
     
     private void cargarCitasComboBox(Tutor tutor) {
@@ -173,6 +209,9 @@ public class ITutoria extends javax.swing.JFrame {
     }
     
     private void popularTablaTutorados(Tutor tutorDeLaCita) {
+        if (datosParaTablaTutorados == null) { // Asegurar que la lista de datos exista
+            datosParaTablaTutorados = new ArrayList<>();
+        }
         datosParaTablaTutorados.clear();
 
         if (tutorDeLaCita != null) {
@@ -182,23 +221,31 @@ public class ITutoria extends javax.swing.JFrame {
                 }
             }
         }
-        
-        // En lugar de asignar una nueva instancia al modelo, actualiza su lista interna y notifica.
-        // O, si MTablaCita tiene un método para actualizar su lista interna y notificar:
-        modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados);
 
+        // Comprobación crucial ANTES de usar el modelo
+        if (modeloTablaTutoradosEnCita != null) {
+            modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); // No necesitas el cast si datosParaTablaTutorados es ArrayList
+        } else {
+            // Esto indica un problema de inicialización más profundo si ocurre fuera del arranque inicial.
+            System.err.println("ERROR: modeloTablaTutoradosEnCita es null en popularTablaTutorados. La tabla no se actualizará.");
+            // Podrías intentar re-inicializarlo como último recurso, pero es mejor encontrar la causa raíz.
+            // modeloTablaTutoradosEnCita = new MTablaCita(datosParaTablaTutorados);
+            // tabTutorados.setModel(modeloTablaTutoradosEnCita);
+        }
 
-        // Re-configurar el editor de ComboBox para la columna "Acción"
-        // Esto es importante porque el modelo se está actualizando significativamente.
-        if (tabTutorados.getColumnCount() > 2) { // Columna "Acción" es la tercera (índice 2)
+        // La reconfiguración del editor solo si la tabla y el modelo existen
+        if (tabTutorados != null && tabTutorados.getColumnCount() > 2 && modeloTablaTutoradosEnCita != null) {
             TableColumn accionesColumn = tabTutorados.getColumnModel().getColumn(2);
             JComboBox<String> comboBoxEditor = new JComboBox<>(new String[]{"Sin acción", "Asesoría", "Trámite", "Atención Médica / Psicológica"});
             accionesColumn.setCellEditor(new DefaultCellEditor(comboBoxEditor));
-            System.out.println("Editor de JComboBox para columna 'Acción' re-configurado.");
-        } else {
-            System.out.println("Advertencia: La tabla no tiene suficientes columnas para configurar el editor de 'Acción'. Columnas: " + tabTutorados.getColumnCount());
+            // System.out.println("Editor de JComboBox para columna 'Acción' re-configurado.");
+        } else if (tabTutorados != null && modeloTablaTutoradosEnCita != null) { // Modelo existe pero no columnas suficientes
+            // System.out.println("Advertencia: La tabla no tiene suficientes columnas para configurar el editor de 'Acción'. Columnas: " + tabTutorados.getColumnCount());
         }
-        actualizarEstadoComponentes(); // Actualizar estado de botones, etc.
+
+        if (uiInicializada) { // Solo llama si la UI está lista
+            actualizarEstadoComponentes();
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -208,15 +255,14 @@ public class ITutoria extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabTutorados = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        cboTutores = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboCitas = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        btnAceptarTutor = new javax.swing.JButton();
         btnAceptarCita = new javax.swing.JButton();
         btnRegistrarTutoria = new javax.swing.JButton();
+        dateSeleccionarFecha = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,10 +279,6 @@ public class ITutoria extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabTutorados);
 
-        jLabel1.setText("Tutor:");
-
-        cboTutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel2.setText("Tutorados");
 
         jLabel3.setText("Cita:");
@@ -245,13 +287,6 @@ public class ITutoria extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Realizando una Tutoria");
-
-        btnAceptarTutor.setText("Aceptar");
-        btnAceptarTutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarTutorActionPerformed(evt);
-            }
-        });
 
         btnAceptarCita.setText("Aceptar");
         btnAceptarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -266,6 +301,14 @@ public class ITutoria extends javax.swing.JFrame {
                 btnRegistrarTutoriaActionPerformed(evt);
             }
         });
+
+        dateSeleccionarFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateSeleccionarFechaPropertyChange(evt);
+            }
+        });
+
+        jLabel5.setText("Fecha:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -287,36 +330,33 @@ public class ITutoria extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(52, 52, 52)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAceptarTutor)
-                            .addComponent(btnAceptarCita))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRegistrarTutoria)
-                        .addGap(162, 162, 162))))
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateSeleccionarFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboCitas, 0, 200, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnAceptarCita)
+                        .addGap(25, 25, 25))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jLabel4)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnAceptarTutor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateSeleccionarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -348,97 +388,110 @@ public class ITutoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarCitaActionPerformed
-        if (cboCitas.getSelectedIndex() <= 0 || SELECCIONA_CITA_TEXT.equals(cboCitas.getSelectedItem()) || cboCitas.getItemCount() <= 1 || "No hay citas pendientes para este tutor".equals(cboCitas.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, "Seleccione una cita válida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            citaSeleccionada = null;
-            popularTablaTutorados(null); // Limpiar tabla y actualizar componentes
+        if (dateSeleccionarFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Primero debe seleccionar una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Valida que no sea el placeholder o el mensaje "No hay citas..."
+        if (cboCitas.getSelectedIndex() <= 0 || 
+            SELECCIONA_CITA_TEXT.equals(cboCitas.getSelectedItem()) || 
+            NO_HAY_CITAS_TEXT.equals(cboCitas.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Seleccione una cita válida de la lista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
+            popularTablaTutorados(null); // Limpia la tabla
+            // actualizarEstadoComponentes(); // popularTablaTutorados ya lo llama
             return;
         }
 
         String citaDisplayText = (String) cboCitas.getSelectedItem();
-        citaSeleccionada = citaMap.get(citaDisplayText);
+        Cita citaDelCombo = citaMap.get(citaDisplayText);
 
-        if (citaSeleccionada != null) {
-            if(citaSeleccionada.getTutor() == null){
-                 JOptionPane.showMessageDialog(this, "La cita seleccionada no tiene un tutor asignado.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
-                 citaSeleccionada = null;
-                 popularTablaTutorados(null);
-                 return;
+        if (citaDelCombo != null) {
+            if (citaDelCombo.getTutor() == null) {
+                JOptionPane.showMessageDialog(this, "La cita seleccionada no tiene un tutor asignado. No se puede proceder.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
+                this.citaSeleccionada = null;
+                this.tutorSeleccionado = null;
+                popularTablaTutorados(null);
+                return;
             }
-            // JOptionPane.showMessageDialog(this, "Cita del " + citaSeleccionada.getFecha() + " seleccionada.");
-            popularTablaTutorados(citaSeleccionada.getTutor()); // Cargar tutorados del tutor de la cita
+            this.citaSeleccionada = citaDelCombo;
+            this.tutorSeleccionado = this.citaSeleccionada.getTutor(); // Establecer el tutor basado en la cita
+
+            popularTablaTutorados(this.tutorSeleccionado); // Popular tabla con tutorados de este tutor
         } else {
-            JOptionPane.showMessageDialog(this, "Cita no encontrada en el mapa.", "Error Interno", JOptionPane.ERROR_MESSAGE);
-            citaSeleccionada = null;
+            JOptionPane.showMessageDialog(this, "Cita seleccionada no encontrada en el mapa. Intente de nuevo.", "Error Interno", JOptionPane.ERROR_MESSAGE);
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
             popularTablaTutorados(null);
         }
-        // El estado de los componentes se actualiza en popularTablaTutorados
+        // actualizarEstadoComponentes(); // popularTablaTutorados ya lo llama// Actualizar el estado de la UI
     }//GEN-LAST:event_btnAceptarCitaActionPerformed
 
     private void btnRegistrarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTutoriaActionPerformed
-        if (tutorSeleccionado == null || citaSeleccionada == null || datosParaTablaTutorados.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe tener un tutor y una cita aceptados, y tutorados listados para registrar la tutoría.", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
+        if (citaSeleccionada == null || citaSeleccionada.getTutor() == null) {
+            JOptionPane.showMessageDialog(this, "Debe tener una cita válida aceptada (con tutor asignado).", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (citaSeleccionada.getTutor() == null || !citaSeleccionada.getTutor().equals(tutorSeleccionado)) {
-            JOptionPane.showMessageDialog(this, "Inconsistencia: La cita procesada no pertenece al tutor seleccionado activamente. Abortando.", "Error Crítico", JOptionPane.ERROR_MESSAGE);
+        // No es necesario verificar datosParaTablaTutorados.isEmpty() aquí si el modelo
+        // maneja una fila de totales, porque getRowCount() sería al menos 1.
+        // Es mejor verificar si hay datos *reales* de tutorados.
+        if (datosParaTablaTutorados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay tutorados listados para esta cita para registrar.", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (this.tutorSeleccionado != null && !citaSeleccionada.getTutor().equals(this.tutorSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Inconsistencia de datos del tutor. Por favor, re-seleccione la cita.", "Error de Consistencia", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int tutoriasRegistradasExitosamente = 0;
-        List<Tutoria> tutoriasCreadasEnEstaOperacion = new ArrayList<>(); // Para potencialmente añadirlas a la cita en memoria si fuera necesario
 
-        for (int i = 0; i < modeloTablaTutoradosEnCita.getRowCount(); i++) {
-            DatosTablaCitas datosFila = datosParaTablaTutorados.get(i);
+        // Iterar SOLAMENTE sobre las filas de datos, NO sobre la fila de totales.
+        // El tamaño de 'datosParaTablaTutorados' es el número de filas de datos reales.
+        for (int i = 0; i < datosParaTablaTutorados.size(); i++) { // <<--- CAMBIO IMPORTANTE AQUÍ
+            DatosTablaCitas datosFila = datosParaTablaTutorados.get(i); // Ahora 'i' siempre será un índice válido para datosParaTablaTutorados
             Tutorado tutoradoDeLaFila = datosFila.getTutorado();
 
+            // Obtener valores de la tabla (modelo) para la fila 'i' (que corresponde a una fila de datos)
             Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
             String accion = (String) modeloTablaTutoradosEnCita.getValueAt(i, 2);
 
             if (tutoradoDeLaFila != null && asistencia != null && asistencia) {
                 Tutoria nuevaTutoria = new Tutoria();
-                nuevaTutoria.setIdCita(citaSeleccionada); // Establece la relación
+                nuevaTutoria.setIdCita(citaSeleccionada);
                 nuevaTutoria.setIdTutorado(tutoradoDeLaFila);
                 nuevaTutoria.setAcciones((accion == null || accion.equals("Sin acción") || accion.trim().isEmpty()) ? "Asistencia registrada." : accion);
 
                 try {
-                    cTutoria.create(nuevaTutoria); // Persiste la nueva tutoría
-                    tutoriasCreadasEnEstaOperacion.add(nuevaTutoria);
+                    cTutoria.create(nuevaTutoria);
                     tutoriasRegistradasExitosamente++;
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Error al guardar tutoría para " + tutoradoDeLaFila.getNombre() + ": " + ex.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
-                    ex.printStackTrace(); // Siempre es bueno tener el stack trace para desarrollo
+                    ex.printStackTrace();
                 }
             }
         }
 
+        // ... (resto del método para actualizar estado de cita y limpiar, como lo tenías)
         if (tutoriasRegistradasExitosamente > 0) {
             try {
-                // ---- INICIO DE LA MODIFICACIÓN IMPORTANTE ----
-                // Volver a obtener la instancia más reciente de Cita desde la BD
-                // antes de modificar y guardar.
                 Cita citaParaActualizar = cCita.findCita(citaSeleccionada.getIdCita());
-
                 if (citaParaActualizar != null) {
                     citaParaActualizar.setEstado("REALIZADA");
-
-                    cCita.edit(citaParaActualizar); // Editar la instancia fresca
-
-                    // Actualizar la lista maestra de citas para que la UI refleje el cambio de estado
-                    // si se vuelve a cargar esta cita en algún momento.
-                    int indexEnListaMaestra = listaTotalCitas.indexOf(citaSeleccionada); // Busca por referencia o equals
+                    cCita.edit(citaParaActualizar);
+                    int indexEnListaMaestra = listaTotalCitas.indexOf(citaSeleccionada);
                     if (indexEnListaMaestra != -1) {
-                        listaTotalCitas.set(indexEnListaMaestra, citaParaActualizar); // Reemplazar con la instancia actualizada
+                        listaTotalCitas.set(indexEnListaMaestra, citaParaActualizar);
                     }
-                    citaSeleccionada = citaParaActualizar; // Asegurar que nuestra variable de instancia también está actualizada
-
-                    JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente + " tutoría(s) registrada(s) exitosamente. La cita ha sido marcada como 'Realizada'.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                    citaSeleccionada = citaParaActualizar;
+                    JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente + " tutoría(s) registrada(s) exitosamente. La cita ha sido marcada como 'REALIZADA'.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                     JOptionPane.showMessageDialog(this, "Error: No se pudo recargar la cita para actualizar su estado.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error: No se pudo recargar la cita para actualizar su estado.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
                 }
-                // ---- FIN DE LA MODIFICACIÓN IMPORTANTE ----
-
             } catch (IllegalOrphanException ioe) {
                 JOptionPane.showMessageDialog(this, "Error de relación al actualizar cita (IllegalOrphanException): " +
                     ioe.getMessage() + (ioe.getMessages() != null ? "\nDetalles: " + String.join(", ", ioe.getMessages()) : ""),
@@ -450,76 +503,50 @@ public class ITutoria extends javax.swing.JFrame {
                     "Error Parcial al Actualizar Cita", JOptionPane.WARNING_MESSAGE);
                 ex.printStackTrace();
             }
-        } else if (tutoriasRegistradasExitosamente == 0 && modeloTablaTutoradosEnCita.getRowCount() > 0) {
-            // Si había tutorados en la tabla pero ninguno tuvo asistencia marcada.
+        } else if (!datosParaTablaTutorados.isEmpty()) { // Se modificó esta condición para ser más precisa
             boolean algunaAsistenciaMarcada = false;
-             for (int i = 0; i < modeloTablaTutoradosEnCita.getRowCount(); i++) {
+            for (int i = 0; i < datosParaTablaTutorados.size(); i++) { // Iterar sobre datos reales
                 Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
                 if (asistencia != null && asistencia) {
                     algunaAsistenciaMarcada = true;
                     break;
                 }
             }
-            if(!algunaAsistenciaMarcada && modeloTablaTutoradosEnCita.getRowCount() > 0){
-                 JOptionPane.showMessageDialog(this, "No se marcaron asistencias. La cita no se marcará como 'Realizada'.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            if(!algunaAsistenciaMarcada){
+                 JOptionPane.showMessageDialog(this, "No se marcaron asistencias. La cita no se marcará como 'REALIZADA'.", "Información", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                // Este caso es si hubo asistencias pero algo falló y no se registró ninguna tutoría.
-                 JOptionPane.showMessageDialog(this, "No se registraron tutorías. Verifique la asistencia y las acciones de los tutorados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(this, "No se registraron tutorías aunque hubo asistencias marcadas (posible error previo). Verifique.", "Información", JOptionPane.INFORMATION_MESSAGE);
             }
-        } else { // No había tutorados en la tabla para empezar, o ningún error/registro previo.
-             JOptionPane.showMessageDialog(this, "No había tutorados con asistencia marcada para registrar.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else { // datosParaTablaTutorados está vacío
+             JOptionPane.showMessageDialog(this, "No hay tutorados en la lista para registrar.", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
-
         limpiarCamposYInterfaz();
     }//GEN-LAST:event_btnRegistrarTutoriaActionPerformed
 
-    private void btnAceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarTutorActionPerformed
-        if (cboTutores.getSelectedIndex() <= 0 || SELECCIONA_TUTOR_TEXT.equals(cboTutores.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, "Seleccione un tutor válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            tutorSeleccionado = null; // Asegurar que no hay tutor seleccionado
-            cargarCitasComboBox(null); // Limpiar y deshabilitar combo de citas
-            return;
-        }
-
-        String nombreTutor = (String) cboTutores.getSelectedItem();
-        tutorSeleccionado = tutorMap.get(nombreTutor);
-
-        if (tutorSeleccionado != null) {
-            // JOptionPane.showMessageDialog(this, "Tutor '" + tutorSeleccionado.getNombre() + "' seleccionado.");
-            cargarCitasComboBox(tutorSeleccionado); // Esto ya llama a actualizarEstadoComponentes
-        } else {
-            JOptionPane.showMessageDialog(this, "Tutor no encontrado en el mapa.", "Error Interno", JOptionPane.ERROR_MESSAGE);
-            tutorSeleccionado = null;
-            cargarCitasComboBox(null);
-        }
-        // El estado de los componentes se actualiza en cargarCitasComboBox
-    }//GEN-LAST:event_btnAceptarTutorActionPerformed
-
     private void cboTutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTutoresActionPerformed
-        // Este evento se dispara cuando cambia la selección.
-        // La lógica principal de "aceptar tutor" está en el botón,
-        // pero podríamos resetear la cita si el tutor cambia aquí ANTES de aceptar.
-        if (cboTutores.getSelectedIndex() > 0 && tutorSeleccionado != null) {
-            // Si ya había un tutor seleccionado y el usuario cambia el combo SIN presionar "Aceptar Tutor" de nuevo.
-            // Podríamos optar por limpiar la selección de cita y tabla.
-             String nombreTutorSeleccionadoEnCombo = (String) cboTutores.getSelectedItem();
-             if(nombreTutorSeleccionadoEnCombo != null && !nombreTutorSeleccionadoEnCombo.equals(tutorSeleccionado.getNombre())){
-                 // El tutor en el combo es diferente al "aceptado".
-                 // Esto sugiere que el usuario cambió el tutor pero no ha confirmado.
-                 // Podríamos forzar a que presione "Aceptar Tutor" o manejarlo aquí.
-                 // Por ahora, la lógica de btnAceptarTutor es la que actualiza 'tutorSeleccionado'.
-             }
-        }
-         // Si se selecciona "Seleccione Tutor", limpiar la selección de tutor y cita
-        if (cboTutores.getSelectedIndex() <= 0) {
-            tutorSeleccionado = null;
-            citaSeleccionada = null; // también resetea la cita
-            cargarCitasComboBox(null); // esto limpiará cboCitas y actualizará estados
-            datosParaTablaTutorados.clear();
-            modeloTablaTutoradosEnCita.fireTableDataChanged();
-            actualizarEstadoComponentes();
-        }
+        
     }//GEN-LAST:event_cboTutoresActionPerformed
+
+    private void dateSeleccionarFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateSeleccionarFechaPropertyChange
+        // El listener ya filtra por evt.getPropertyName() == "date"
+        java.util.Date fechaSeleccionada = dateSeleccionarFecha.getDate();
+
+        // Limpiar selecciones previas y tabla independientemente de si hay nueva fecha o no.
+        // Esto asegura que al cambiar la fecha (incluso a null), la tabla se limpie.
+        this.citaSeleccionada = null;
+        this.tutorSeleccionado = null; // El tutor se deriva de la cita
+        popularTablaTutorados(null); // Limpia la tabla
+
+        if (fechaSeleccionada != null) {
+            cargarCitasDelDia(fechaSeleccionada); // Carga nuevas citas y actualiza UI
+        } else {
+            // Si la fecha se borra, limpiar cboCitas
+            cboCitas.removeAllItems();
+            cboCitas.addItem(SELECCIONA_CITA_TEXT);
+            citaMap.clear();
+            actualizarEstadoComponentes(); // Actualiza la UI
+        }
+    }//GEN-LAST:event_dateSeleccionarFechaPropertyChange
     
     private void cboCitasActionPerformed(java.awt.event.ActionEvent evt) {
         // Si se selecciona "Seleccione Cita" o no hay citas válidas,
@@ -544,21 +571,81 @@ public class ITutoria extends javax.swing.JFrame {
 
 
     private void limpiarCamposYInterfaz() {
-        // Resetear variables de estado
         tutorSeleccionado = null;
         citaSeleccionada = null;
 
-        // Limpiar ComboBoxes y recargar el de tutores
-        cargarTutoresComboBox(); // Esto pondrá "Seleccione Tutor"
+        // Desactivar temporalmente el listener del JDateChooser para evitar llamadas recursivas o prematuras
+        // Esto es una técnica común si el setDate(null) dispara el evento y causa problemas.
+        boolean listenerWasActive = uiInicializada;
+        uiInicializada = false; // Desactivar temporalmente el procesamiento del evento
+        dateSeleccionarFecha.setDate(null);
+        uiInicializada = listenerWasActive; // Restaurar estado del listener
+
         cboCitas.removeAllItems();
         cboCitas.addItem(SELECCIONA_CITA_TEXT);
+        citaMap.clear();
 
-
-        // Limpiar la tabla
+        if(datosParaTablaTutorados == null) datosParaTablaTutorados = new ArrayList<>();
         datosParaTablaTutorados.clear();
-        modeloTablaTutoradosEnCita.fireTableDataChanged();
 
-        // Actualizar el estado de habilitación de los componentes
+        if(modeloTablaTutoradosEnCita != null) { // Comprobar nulidad
+            modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); 
+        } else {
+            // Si el modelo es null aquí, hay un problema de inicialización.
+            // Como mínimo, la lista de datos está vacía.
+            System.err.println("ADVERTENCIA: modeloTablaTutoradosEnCita es null en limpiarCamposYInterfaz.");
+        }
+        actualizarEstadoComponentes();
+    }
+    
+    private void cargarCitasDelDia(java.util.Date fechaSeleccionada) {
+        cboCitas.removeAllItems();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT); // Placeholder inicial
+        citaMap.clear();
+
+        // Cuando se carga por fecha, la cita y el tutor seleccionados previamente deben resetearse
+        // hasta que el usuario explícitamente acepte una nueva cita.
+        this.citaSeleccionada = null; 
+        this.tutorSeleccionado = null;
+
+        if (fechaSeleccionada == null) {
+            actualizarEstadoComponentes(); // Actualiza la UI (ej. deshabilita btnAceptarCita)
+            return;
+        }
+
+        SimpleDateFormat sdfCompararFecha = new SimpleDateFormat("yyyyMMdd");
+        String fechaSeleccionadaStr = sdfCompararFecha.format(fechaSeleccionada);
+        boolean hayCitasDisponibles = false;
+
+        // System.out.println("Filtrando citas para la fecha: " + fechaSeleccionadaStr);
+
+        for (Cita c : listaTotalCitas) {
+            if (c.getFecha() != null && "PENDIENTE".equalsIgnoreCase(c.getEstado())) {
+                String fechaCitaStr = sdfCompararFecha.format(c.getFecha());
+                if (fechaCitaStr.equals(fechaSeleccionadaStr)) {
+                    String tutorNombre = (c.getTutor() != null && c.getTutor().getNombre() != null) ? c.getTutor().getNombre() : "Tutor Desconocido";
+                    String horaFormateada = (c.getHora() != null) ? String.format("%02d:00", c.getHora()) : "Hora N/A";
+                    String asunto = (c.getAsunto() != null && !c.getAsunto().isEmpty()) ? c.getAsunto() : "Sin Asunto";
+
+                    String displayText = String.format("Tutor: %s - %s (%s)", tutorNombre, horaFormateada, asunto);
+
+                    cboCitas.addItem(displayText);
+                    citaMap.put(displayText, c);
+                    hayCitasDisponibles = true;
+                }
+            }
+        }
+
+        if (!hayCitasDisponibles) { // Si no se añadió ninguna cita real
+            // Y solo está el item "Seleccione Cita..."
+            if (cboCitas.getItemCount() <= 1) {
+                 cboCitas.addItem(NO_HAY_CITAS_TEXT);
+            }
+        }
+
+        if (cboCitas.getItemCount() > 0) {
+            cboCitas.setSelectedIndex(0); // Dejar "Seleccione Cita..." por defecto
+        }
         actualizarEstadoComponentes();
     }
     
@@ -599,14 +686,13 @@ public class ITutoria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarCita;
-    private javax.swing.JButton btnAceptarTutor;
     private javax.swing.JButton btnRegistrarTutoria;
     private javax.swing.JComboBox<String> cboCitas;
-    private javax.swing.JComboBox<String> cboTutores;
-    private javax.swing.JLabel jLabel1;
+    private com.toedter.calendar.JDateChooser dateSeleccionarFecha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabTutorados;
