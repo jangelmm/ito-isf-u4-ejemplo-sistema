@@ -7,7 +7,7 @@ import modelo.Tutor;
 public class MTtutor extends AbstractTableModel{
     
     private List<Tutor> lt;
-    private String encabezados[] = {"No. de Tarjeta", " Nombre ", " Carrera ", " Dias ", " Horario "};
+    private String encabezados[] = {"No. de Tarjeta", " Nombre ", " Carrera ", " Dias ", " Horario ", "No. de tutorados"};
     
     public MTtutor(List<Tutor> tutores){
         lt = tutores;
@@ -38,6 +38,8 @@ public class MTtutor extends AbstractTableModel{
                 return lt.get(rowIndex).getDias();
             case 4:
                 return lt.get(rowIndex).getHoras();
+            case 5:
+                return lt.get(rowIndex).getNumeroDeTutorados();
             default:
                 return null;
         }
