@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import modelo.Notificaciones;
 import modelo.Evidencias;
 import modelo.Talleres;
@@ -40,6 +42,22 @@ public class UsuariosJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    // Metodo para buscar usuarios por usuario y contrasena
+    public Usuarios validarUsuario(String username, String password) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE (u.nombre = :username OR u.correo = :username) AND u.contrasenaHash = :password", Usuarios.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            return query.getSingleResult(); // Si no encuentra lanza excepción
+        } catch (NoResultException e) {
+            return null; // No coincide
+        } finally {
+            em.close();
+        }
+    }    
+    
     public void create(Usuarios usuarios) {
         if (usuarios.getComentariosRevisionTallerList() == null) {
             usuarios.setComentariosRevisionTallerList(new ArrayList<ComentariosRevisionTaller>());
