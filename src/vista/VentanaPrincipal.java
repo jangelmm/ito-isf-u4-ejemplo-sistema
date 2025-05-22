@@ -9,12 +9,14 @@ package vista;
  * @author Diego Garcia
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+    String username;
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal() {
+    public VentanaPrincipal(String username) {
         initComponents();
+        this.username = username;
+        lblBienvenida.setText("!Bienvenido, " + username + "!");
     }
 
     /**
@@ -26,21 +28,191 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        DialogGestionUsuarios = new javax.swing.JDialog();
+        DialogGestionEventos = new javax.swing.JDialog();
+        lblBienvenida = new javax.swing.JLabel();
+        panelEstatus = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        menuBarraPrincipal = new javax.swing.JMenuBar();
+        menuArchivo = new javax.swing.JMenu();
+        menuGestion = new javax.swing.JMenu();
+        opcionUsuarios = new javax.swing.JMenuItem();
+        opcionEventos = new javax.swing.JMenuItem();
+        opcionTalleres = new javax.swing.JMenuItem();
+        opcionConvocatorias = new javax.swing.JMenuItem();
+        opcionEvidencias = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        menuInscripcion = new javax.swing.JMenu();
+        opcionNuevaConvocatoria = new javax.swing.JMenuItem();
+        menuAyuda = new javax.swing.JMenu();
+        menuSalir = new javax.swing.JMenu();
+
+        javax.swing.GroupLayout DialogGestionUsuariosLayout = new javax.swing.GroupLayout(DialogGestionUsuarios.getContentPane());
+        DialogGestionUsuarios.getContentPane().setLayout(DialogGestionUsuariosLayout);
+        DialogGestionUsuariosLayout.setHorizontalGroup(
+            DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        DialogGestionUsuariosLayout.setVerticalGroup(
+            DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout DialogGestionEventosLayout = new javax.swing.GroupLayout(DialogGestionEventos.getContentPane());
+        DialogGestionEventos.getContentPane().setLayout(DialogGestionEventosLayout);
+        DialogGestionEventosLayout.setHorizontalGroup(
+            DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        DialogGestionEventosLayout.setVerticalGroup(
+            DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AcademicPlus - Ventana Principal");
+        setPreferredSize(new java.awt.Dimension(750, 600));
+
+        lblBienvenida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBienvenida.setText("¡Bienvenido, !");
+        lblBienvenida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Estatus del usuario");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Nombre: ");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Correo: ");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Rol:");
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Número de control:");
+
+        javax.swing.GroupLayout panelEstatusLayout = new javax.swing.GroupLayout(panelEstatus);
+        panelEstatus.setLayout(panelEstatusLayout);
+        panelEstatusLayout.setHorizontalGroup(
+            panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstatusLayout.createSequentialGroup()
+                .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEstatusLayout.createSequentialGroup()
+                        .addGap(316, 316, 316)
+                        .addComponent(jLabel1))
+                    .addGroup(panelEstatusLayout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(320, Short.MAX_VALUE))
+        );
+        panelEstatusLayout.setVerticalGroup(
+            panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstatusLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        menuArchivo.setText("Archivo");
+        menuBarraPrincipal.add(menuArchivo);
+
+        menuGestion.setText("Gestión");
+
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionUsuarios);
+
+        opcionEventos.setText("Eventos");
+        menuGestion.add(opcionEventos);
+
+        opcionTalleres.setText("Talleres");
+        menuGestion.add(opcionTalleres);
+
+        opcionConvocatorias.setText("Convocatorias");
+        menuGestion.add(opcionConvocatorias);
+
+        opcionEvidencias.setText("Evidencias");
+        menuGestion.add(opcionEvidencias);
+
+        menuBarraPrincipal.add(menuGestion);
+
+        menuReportes.setText("Reportes");
+        menuBarraPrincipal.add(menuReportes);
+
+        menuInscripcion.setText("Inscripción");
+
+        opcionNuevaConvocatoria.setText("Nueva convocatoria");
+        opcionNuevaConvocatoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionNuevaConvocatoriaActionPerformed(evt);
+            }
+        });
+        menuInscripcion.add(opcionNuevaConvocatoria);
+
+        menuBarraPrincipal.add(menuInscripcion);
+
+        menuAyuda.setText("Ayuda");
+        menuBarraPrincipal.add(menuAyuda);
+
+        menuSalir.setText("Salir");
+        menuBarraPrincipal.add(menuSalir);
+
+        setJMenuBar(menuBarraPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(lblBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblBienvenida)
+                .addGap(18, 18, 18)
+                .addComponent(panelEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionNuevaConvocatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionNuevaConvocatoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opcionNuevaConvocatoriaActionPerformed
+
+    private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_opcionUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -72,11 +244,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                new VentanaPrincipal(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogGestionEventos;
+    private javax.swing.JDialog DialogGestionUsuarios;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuAyuda;
+    private javax.swing.JMenuBar menuBarraPrincipal;
+    private javax.swing.JMenu menuGestion;
+    private javax.swing.JMenu menuInscripcion;
+    private javax.swing.JMenu menuReportes;
+    private javax.swing.JMenu menuSalir;
+    private javax.swing.JMenuItem opcionConvocatorias;
+    private javax.swing.JMenuItem opcionEventos;
+    private javax.swing.JMenuItem opcionEvidencias;
+    private javax.swing.JMenuItem opcionNuevaConvocatoria;
+    private javax.swing.JMenuItem opcionTalleres;
+    private javax.swing.JMenuItem opcionUsuarios;
+    private javax.swing.JPanel panelEstatus;
     // End of variables declaration//GEN-END:variables
 }
