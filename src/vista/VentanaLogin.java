@@ -139,7 +139,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         
         if (u != null) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
-            new VentanaPrincipal(username).setVisible(true); // Abrir ventana principal
+            new VentanaPrincipal(u).setVisible(true); // Abrir ventana principal
             this.dispose(); // Cerrar la ventana de login
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);

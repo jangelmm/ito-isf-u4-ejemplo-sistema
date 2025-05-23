@@ -4,19 +4,32 @@
  */
 package vista;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Usuarios;
+
 /**
  *
  * @author Diego Garcia
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-    String username;
-    /**
-     * Creates new form VentanaPrincipal
-     */
-    public VentanaPrincipal(String username) {
+    
+    private Usuarios usuarioActual;
+    
+    public VentanaPrincipal(Usuarios u) {
         initComponents();
-        this.username = username;
-        lblBienvenida.setText("!Bienvenido, " + username + "!");
+        this.usuarioActual = u;
+        lblBienvenida.setText("!Bienvenido, " + u.getNombre() + "!");
+        lblNombre.setText("Nombre: " + u.getNombre());
+        lblCorreo.setText("Correo: " + u.getCorreo());
+        lblRol.setText("Rol : " + u.getRol());
+        lblNumControl.setText("Número de control: " + u.getNumeroControl());
     }
 
     /**
@@ -33,10 +46,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblBienvenida = new javax.swing.JLabel();
         panelEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCorreo = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
+        lblNumControl = new javax.swing.JLabel();
         menuBarraPrincipal = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuGestion = new javax.swing.JMenu();
@@ -47,9 +60,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         opcionEvidencias = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
         menuInscripcion = new javax.swing.JMenu();
-        opcionNuevaConvocatoria = new javax.swing.JMenuItem();
+        opcionInscripcion = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
+        opcionAyuda = new javax.swing.JMenuItem();
         menuSalir = new javax.swing.JMenu();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
+        opcionSalir = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout DialogGestionUsuariosLayout = new javax.swing.GroupLayout(DialogGestionUsuarios.getContentPane());
         DialogGestionUsuarios.getContentPane().setLayout(DialogGestionUsuariosLayout);
@@ -75,28 +91,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AcademicPlus - Ventana Principal");
-        setPreferredSize(new java.awt.Dimension(750, 600));
 
         lblBienvenida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBienvenida.setText("¡Bienvenido, !");
         lblBienvenida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Estatus del usuario");
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Nombre: ");
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNombre.setText("Nombre: ");
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Correo: ");
+        lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblCorreo.setText("Correo: ");
+        lblCorreo.setPreferredSize(new java.awt.Dimension(50, 16));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Rol:");
+        lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblRol.setText("Rol: ");
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Número de control:");
+        lblNumControl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumControl.setText("Número de control: ");
 
         javax.swing.GroupLayout panelEstatusLayout = new javax.swing.GroupLayout(panelEstatus);
         panelEstatus.setLayout(panelEstatusLayout);
@@ -105,31 +121,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(panelEstatusLayout.createSequentialGroup()
                 .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstatusLayout.createSequentialGroup()
-                        .addGap(316, 316, 316)
-                        .addComponent(jLabel1))
-                    .addGroup(panelEstatusLayout.createSequentialGroup()
-                        .addGap(210, 210, 210)
+                        .addGap(235, 235, 235)
                         .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(320, Short.MAX_VALUE))
+                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelEstatusLayout.createSequentialGroup()
+                        .addGap(305, 305, 305)
+                        .addComponent(jLabel1)))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
         panelEstatusLayout.setVerticalGroup(
             panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEstatusLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblNombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblRol)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNumControl)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         menuArchivo.setText("Archivo");
@@ -164,20 +180,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuInscripcion.setText("Inscripción");
 
-        opcionNuevaConvocatoria.setText("Nueva convocatoria");
-        opcionNuevaConvocatoria.addActionListener(new java.awt.event.ActionListener() {
+        opcionInscripcion.setText("Realizar una inscripción");
+        opcionInscripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionNuevaConvocatoriaActionPerformed(evt);
+                opcionInscripcionActionPerformed(evt);
             }
         });
-        menuInscripcion.add(opcionNuevaConvocatoria);
+        menuInscripcion.add(opcionInscripcion);
 
         menuBarraPrincipal.add(menuInscripcion);
 
         menuAyuda.setText("Ayuda");
+
+        opcionAyuda.setText("Manual y documentación");
+        opcionAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionAyudaActionPerformed(evt);
+            }
+        });
+        menuAyuda.add(opcionAyuda);
+
         menuBarraPrincipal.add(menuAyuda);
 
         menuSalir.setText("Salir");
+
+        opcionCerrarSesion.setText("Cerrar sesión");
+        opcionCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionCerrarSesionActionPerformed(evt);
+            }
+        });
+        menuSalir.add(opcionCerrarSesion);
+
+        opcionSalir.setText("Salir");
+        opcionSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionSalirActionPerformed(evt);
+            }
+        });
+        menuSalir.add(opcionSalir);
+
         menuBarraPrincipal.add(menuSalir);
 
         setJMenuBar(menuBarraPrincipal);
@@ -186,10 +228,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -199,20 +242,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(lblBienvenida)
                 .addGap(18, 18, 18)
                 .addComponent(panelEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void opcionNuevaConvocatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionNuevaConvocatoriaActionPerformed
+    private void opcionInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInscripcionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_opcionNuevaConvocatoriaActionPerformed
+    }//GEN-LAST:event_opcionInscripcionActionPerformed
 
     private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_opcionUsuariosActionPerformed
+
+    private void opcionCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        VentanaLogin login = new VentanaLogin();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_opcionCerrarSesionActionPerformed
+
+    private void opcionSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_opcionSalirActionPerformed
+
+    private void opcionAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionAyudaActionPerformed
+        // TODO add your handling code here:
+        try {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/jangelmm/AcademicPlus.git"));
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_opcionAyudaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,11 +322,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog DialogGestionEventos;
     private javax.swing.JDialog DialogGestionUsuarios;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNumControl;
+    private javax.swing.JLabel lblRol;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuBar menuBarraPrincipal;
@@ -265,10 +334,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuInscripcion;
     private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuSalir;
+    private javax.swing.JMenuItem opcionAyuda;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionConvocatorias;
     private javax.swing.JMenuItem opcionEventos;
     private javax.swing.JMenuItem opcionEvidencias;
-    private javax.swing.JMenuItem opcionNuevaConvocatoria;
+    private javax.swing.JMenuItem opcionInscripcion;
+    private javax.swing.JMenuItem opcionSalir;
     private javax.swing.JMenuItem opcionTalleres;
     private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JPanel panelEstatus;
