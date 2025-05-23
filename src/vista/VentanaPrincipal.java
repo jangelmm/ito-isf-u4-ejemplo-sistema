@@ -242,7 +242,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(lblBienvenida)
                 .addGap(18, 18, 18)
                 .addComponent(panelEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(343, Short.MAX_VALUE))
         );
 
         pack();
