@@ -58,6 +58,18 @@ public class UsuariosJpaController implements Serializable {
         }
     }    
     
+    /*
+    public List<Usuarios> buscarUsuarios() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Usuarios.class));
+            return em.createQuery(cq).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    */
     public void create(Usuarios usuarios) {
         if (usuarios.getComentariosRevisionTallerList() == null) {
             usuarios.setComentariosRevisionTallerList(new ArrayList<ComentariosRevisionTaller>());
