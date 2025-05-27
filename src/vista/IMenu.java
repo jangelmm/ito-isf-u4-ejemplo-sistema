@@ -5,7 +5,7 @@
  */
 package vista;
 
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 
 import control.AdmDatos;
 import control.CitaJpaController;
@@ -34,6 +34,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import modelo.MTcita;
 import modelo.MTtutorado;
 import modelo.MTtutoria;
@@ -104,14 +106,14 @@ private MTtutoria modeloTablaAdmTutorias;
         tabAdmTutores.setModel(mtt);
 
         // Inicializacion de Crear Tutoria
-        FechaActual.setText("Fecha: " + getFecha());
-        cargarTutoresCita();   
+        //FechaActual.setText("Fecha: " + getFecha());
+        //cargarTutoresCita();   
         //Inicializacion de Asignar Tutor
-        cargarTutores();
+        //cargarTutores();
         cargarEstudiantes();
-        estudiantes.setModel(mestudiantes);
-        estudiantes.setSelectionMode(1);
-        tutoradoss.setModel(mtutorados);
+        //estudiantes.setModel(mestudiantes);
+        //estudiantes.setSelectionMode(1);
+        //tutoradoss.setModel(mtutorados);
         iconMiniatura = redimensionarImagen("imagenes/icono.png", 350, 500); // NUEVA LÍNEA (relativa al paquete 'vista')
         //ImagenTutor.setIcon(iconMiniatura);
        
@@ -174,36 +176,15 @@ private MTtutoria modeloTablaAdmTutorias;
         btnAdmRealizarTutoria = new javax.swing.JButton();
         btnAdmCitas = new javax.swing.JButton();
         btnAdmTutorados = new javax.swing.JButton();
-        panelAdmAsignarTutor = new javax.swing.JPanel();
-        moverTut = new javax.swing.JButton();
-        asignarTutorado = new javax.swing.JButton();
-        aceptarTutor = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        bct = new javax.swing.JButton();
-        LTutores = new javax.swing.JComboBox<>();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        estudiantes = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tutoradoss = new javax.swing.JList<>();
-        moverEst = new javax.swing.JButton();
-        jLabel19 = new javax.swing.JLabel();
-        panelCitas = new javax.swing.JPanel();
-        tabCitaCrear = new javax.swing.JTabbedPane();
+        btnAdmAsignar = new javax.swing.JButton();
+        tabTutor = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        panelTutorias = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        RegistroTutoria = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ltutorados = new javax.swing.JTable();
-        jLabel20 = new javax.swing.JLabel();
-        ListaTutor = new javax.swing.JComboBox<>();
-        Aceptar = new javax.swing.JButton();
-        FechaActual = new javax.swing.JLabel();
+        btnAdmCitas1 = new javax.swing.JButton();
+        btnAdmRealizarTutoria1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         panelEncabezado = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1100, 750));
@@ -250,18 +231,19 @@ private MTtutoria modeloTablaAdmTutorias;
             .addGroup(panelVerCitasLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane8)
-                    .addGroup(panelVerCitasLayout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addGap(45, 45, 45)
-                        .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVerCitasBuscar))
                     .addComponent(jSeparator1)
-                    .addGroup(panelVerCitasLayout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(jLabel12)
-                        .addGap(409, 409, 409)))
+                    .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane8)
+                        .addGroup(panelVerCitasLayout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addGap(45, 45, 45)
+                            .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerCitasBuscar))
+                        .addGroup(panelVerCitasLayout.createSequentialGroup()
+                            .addGap(326, 326, 326)
+                            .addComponent(jLabel12)
+                            .addGap(409, 409, 409))))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         panelVerCitasLayout.setVerticalGroup(
@@ -278,7 +260,7 @@ private MTtutoria modeloTablaAdmTutorias;
                     .addComponent(btnVerCitasBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         tabVerCitas.addTab("VerCitas", panelVerCitas);
@@ -404,6 +386,13 @@ private MTtutoria modeloTablaAdmTutorias;
             }
         });
 
+        btnAdmAsignar.setText("Asignar Tutorados");
+        btnAdmAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmAsignarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelAdmControlLayout = new javax.swing.GroupLayout(panelAdmControl);
         panelAdmControl.setLayout(panelAdmControlLayout);
         panelAdmControlLayout.setHorizontalGroup(
@@ -423,6 +412,8 @@ private MTtutoria modeloTablaAdmTutorias;
                     .addGroup(panelAdmControlLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdmAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAdmTutorados, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5)
                     .addComponent(jScrollPane6)
@@ -435,7 +426,7 @@ private MTtutoria modeloTablaAdmTutorias;
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdmTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAdmControlLayout.setVerticalGroup(
             panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +443,9 @@ private MTtutoria modeloTablaAdmTutorias;
                 .addGap(18, 18, 18)
                 .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
-                    .addComponent(btnAdmTutorados))
+                    .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdmTutorados)
+                        .addComponent(btnAdmAsignar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -468,157 +461,10 @@ private MTtutoria modeloTablaAdmTutorias;
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdmRealizarTutoria))
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         tabAdministrador.addTab("Control", panelAdmControl);
-
-        moverTut.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        moverTut.setText("< Mover Estudiante");
-        moverTut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moverTutActionPerformed(evt);
-            }
-        });
-
-        asignarTutorado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        asignarTutorado.setText("Asignar Tutorado");
-        asignarTutorado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                asignarTutoradoActionPerformed(evt);
-            }
-        });
-
-        aceptarTutor.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        aceptarTutor.setText("Aceptar Tutor");
-        aceptarTutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aceptarTutorActionPerformed(evt);
-            }
-        });
-
-        jLabel16.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel16.setText("Estudiantes Disponibles");
-
-        bct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        bct.setText("Cambiar Tutor");
-        bct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bctActionPerformed(evt);
-            }
-        });
-
-        LTutores.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        LTutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel17.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel17.setText("Selecciona Tutor:");
-
-        jLabel18.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel18.setText("Estudiantes Asignados");
-
-        estudiantes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        estudiantes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(estudiantes);
-
-        tutoradoss.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        tutoradoss.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(tutoradoss);
-
-        moverEst.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        moverEst.setText("Mover Estudiante >");
-        moverEst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moverEstActionPerformed(evt);
-            }
-        });
-
-        jLabel19.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Asignar Tutor");
-
-        javax.swing.GroupLayout panelAdmAsignarTutorLayout = new javax.swing.GroupLayout(panelAdmAsignarTutor);
-        panelAdmAsignarTutor.setLayout(panelAdmAsignarTutorLayout);
-        panelAdmAsignarTutorLayout.setHorizontalGroup(
-            panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LTutores, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(moverTut)
-                                    .addComponent(moverEst)
-                                    .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
-                                        .addComponent(asignarTutorado)))
-                                .addGap(14, 14, 14)))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                                .addComponent(aceptarTutor)
-                                .addGap(35, 35, 35)
-                                .addComponent(bct))
-                            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                        .addGap(399, 399, 399)
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel18)
-                .addGap(145, 145, 145))
-        );
-        panelAdmAsignarTutorLayout.setVerticalGroup(
-            panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAdmAsignarTutorLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel19)
-                .addGap(61, 61, 61)
-                .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LTutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(aceptarTutor)
-                    .addComponent(bct)
-                    .addComponent(jLabel17))
-                .addGap(98, 98, 98)
-                .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel18))
-                .addGap(31, 31, 31)
-                .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAdmAsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAdmAsignarTutorLayout.createSequentialGroup()
-                            .addComponent(moverTut)
-                            .addGap(38, 38, 38)
-                            .addComponent(moverEst)
-                            .addGap(57, 57, 57))
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(asignarTutorado)
-                .addGap(60, 60, 60))
-        );
-
-        tabAdministrador.addTab("Asignar Tutor", panelAdmAsignarTutor);
 
         javax.swing.GroupLayout panelTutoresLayout = new javax.swing.GroupLayout(panelTutores);
         panelTutores.setLayout(panelTutoresLayout);
@@ -636,136 +482,55 @@ private MTtutoria modeloTablaAdmTutorias;
 
         Menu.addTab("Administrador", panelTutores);
 
+        btnAdmCitas1.setText("Realizar una Cita");
+        btnAdmCitas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmCitas1ActionPerformed(evt);
+            }
+        });
+
+        btnAdmRealizarTutoria1.setText("Realizar una Tutoria");
+        btnAdmRealizarTutoria1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmRealizarTutoria1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/roles.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 877, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAdmCitas1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnAdmRealizarTutoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(86, 86, 86)
+                .addComponent(jLabel3)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnAdmCitas1)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnAdmRealizarTutoria1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel3)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
-        tabCitaCrear.addTab("Crear Cita", jPanel1);
+        tabTutor.addTab("Opciones", jPanel1);
 
-        javax.swing.GroupLayout panelCitasLayout = new javax.swing.GroupLayout(panelCitas);
-        panelCitas.setLayout(panelCitasLayout);
-        panelCitasLayout.setHorizontalGroup(
-            panelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCitasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabCitaCrear)
-                .addContainerGap())
-        );
-        panelCitasLayout.setVerticalGroup(
-            panelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCitasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabCitaCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        Menu.addTab("Tutor", tabTutor);
 
-        Menu.addTab("Cita", panelCitas);
-
-        jLabel13.setText("Registro de Asistencia");
-
-        jLabel14.setText("Registro de Tutoria");
-
-        RegistroTutoria.setText("Registrar Tutoria");
-
-        ltutorados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        ltutorados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(ltutorados);
-
-        jLabel20.setText("Tutor");
-
-        ListaTutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        ListaTutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ListaTutorActionPerformed(evt);
-            }
-        });
-
-        Aceptar.setText("Aceptar");
-        Aceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AceptarActionPerformed(evt);
-            }
-        });
-
-        FechaActual.setText("Fecha: ");
-
-        javax.swing.GroupLayout panelTutoriasLayout = new javax.swing.GroupLayout(panelTutorias);
-        panelTutorias.setLayout(panelTutoriasLayout);
-        panelTutoriasLayout.setHorizontalGroup(
-            panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTutoriasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTutoriasLayout.createSequentialGroup()
-                        .addComponent(RegistroTutoria)
-                        .addGap(432, 432, 432))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTutoriasLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(422, 422, 422))))
-            .addGroup(panelTutoriasLayout.createSequentialGroup()
-                .addGroup(panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTutoriasLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane2))
-                    .addGroup(panelTutoriasLayout.createSequentialGroup()
-                        .addGroup(panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelTutoriasLayout.createSequentialGroup()
-                                .addGap(190, 190, 190)
-                                .addComponent(jLabel20)
-                                .addGap(68, 68, 68)
-                                .addComponent(ListaTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(102, 102, 102)
-                                .addComponent(Aceptar))
-                            .addGroup(panelTutoriasLayout.createSequentialGroup()
-                                .addGap(439, 439, 439)
-                                .addComponent(FechaActual))
-                            .addGroup(panelTutoriasLayout.createSequentialGroup()
-                                .addGap(402, 402, 402)
-                                .addComponent(jLabel14)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelTutoriasLayout.setVerticalGroup(
-            panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTutoriasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FechaActual)
-                .addGap(35, 35, 35)
-                .addGroup(panelTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(ListaTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Aceptar))
-                .addGap(53, 53, 53)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(RegistroTutoria)
-                .addGap(94, 94, 94))
-        );
-
-        Menu.addTab("Tutoria", panelTutorias);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sistema de Tutorias");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -775,16 +540,23 @@ private MTtutoria modeloTablaAdmTutorias;
         panelEncabezadoLayout.setHorizontalGroup(
             panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(701, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 570, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(109, 109, 109))
         );
         panelEncabezadoLayout.setVerticalGroup(
             panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel7))
+                    .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -792,12 +564,12 @@ private MTtutoria modeloTablaAdmTutorias;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 1002, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -805,113 +577,44 @@ private MTtutoria modeloTablaAdmTutorias;
                 .addContainerGap()
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 638, Short.MAX_VALUE))
+                .addComponent(Menu))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public String getFecha(){
-        fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        return formato.format(fecha);
-    }
-    
-    public void cargarTutoresCita(){
-        ListaTutor.removeAllItems();
-        tutor_nom.clear();
-        cita_horas.clear();        
-        ListaTutor.addItem(SELECCIONA);
-        int nc = 1;
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String ff = formato.format(fecha);
-        citas.sort(Comparator.comparing((Cita c) -> c.getTutor().getNombre())
-            .thenComparing(Cita::getHora));
-        for(Cita dCita: citas){
-            if(ff.equals(formato.format(dCita.getFecha())) && dCita.getEstado().equals("0")){
-                ListaTutor.addItem(dCita.getTutor().getNombre() + " - Hora: " + dCita.getHora() +":00");
-                tutor_nom.put(dCita.getTutor().getNombre() + " - Hora: " + dCita.getHora() +":00",dCita.getTutor());
-                cita_horas.put(nc++,dCita);
-            }
-        }
-    }
-    
 
-    public void cargarTutores(){
-        LTutores.removeAllItems();
-        LTutores.addItem("Selecciona Tutor");
-        for(Tutor dtutor: tutores) LTutores.addItem(dtutor.getNombre());
-    }
-    public void cargarEstudiantes(){
-        mestudiantes = new DefaultListModel();
-        mtutorados = new DefaultListModel();
-        mestudiantes.clear();
-        for(Tutorado dtutorado : tutorados) 
-            if(dtutorado.getTutor() == null){
-                mestudiantes.addElement(dtutorado.getNombre());
-                tutorado_nom.put(dtutorado.getNombre(),dtutorado);
-            }
-    }
+    private void tabAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAdministradorMouseClicked
 
-    
- 
-    public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
-        // 'nombreArchivoImagen' ahora sería solo "imagenes/icono.png"
-        java.net.URL imgUrl = getClass().getResource("imagenes/icono.png");
-        if (imgUrl == null) {
-            System.err.println("No se pudo encontrar el recurso de imagen: " + "imagenes/icono.png" + " (relativo a " + getClass().getPackage().getName() + ")");
-            // Opcionalmente, devuelve un icono por defecto o null y maneja el error
-            return null; // O un icono por defecto
-        }
-        ImageIcon icono = new ImageIcon(imgUrl);
-        Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-        return new ImageIcon(imagen);
-    }
-            
-    public void cargarTutoresTutoria(){
-        ListaTutor.removeAllItems();
-        tutor_nom.clear();
-        cita_horas.clear();        
-        ListaTutor.addItem(SELECCIONA);
-        int nc = 1;
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String ff = formato.format(fecha);
-        citas.sort(Comparator.comparing((Cita c) -> c.getTutor().getNombre())
-            .thenComparing(Cita::getHora));
-        for(Cita dCita: citas){
-            if(ff.equals(formato.format(dCita.getFecha())) && dCita.getEstado().equals("0")){
-                ListaTutor.addItem(dCita.getTutor().getNombre() + " - Hora: " + dCita.getHora() +":00");
-                tutor_nom.put(dCita.getTutor().getNombre() + " - Hora: " + dCita.getHora() +":00",dCita.getTutor());
-                cita_horas.put(nc++,dCita);
-            }
-        }
-    }
-    private void ListaTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaTutorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ListaTutorActionPerformed
+    }//GEN-LAST:event_tabAdministradorMouseClicked
 
-    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-        // TODO add your handling code here:
-        if(!(ListaTutor.getSelectedItem().equals(SELECCIONA))){
+    private void btnAdmAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmAsignarActionPerformed
+        ITutorado ventana = new ITutorado();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnAdmAsignarActionPerformed
 
-            cita = cita_horas.get(ListaTutor.getSelectedIndex());
+    private void btnAdmTutoradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmTutoradosActionPerformed
+        IPTutorado ventana = new IPTutorado();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnAdmTutoradosActionPerformed
 
-            tutorados_s = new ArrayList<>();
-            for (Tutorado dt: tutorados)
-            if(dt.getTutor()!= null && dt.getTutor().equals(cita.getTutor())) tutorados_s.add(dt);
+    private void btnAdmCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCitasActionPerformed
+        IPCita ventana = new IPCita();
+        ventana.setVisible(true);
 
-            datosCitas = new ArrayList<>();
-            for(Tutorado dt: tutorados_s){
-                DatosTablaCitas dtc = new DatosTablaCitas(dt);
-                datosCitas.add(dtc);
-            }
-            modTabCita = new MTablaCita(datosCitas);
-            ltutorados.setModel(modTabCita);
-        } else JOptionPane.showMessageDialog(this,"Seleccione un Tutor - Hola");
-    }//GEN-LAST:event_AceptarActionPerformed
+    }//GEN-LAST:event_btnAdmCitasActionPerformed
 
-    private void txtVerCitasNumControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVerCitasNumControlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtVerCitasNumControlActionPerformed
+    private void btnAdmRealizarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmRealizarTutoriaActionPerformed
+        ITutoria ventana = new ITutoria();
+        ventana.setVisible(true);
+
+    }//GEN-LAST:event_btnAdmRealizarTutoriaActionPerformed
+
+    private void btnAdmTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmTutorActionPerformed
+
+        ITutor principal = new ITutor(this, rootPaneCheckingEnabled);
+        principal.setVisible(true);
+
+    }//GEN-LAST:event_btnAdmTutorActionPerformed
 
     private void btnVerCitasBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCitasBuscarActionPerformed
         String numControl = txtVerCitasNumControl.getText().trim();
@@ -924,7 +627,7 @@ private MTtutoria modeloTablaAdmTutorias;
         // 1. Buscar el Tutorado por número de control
         Tutorado tutoradoEncontrado = null;
         // 'tutorados' es tu lista List<Tutorado> listaTotalTutoradosGeneral que cargas al inicio
-        for (Tutorado tdo : tutorados) { 
+        for (Tutorado tdo : tutorados) {
             if (tdo.getNc() != null && tdo.getNc().equalsIgnoreCase(numControl)) {
                 tutoradoEncontrado = tdo;
                 break;
@@ -972,7 +675,7 @@ private MTtutoria modeloTablaAdmTutorias;
         // Si no, necesitas re-crear el modelo o modificar su lista interna y notificar.
         // La forma más simple si MTcita toma la lista en el constructor y no la modifica internamente:
         modeloTablaVerCitas = new MTcita(citasDelTutorado); // Re-crear con la nueva lista filtrada
-        tabVerCitasCitas.setModel(modeloTablaVerCitas); 
+        tabVerCitasCitas.setModel(modeloTablaVerCitas);
         // O si tienes un método en MTcita como actualizarListaDatos:
         // ((MTcita)modeloTablaVerCitas).actualizarListaDatos(citasDelTutorado); // Necesitarías un cast y el método en MTcita
 
@@ -980,98 +683,58 @@ private MTtutoria modeloTablaAdmTutorias;
         // modeloTablaVerCitas.fireTableDataChanged(); // Esto ya lo haría el constructor o actualizarListaDatos
     }//GEN-LAST:event_btnVerCitasBuscarActionPerformed
 
-    private void moverEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moverEstActionPerformed
+    private void txtVerCitasNumControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVerCitasNumControlActionPerformed
         // TODO add your handling code here:
-        int iest_sel[] = estudiantes.getSelectedIndices();
-        for (int x = iest_sel.length-1; x >= 0; x--){
-            mtutorados.addElement(mestudiantes.get(iest_sel[x]));
-            mestudiantes.remove(iest_sel[x]);
-        }
-        moverEst.setEnabled(!mestudiantes.isEmpty());
-        moverTut.setEnabled(!mtutorados.isEmpty());
-    }//GEN-LAST:event_moverEstActionPerformed
+    }//GEN-LAST:event_txtVerCitasNumControlActionPerformed
 
-    private void bctActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bctActionPerformed
-        // TODO add your handling code here:
-        LTutores.setEnabled(true);
-        jLabel1.setText(SELECCIONA);
-        aceptarTutor.setEnabled(true);
-    }//GEN-LAST:event_bctActionPerformed
-
-    private void aceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarTutorActionPerformed
-        // TODO add your handling code here:
-        if(LTutores.getSelectedItem().equals(SELECCIONA))
-        JOptionPane.showMessageDialog(this,"Selecciona un Tutor");
-        else
-        if(JOptionPane.showConfirmDialog(this,"Confirme Selecciona al tutor " + LTutores.getSelectedItem()+"?") == 0){
-            tutor = tutores.get(LTutores.getSelectedIndex()-1);
-            LTutores.setEnabled(false);
-            jLabel17.setText(SELECCIONADO);
-            aceptarTutor.setEnabled(false);
-            if(!mestudiantes.isEmpty()) moverEst.setEnabled(true);
-        }
-    }//GEN-LAST:event_aceptarTutorActionPerformed
-
-    private void asignarTutoradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarTutoradoActionPerformed
-        // TODO add your handling code here:
-        if(JOptionPane.showConfirmDialog(this,"Confirma la asignacion de tutor " + LTutores.getSelectedItem() + "?") == 0){
-            for(int nts = 0; nts < mtutorados.size(); nts++){
-                Tutorado t = tutorado_nom.get(mtutorados.get(nts));
-                t.setTutor(tutor);
-                try{
-                    cTutorado.edit(t);
-                } catch (Exception ex){
-                    Logger.getLogger(ITutorado.class.getName()).log(Level.SEVERE,null,ex);
-                }
-            }
-        }
-
-    }//GEN-LAST:event_asignarTutoradoActionPerformed
-
-    private void moverTutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moverTutActionPerformed
-        // TODO add your handling code here:
-        int iest_sel[] = tutoradoss.getSelectedIndices();
-        for (int x = iest_sel.length-1; x >= 0; x--){
-            mestudiantes.addElement(mtutorados.get(iest_sel[x]));
-            mtutorados.remove(iest_sel[x]);
-        }
-        moverTut.setEnabled(!mtutorados.isEmpty());
-        moverEst.setEnabled(!mestudiantes.isEmpty());
-    }//GEN-LAST:event_moverTutActionPerformed
-
-    private void tabAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAdministradorMouseClicked
-        
-    }//GEN-LAST:event_tabAdministradorMouseClicked
-
-    private void btnAdmTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmTutorActionPerformed
-
-        ITutor principal = new ITutor(this, rootPaneCheckingEnabled);
-        principal.setVisible(true);
-                
-        
-    }//GEN-LAST:event_btnAdmTutorActionPerformed
-
-    private void btnAdmRealizarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmRealizarTutoriaActionPerformed
-        ITutoria ventana = new ITutoria();
-        ventana.setVisible(true);
-        
-    }//GEN-LAST:event_btnAdmRealizarTutoriaActionPerformed
-
-    private void btnAdmCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCitasActionPerformed
+    private void btnAdmCitas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCitas1ActionPerformed
         IPCita ventana = new IPCita();
         ventana.setVisible(true);
-        
-    }//GEN-LAST:event_btnAdmCitasActionPerformed
+    }//GEN-LAST:event_btnAdmCitas1ActionPerformed
 
-    private void btnAdmTutoradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmTutoradosActionPerformed
-        IPTutorado ventana = new IPTutorado();
+    private void btnAdmRealizarTutoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmRealizarTutoria1ActionPerformed
+        ITutoria ventana = new ITutoria();
         ventana.setVisible(true);
-    }//GEN-LAST:event_btnAdmTutoradosActionPerformed
+    }//GEN-LAST:event_btnAdmRealizarTutoria1ActionPerformed
+    public String getFecha(){
+        fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fecha);
+    }
     
+    
+
+    public void cargarEstudiantes(){
+        mestudiantes = new DefaultListModel();
+        mtutorados = new DefaultListModel();
+        mestudiantes.clear();
+        for(Tutorado dtutorado : tutorados) 
+            if(dtutorado.getTutor() == null){
+                mestudiantes.addElement(dtutorado.getNombre());
+                tutorado_nom.put(dtutorado.getNombre(),dtutorado);
+            }
+    }
+
+    
+ 
+    public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
+        // 'nombreArchivoImagen' ahora sería solo "imagenes/icono.png"
+        java.net.URL imgUrl = getClass().getResource("imagenes/icono.png");
+        if (imgUrl == null) {
+            System.err.println("No se pudo encontrar el recurso de imagen: " + "imagenes/icono.png" + " (relativo a " + getClass().getPackage().getName() + ")");
+            // Opcionalmente, devuelve un icono por defecto o null y maneja el error
+            return null; // O un icono por defecto
+        }
+        ImageIcon icono = new ImageIcon(imgUrl);
+        Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagen);
+    }
+            
+  
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1094,11 +757,9 @@ private MTtutoria modeloTablaAdmTutorias;
             java.util.logging.Logger.getLogger(IMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        try {
-            FlatMacDarkLaf.setup();
-        } catch( Exception ex ) {
-            System.err.println( "Failed to initialize LaF" );
-        }
+        
+        
+        UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
 
         
         /* Create and display the form */
@@ -1110,66 +771,45 @@ private MTtutoria modeloTablaAdmTutorias;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Aceptar;
-    private javax.swing.JLabel FechaActual;
-    private javax.swing.JComboBox<String> LTutores;
-    private javax.swing.JComboBox<String> ListaTutor;
     private javax.swing.JTabbedPane Menu;
-    private javax.swing.JButton RegistroTutoria;
-    private javax.swing.JButton aceptarTutor;
-    private javax.swing.JButton asignarTutorado;
-    private javax.swing.JButton bct;
+    private javax.swing.JButton btnAdmAsignar;
     private javax.swing.JButton btnAdmCitas;
+    private javax.swing.JButton btnAdmCitas1;
     private javax.swing.JButton btnAdmRealizarTutoria;
+    private javax.swing.JButton btnAdmRealizarTutoria1;
     private javax.swing.JButton btnAdmTutor;
     private javax.swing.JButton btnAdmTutorados;
     private javax.swing.JButton btnVerCitasBuscar;
-    private javax.swing.JList<String> estudiantes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable ltutorados;
-    private javax.swing.JButton moverEst;
-    private javax.swing.JButton moverTut;
-    private javax.swing.JPanel panelAdmAsignarTutor;
     private javax.swing.JPanel panelAdmControl;
-    private javax.swing.JPanel panelCitas;
     private javax.swing.JPanel panelEncabezado;
     private javax.swing.JPanel panelTutorados;
     private javax.swing.JPanel panelTutores;
-    private javax.swing.JPanel panelTutorias;
     private javax.swing.JPanel panelVerCitas;
     private javax.swing.JTable tabAdmCitas;
     private javax.swing.JTable tabAdmEstudiantes;
     private javax.swing.JTable tabAdmTutores;
     private javax.swing.JTable tabAdmTutorias;
     private javax.swing.JTabbedPane tabAdministrador;
-    private javax.swing.JTabbedPane tabCitaCrear;
+    private javax.swing.JTabbedPane tabTutor;
     private javax.swing.JTabbedPane tabVerCitas;
     private javax.swing.JTable tabVerCitasCitas;
-    private javax.swing.JList<String> tutoradoss;
     private javax.swing.JTextField txtVerCitasNumControl;
     // End of variables declaration//GEN-END:variables
 }

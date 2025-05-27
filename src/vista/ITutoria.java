@@ -227,7 +227,7 @@ public class ITutoria extends javax.swing.JFrame {
             modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); // No necesitas el cast si datosParaTablaTutorados es ArrayList
         } else {
             // Esto indica un problema de inicialización más profundo si ocurre fuera del arranque inicial.
-            System.err.println("ERROR: modeloTablaTutoradosEnCita es null en popularTablaTutorados. La tabla no se actualizará.");
+            //System.err.println("ERROR: modeloTablaTutoradosEnCita es null en popularTablaTutorados. La tabla no se actualizará.");
             // Podrías intentar re-inicializarlo como último recurso, pero es mejor encontrar la causa raíz.
             // modeloTablaTutoradosEnCita = new MTablaCita(datosParaTablaTutorados);
             // tabTutorados.setModel(modeloTablaTutoradosEnCita);
