@@ -111,6 +111,86 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEFin = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtEID = new javax.swing.JTextField();
+        DialogGestionTalleres = new javax.swing.JDialog();
+        txtNombreTaller6 = new javax.swing.JLabel();
+        txtFieldNombreTaller = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        taDescripcionTaller = new javax.swing.JTextArea();
+        cboPonente = new javax.swing.JComboBox<>();
+        cboEventoAsociado1 = new javax.swing.JComboBox<>();
+        txtFieldFecha_Hora = new javax.swing.JTextField();
+        txtMaterialReq = new javax.swing.JLabel();
+        txtFieldMaterial_Req = new javax.swing.JTextField();
+        jSpinner1 = new javax.swing.JSpinner();
+        TITULO4 = new javax.swing.JLabel();
+        TITULO5 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tblTalleres = new javax.swing.JTable();
+        cboEstadoTaller = new javax.swing.JLabel();
+        cboEventoAsociado2 = new javax.swing.JComboBox<>();
+        txtCupoMaximo = new javax.swing.JLabel();
+        txtDuracion = new javax.swing.JLabel();
+        txtFieldDuracion = new javax.swing.JTextField();
+        btnEditarTaller = new javax.swing.JButton();
+        btnAgregarTaller = new javax.swing.JButton();
+        btnVerComentarios = new javax.swing.JButton();
+        btnElliminarTaller = new javax.swing.JButton();
+        txtFecha_Hora = new javax.swing.JLabel();
+        DialogGestionConvocatorias = new javax.swing.JDialog();
+        TITULO = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblConvocatorias = new javax.swing.JTable();
+        txtNombreTaller = new javax.swing.JLabel();
+        txtFieldTituloConvocatoria = new javax.swing.JTextField();
+        txtNombreTaller2 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        taDescripcionConvocatoria = new javax.swing.JTextArea();
+        txtFieldPublicoObjetivo = new javax.swing.JTextField();
+        txtNombreTaller3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        btnPublicar = new javax.swing.JButton();
+        txtNombreTaller1 = new javax.swing.JLabel();
+        btnEliminarConvocatoria = new javax.swing.JButton();
+        txtFieldFehcaLímite = new javax.swing.JTextField();
+        btnModificar = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        TITULO1 = new javax.swing.JLabel();
+        cboTallerAsociado = new javax.swing.JComboBox<>();
+        cboEventoAsociado = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        txtFieldFechaInscripción = new javax.swing.JTextField();
+        DialogInscripcionEventoTaller = new javax.swing.JDialog();
+        btnInscribirme = new javax.swing.JButton();
+        btnVerMisInscripciones = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        TITULO6 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        lstEventosDisponibles = new javax.swing.JList<>();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        tblTalleresDisponibles = new javax.swing.JTable();
+        TITULO7 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        taMostrarDetSelec = new javax.swing.JTextArea();
+        DialogGestionEvidencias = new javax.swing.JDialog();
+        jLabel14 = new javax.swing.JLabel();
+        TITULO2 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblEvidencias = new javax.swing.JTable();
+        txtNombreTaller4 = new javax.swing.JLabel();
+        txtFieldArchivo = new javax.swing.JTextField();
+        txtNombreTaller5 = new javax.swing.JLabel();
+        TITULO3 = new javax.swing.JLabel();
+        txtFieldTituloEvidencia = new javax.swing.JTextField();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        taDescripcionEvidencia = new javax.swing.JTextArea();
+        btnSeleccionarArchivo = new javax.swing.JButton();
+        btnSubirEvidencia = new javax.swing.JButton();
+        btnDescargarEvidencia = new javax.swing.JButton();
+        btnEliminarEvidencia = new javax.swing.JButton();
         lblBienvenida = new javax.swing.JLabel();
         panelEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -535,6 +615,629 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        txtNombreTaller6.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller6.setText("Nombre del taller: ");
+
+        txtFieldNombreTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldNombreTallerActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel18.setText("Descripción:");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel19.setText("Ponente/Instructor:");
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel22.setText("Evento asociado:");
+
+        taDescripcionTaller.setColumns(20);
+        taDescripcionTaller.setRows(5);
+        jScrollPane8.setViewportView(taDescripcionTaller);
+
+        cboPonente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboEventoAsociado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtFieldFecha_Hora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFecha_HoraActionPerformed(evt);
+            }
+        });
+
+        txtMaterialReq.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtMaterialReq.setText("Material Requerido:");
+
+        txtFieldMaterial_Req.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldMaterial_ReqActionPerformed(evt);
+            }
+        });
+
+        TITULO4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO4.setText("Talleres Registrados");
+
+        TITULO5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO5.setText("Gestión de Talleres");
+
+        tblTalleres.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(tblTalleres);
+
+        cboEstadoTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        cboEstadoTaller.setText("Estado Taller:");
+
+        cboEventoAsociado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtCupoMaximo.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtCupoMaximo.setText("Cupo Maximo:");
+
+        txtDuracion.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtDuracion.setText("Duración:");
+
+        txtFieldDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldDuracionActionPerformed(evt);
+            }
+        });
+
+        btnEditarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarTaller.setText("Editar Taller");
+
+        btnAgregarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAgregarTaller.setText("Agregar Taller");
+
+        btnVerComentarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnVerComentarios.setText("Ver comentarios");
+
+        btnElliminarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnElliminarTaller.setText("Eliminar Taller");
+
+        txtFecha_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtFecha_Hora.setText("Fecha/Hora:");
+
+        javax.swing.GroupLayout DialogGestionTalleresLayout = new javax.swing.GroupLayout(DialogGestionTalleres.getContentPane());
+        DialogGestionTalleres.getContentPane().setLayout(DialogGestionTalleresLayout);
+        DialogGestionTalleresLayout.setHorizontalGroup(
+            DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                    .addComponent(txtMaterialReq)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel19)
+                                        .addComponent(cboEstadoTaller)
+                                        .addComponent(jLabel22)
+                                        .addComponent(jLabel18))
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                            .addGap(76, 76, 76)
+                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreTaller6)
+                                    .addComponent(txtCupoMaximo)
+                                    .addComponent(txtFecha_Hora)
+                                    .addComponent(txtDuracion))
+                                .addGap(81, 81, 81)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(btnAgregarTaller)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditarTaller)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnElliminarTaller)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVerComentarios)))
+                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TITULO5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TITULO4)
+                .addGap(194, 194, 194))
+        );
+        DialogGestionTalleresLayout.setVerticalGroup(
+            DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TITULO5))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(TITULO4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                                .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                                .addGap(65, 65, 65)
+                                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtMaterialReq, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(14, 14, 14)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                                .addGap(40, 40, 40)
+                                                .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnElliminarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerComentarios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
+        );
+
+        DialogGestionConvocatorias.setPreferredSize(new java.awt.Dimension(850, 500));
+
+        TITULO.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO.setText("Gestión de Convocatorias");
+
+        tblConvocatorias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblConvocatorias);
+
+        txtNombreTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller.setText("Título convocatoria:");
+
+        txtFieldTituloConvocatoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldTituloConvocatoriaActionPerformed(evt);
+            }
+        });
+
+        txtNombreTaller2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller2.setText("Fecha de inscripción/publicación:");
+
+        taDescripcionConvocatoria.setColumns(20);
+        taDescripcionConvocatoria.setRows(5);
+        jScrollPane5.setViewportView(taDescripcionConvocatoria);
+
+        txtFieldPublicoObjetivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldPublicoObjetivoActionPerformed(evt);
+            }
+        });
+
+        txtNombreTaller3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller3.setText("Público objetivo:");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel11.setText("Descripción convocatoria:");
+
+        btnPublicar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPublicar.setText("Publicar/Guardar");
+
+        txtNombreTaller1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller1.setText("Fecha límite:");
+
+        btnEliminarConvocatoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarConvocatoria.setText("Eliminar Convocatoria");
+
+        txtFieldFehcaLímite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFehcaLímiteActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnModificar.setText("Modificar");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel12.setText("Para taller:");
+
+        TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO1.setText("Lista de Convocatorias Existentes");
+
+        cboTallerAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboEventoAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel13.setText("Para evento:");
+
+        txtFieldFechaInscripción.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFechaInscripciónActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout DialogGestionConvocatoriasLayout = new javax.swing.GroupLayout(DialogGestionConvocatorias.getContentPane());
+        DialogGestionConvocatorias.getContentPane().setLayout(DialogGestionConvocatoriasLayout);
+        DialogGestionConvocatoriasLayout.setHorizontalGroup(
+            DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addComponent(txtNombreTaller)
+                                .addGap(97, 97, 97)
+                                .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreTaller2)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txtNombreTaller1)
+                                    .addComponent(txtNombreTaller3))
+                                .addGap(27, 27, 27)
+                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtFieldPublicoObjetivo)
+                                    .addComponent(txtFieldFehcaLímite)
+                                    .addComponent(txtFieldFechaInscripción)
+                                    .addComponent(cboEventoAsociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addComponent(TITULO)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TITULO1)
+                        .addGap(101, 101, 101))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(btnPublicar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminarConvocatoria)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        DialogGestionConvocatoriasLayout.setVerticalGroup(
+            DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TITULO))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(TITULO1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldFehcaLímite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldFechaInscripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboEventoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldPublicoObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
+        );
+
+        btnInscribirme.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnInscribirme.setText("Inscribirme");
+
+        btnVerMisInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnVerMisInscripciones.setText("Ver Mis Inscripciones");
+
+        jLabel23.setText("jLabel1");
+
+        TITULO6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO6.setText("Inscripción a Eventos/Talleres");
+
+        lstEventosDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane10.setViewportView(lstEventosDisponibles);
+
+        tblTalleresDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane11.setViewportView(tblTalleresDisponibles);
+
+        TITULO7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO7.setText("Eventos/Talleres Disponibles:");
+
+        taMostrarDetSelec.setColumns(20);
+        taMostrarDetSelec.setRows(5);
+        jScrollPane12.setViewportView(taMostrarDetSelec);
+
+        javax.swing.GroupLayout DialogInscripcionEventoTallerLayout = new javax.swing.GroupLayout(DialogInscripcionEventoTaller.getContentPane());
+        DialogInscripcionEventoTaller.getContentPane().setLayout(DialogInscripcionEventoTallerLayout);
+        DialogInscripcionEventoTallerLayout.setHorizontalGroup(
+            DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                                    .addGap(251, 251, 251)
+                                    .addComponent(btnInscribirme)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnVerMisInscripciones)
+                                    .addGap(155, 155, 155))
+                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO6)
+                            .addComponent(TITULO7))))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        DialogInscripcionEventoTallerLayout.setVerticalGroup(
+            DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(TITULO6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TITULO7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane12)
+                    .addComponent(jScrollPane10)
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVerMisInscripciones, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInscribirme, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel14.setText("Descripción Evidencia:");
+
+        TITULO2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO2.setText("Gestión de Evidencias para: [Nombre Taller/Evento]");
+
+        tblEvidencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(tblEvidencias);
+
+        txtNombreTaller4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller4.setText("Archivo:");
+
+        txtFieldArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldArchivoActionPerformed(evt);
+            }
+        });
+
+        txtNombreTaller5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller5.setText("Título Evidencia:");
+
+        TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO3.setText("Evidencias Subidas");
+
+        txtFieldTituloEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldTituloEvidenciaActionPerformed(evt);
+            }
+        });
+
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
+
+        taDescripcionEvidencia.setColumns(20);
+        taDescripcionEvidencia.setRows(5);
+        jScrollPane7.setViewportView(taDescripcionEvidencia);
+
+        btnSeleccionarArchivo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSeleccionarArchivo.setText("Seleccionar Archivo");
+
+        btnSubirEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSubirEvidencia.setText("Subir Evidencia");
+
+        btnDescargarEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDescargarEvidencia.setText("Descargar Evidencia");
+
+        btnEliminarEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarEvidencia.setText("Eliminar Evidencia");
+
+        javax.swing.GroupLayout DialogGestionEvidenciasLayout = new javax.swing.GroupLayout(DialogGestionEvidencias.getContentPane());
+        DialogGestionEvidencias.getContentPane().setLayout(DialogGestionEvidenciasLayout);
+        DialogGestionEvidenciasLayout.setHorizontalGroup(
+            DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO2)
+                            .addComponent(TITULO3)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                        .addComponent(txtNombreTaller4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtFieldArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel14)
+                                            .addComponent(txtNombreTaller5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                                        .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(47, 47, 47)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGap(0, 65, Short.MAX_VALUE)
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addComponent(btnSeleccionarArchivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSubirEvidencia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDescargarEvidencia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminarEvidencia)))
+                        .addGap(110, 110, 110))))
+        );
+        DialogGestionEvidenciasLayout.setVerticalGroup(
+            DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TITULO2)
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFieldArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(TITULO3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSeleccionarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSubirEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDescargarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1066,6 +1769,50 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             System.err.println("Error al actualizar evento: " + e.getMessage());
         }
     }//GEN-LAST:event_btnEModificarActionPerformed
+
+    private void txtFieldTituloConvocatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloConvocatoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldTituloConvocatoriaActionPerformed
+
+    private void txtFieldPublicoObjetivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldPublicoObjetivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldPublicoObjetivoActionPerformed
+
+    private void txtFieldFehcaLímiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFehcaLímiteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFehcaLímiteActionPerformed
+
+    private void txtFieldFechaInscripciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFechaInscripciónActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFechaInscripciónActionPerformed
+
+    private void txtFieldArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldArchivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldArchivoActionPerformed
+
+    private void txtFieldTituloEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloEvidenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldTituloEvidenciaActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
+
+    private void txtFieldNombreTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreTallerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldNombreTallerActionPerformed
+
+    private void txtFieldFecha_HoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFecha_HoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFecha_HoraActionPerformed
+
+    private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
+
+    private void txtFieldDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldDuracionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldDuracionActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -1224,31 +1971,71 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogGestionConvocatorias;
     private javax.swing.JDialog DialogGestionEventos;
+    private javax.swing.JDialog DialogGestionEvidencias;
+    private javax.swing.JDialog DialogGestionTalleres;
     private javax.swing.JDialog DialogGestionUsuarios;
+    private javax.swing.JDialog DialogInscripcionEventoTaller;
+    private javax.swing.JLabel TITULO;
+    private javax.swing.JLabel TITULO1;
+    private javax.swing.JLabel TITULO2;
+    private javax.swing.JLabel TITULO3;
+    private javax.swing.JLabel TITULO4;
+    private javax.swing.JLabel TITULO5;
+    private javax.swing.JLabel TITULO6;
+    private javax.swing.JLabel TITULO7;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregarTaller;
+    private javax.swing.JButton btnDescargarEvidencia;
     private javax.swing.JButton btnECrear;
     private javax.swing.JButton btnEEliminar;
     private javax.swing.JButton btnELimpiar;
     private javax.swing.JButton btnEModificar;
+    private javax.swing.JButton btnEditarTaller;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarConvocatoria;
+    private javax.swing.JButton btnEliminarEvidencia;
+    private javax.swing.JButton btnElliminarTaller;
+    private javax.swing.JButton btnInscribirme;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnPublicar;
+    private javax.swing.JButton btnSeleccionarArchivo;
+    private javax.swing.JButton btnSubirEvidencia;
+    private javax.swing.JButton btnVerComentarios;
+    private javax.swing.JButton btnVerMisInscripciones;
     private com.toedter.calendar.JCalendar calendario;
     private javax.swing.JComboBox<String> cboEstado;
+    private javax.swing.JLabel cboEstadoTaller;
+    private javax.swing.JComboBox<String> cboEventoAsociado;
+    private javax.swing.JComboBox<String> cboEventoAsociado1;
+    private javax.swing.JComboBox<String> cboEventoAsociado2;
+    private javax.swing.JComboBox<String> cboPonente;
+    private javax.swing.JComboBox<String> cboTallerAsociado;
     private javax.swing.JComboBox<String> cboURol;
     private javax.swing.JLabel encabezado;
     private javax.swing.JLabel encabezado1;
     private javax.swing.JLabel encabezado2;
     private javax.swing.JLabel encabezado4;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1259,13 +2046,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNumControl;
     private javax.swing.JLabel lblRol;
+    private javax.swing.JList<String> lstEventosDisponibles;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuBar menuBarraPrincipal;
@@ -1284,14 +2082,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JPanel panelEstatus;
     private javax.swing.JPasswordField passContrasena;
+    private javax.swing.JTextArea taDescripcionConvocatoria;
+    private javax.swing.JTextArea taDescripcionEvidencia;
+    private javax.swing.JTextArea taDescripcionTaller;
+    private javax.swing.JTextArea taMostrarDetSelec;
+    private javax.swing.JTable tblConvocatorias;
+    private javax.swing.JTable tblEvidencias;
+    private javax.swing.JTable tblTalleres;
+    private javax.swing.JTable tblTalleresDisponibles;
     private javax.swing.JTable ttEventos;
     private javax.swing.JTable ttUsuarios;
+    private javax.swing.JLabel txtCupoMaximo;
+    private javax.swing.JLabel txtDuracion;
     private javax.swing.JTextArea txtEDescripcion;
     private javax.swing.JTextField txtEFin;
     private javax.swing.JTextField txtEID;
     private javax.swing.JTextField txtEInicio;
     private javax.swing.JTextField txtENombre;
+    private javax.swing.JLabel txtFecha_Hora;
+    private javax.swing.JTextField txtFieldArchivo;
+    private javax.swing.JTextField txtFieldDuracion;
+    private javax.swing.JTextField txtFieldFechaInscripción;
+    private javax.swing.JTextField txtFieldFecha_Hora;
+    private javax.swing.JTextField txtFieldFehcaLímite;
+    private javax.swing.JTextField txtFieldMaterial_Req;
+    private javax.swing.JTextField txtFieldNombreTaller;
+    private javax.swing.JTextField txtFieldPublicoObjetivo;
+    private javax.swing.JTextField txtFieldTituloConvocatoria;
+    private javax.swing.JTextField txtFieldTituloEvidencia;
     private javax.swing.JTextField txtLugar;
+    private javax.swing.JLabel txtMaterialReq;
+    private javax.swing.JLabel txtNombreTaller;
+    private javax.swing.JLabel txtNombreTaller1;
+    private javax.swing.JLabel txtNombreTaller2;
+    private javax.swing.JLabel txtNombreTaller3;
+    private javax.swing.JLabel txtNombreTaller4;
+    private javax.swing.JLabel txtNombreTaller5;
+    private javax.swing.JLabel txtNombreTaller6;
     private javax.swing.JTextField txtUEmail;
     private javax.swing.JTextField txtUID;
     private javax.swing.JTextField txtUNombre;
