@@ -4,6 +4,7 @@
  */
 package vista;
 
+import control.ServicioUsuario;
 import control.UsuariosJpaController;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,8 +135,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademicPlusPU");
         UsuariosJpaController controller = new UsuariosJpaController(emf);
-
-        Usuarios u = controller.validarUsuario(username, password);
+        
+        // Usar la clase de servicio en lugar del JpaController directamente
+        ServicioUsuario service = new ServicioUsuario();
+        Usuarios u = service.validarUsuario(username, password);
         
         if (u != null) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");

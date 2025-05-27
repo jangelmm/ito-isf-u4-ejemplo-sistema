@@ -42,34 +42,6 @@ public class UsuariosJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    // Metodo para buscar usuarios por usuario y contrasena
-    public Usuarios validarUsuario(String username, String password) {
-        EntityManager em = getEntityManager();
-        try {
-            TypedQuery<Usuarios> query = em.createQuery(
-                "SELECT u FROM Usuarios u WHERE (u.nombre = :username OR u.correo = :username) AND u.contrasenaHash = :password", Usuarios.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            return query.getSingleResult(); // Si no encuentra lanza excepción
-        } catch (NoResultException e) {
-            return null; // No coincide
-        } finally {
-            em.close();
-        }
-    }    
-    
-    /*
-    public List<Usuarios> buscarUsuarios() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Usuarios.class));
-            return em.createQuery(cq).getResultList();
-        } finally {
-            em.close();
-        }
-    }
-    */
     public void create(Usuarios usuarios) {
         if (usuarios.getComentariosRevisionTallerList() == null) {
             usuarios.setComentariosRevisionTallerList(new ArrayList<ComentariosRevisionTaller>());
