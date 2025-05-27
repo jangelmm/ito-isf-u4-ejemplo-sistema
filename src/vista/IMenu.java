@@ -34,6 +34,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
+import modelo.MTcita;
+import modelo.MTtutorado;
+import modelo.MTtutoria;
+
 
 /**
  *
@@ -70,6 +74,15 @@ private List<Tutoria> tutorias;
 private Date fecha;
 private ImageIcon iconMiniatura;
 
+
+private MTcita modeloTablaVerCitas; // O el nombre de tu nuevo TableModel, ej: MTVerCitas
+private List<Cita> citasDelTutorado; // Para almacenar las citas encontradas
+
+private MTtutor modeloTablaAdmTutores; // Ya tienes 'mtt', puedes renombrarlo o usarlo.
+private MTtutorado modeloTablaAdmEstudiantes;
+private MTcita modeloTablaAdmCitas;
+private MTtutoria modeloTablaAdmTutorias;
+
     /**
      * Creates new form IMenuTutorias
      */
@@ -88,7 +101,7 @@ private ImageIcon iconMiniatura;
         cTutoria =  new TutoriaJpaController(AdmDatos.getEnf());
         // Inicializacion de Agregar Tutor
         mtt = new MTtutor(tutores);
-        ttutores.setModel(mtt);
+        tabAdmTutores.setModel(mtt);
         configurarComboBox();
         configurarJSpinner();
         // Inicializacion de Crear Tutoria
@@ -103,6 +116,22 @@ private ImageIcon iconMiniatura;
         iconMiniatura = redimensionarImagen("imagenes/icono.png", 350, 500); // NUEVA LÍNEA (relativa al paquete 'vista')
         ImagenTutor.setIcon(iconMiniatura);
        
+        citasDelTutorado = new ArrayList<>(); // Inicializa la lista
+        modeloTablaVerCitas = new MTcita(citasDelTutorado); // Usa tu TableModel para citas (MTcita o uno nuevo)
+        tabVerCitasCitas.setModel(modeloTablaVerCitas);
+        
+        modeloTablaAdmTutores = new MTtutor(this.tutores); // 'this.tutores' es tu List<Tutor>
+        tabAdmTutores.setModel(modeloTablaAdmTutores);
+
+        modeloTablaAdmEstudiantes = new MTtutorado(this.tutorados); // 'this.tutorados' es tu List<Tutorado>
+        tabAdmEstudiantes.setModel(modeloTablaAdmEstudiantes);
+
+        modeloTablaAdmCitas = new MTcita(this.citas); // 'this.citas' es tu List<Cita>
+        tabAdmCitas.setModel(modeloTablaAdmCitas);
+
+        this.tutorias = cTutoria.findTutoriaEntities(); // Asegúrate de que 'tutorias' se carga
+        modeloTablaAdmTutorias = new MTtutoria(this.tutorias); // 'this.tutorias' es tu List<Tutoria>
+        tabAdmTutorias.setModel(modeloTablaAdmTutorias);
     }
 
     /**
@@ -124,22 +153,22 @@ private ImageIcon iconMiniatura;
         btnVerCitasBuscar = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tabVerCitasCitas = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
         panelTutores = new javax.swing.JPanel();
         tabAdministrador = new javax.swing.JTabbedPane();
         panelAdmControl = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ttutores = new javax.swing.JTable();
+        tabAdmTutores = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        ttutores1 = new javax.swing.JTable();
+        tabAdmEstudiantes = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        ttutores2 = new javax.swing.JTable();
+        tabAdmCitas = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        ttutores3 = new javax.swing.JTable();
+        tabAdmTutorias = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         panelAdmAgregarTutor = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -185,21 +214,22 @@ private ImageIcon iconMiniatura;
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1100, 750));
 
         Menu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
         panelVerCitas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Buscar Citas");
 
-        txtVerCitasNumControl.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtVerCitasNumControl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtVerCitasNumControlActionPerformed(evt);
             }
         });
 
-        jLabel21.setText("Ingrese No Control");
+        jLabel21.setText("Ingrese No Control:");
 
         btnVerCitasBuscar.setText("Buscar");
         btnVerCitasBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -226,35 +256,38 @@ private ImageIcon iconMiniatura;
         panelVerCitasLayout.setHorizontalGroup(
             panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelVerCitasLayout.createSequentialGroup()
-                .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelVerCitasLayout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(21, 21, 21)
+                .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane8)
+                    .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panelVerCitasLayout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addGap(45, 45, 45)
+                            .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerCitasBuscar))
+                        .addComponent(jSeparator1)
+                        .addGroup(panelVerCitasLayout.createSequentialGroup()
+                            .addGap(326, 326, 326)
                             .addComponent(jLabel12)
-                            .addGroup(panelVerCitasLayout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addGap(44, 44, 44)
-                                .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(48, 48, 48)
-                        .addComponent(btnVerCitasBuscar))
-                    .addGroup(panelVerCitasLayout.createSequentialGroup()
-                        .addGap(289, 289, 289)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(416, Short.MAX_VALUE))
+                            .addGap(409, 409, 409))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         panelVerCitasLayout.setVerticalGroup(
             panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelVerCitasLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel12)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
                     .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerCitasBuscar)
-                    .addComponent(jLabel21))
-                .addGap(113, 113, 113)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                    .addComponent(btnVerCitasBuscar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         tabVerCitas.addTab("VerCitas", panelVerCitas);
@@ -265,7 +298,8 @@ private ImageIcon iconMiniatura;
             panelTutoradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTutoradosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabVerCitas))
+                .addComponent(tabVerCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTutoradosLayout.setVerticalGroup(
             panelTutoradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,8 +308,8 @@ private ImageIcon iconMiniatura;
 
         Menu.addTab("Tutorado", panelTutorados);
 
-        ttutores.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        ttutores.setModel(new javax.swing.table.DefaultTableModel(
+        tabAdmTutores.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tabAdmTutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -287,17 +321,15 @@ private ImageIcon iconMiniatura;
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane1.setViewportView(ttutores);
+        jScrollPane1.setViewportView(tabAdmTutores);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Control de Registrados");
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Instituto Tecnológico de Oaxaca");
 
         jLabel4.setText("Tutores Registrados");
 
-        ttutores1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        ttutores1.setModel(new javax.swing.table.DefaultTableModel(
+        tabAdmEstudiantes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tabAdmEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -309,12 +341,12 @@ private ImageIcon iconMiniatura;
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane5.setViewportView(ttutores1);
+        jScrollPane5.setViewportView(tabAdmEstudiantes);
 
         jLabel5.setText("Estudiantes Registrados");
 
-        ttutores2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        ttutores2.setModel(new javax.swing.table.DefaultTableModel(
+        tabAdmCitas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tabAdmCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -326,12 +358,12 @@ private ImageIcon iconMiniatura;
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane6.setViewportView(ttutores2);
+        jScrollPane6.setViewportView(tabAdmCitas);
 
         jLabel6.setText("Citas Creadas");
 
-        ttutores3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        ttutores3.setModel(new javax.swing.table.DefaultTableModel(
+        tabAdmTutorias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tabAdmTutorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -343,7 +375,7 @@ private ImageIcon iconMiniatura;
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane7.setViewportView(ttutores3);
+        jScrollPane7.setViewportView(tabAdmTutorias);
 
         jLabel11.setText("Tutorias Creadas");
 
@@ -352,70 +384,45 @@ private ImageIcon iconMiniatura;
         panelAdmControlLayout.setHorizontalGroup(
             panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAdmControlLayout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(157, 157, 157))
-            .addGroup(panelAdmControlLayout.createSequentialGroup()
                 .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAdmControlLayout.createSequentialGroup()
-                        .addGap(747, 747, 747)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(341, 341, 341)
+                        .addComponent(jLabel2))
                     .addGroup(panelAdmControlLayout.createSequentialGroup()
-                        .addGap(404, 404, 404)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAdmControlLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelAdmControlLayout.createSequentialGroup()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelAdmControlLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAdmControlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(190, 190, 190))
-            .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelAdmControlLayout.createSequentialGroup()
-                    .addGap(198, 198, 198)
-                    .addComponent(jLabel11)
-                    .addContainerGap(877, Short.MAX_VALUE)))
+                        .addGap(27, 27, 27)
+                        .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane5)
+                            .addComponent(jScrollPane6)
+                            .addComponent(jScrollPane7))))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         panelAdmControlLayout.setVerticalGroup(
             panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAdmControlLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel2)
-                .addGap(56, 56, 56)
-                .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addGap(1, 1, 1)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
-                .addGap(48, 48, 48)
-                .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAdmControlLayout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
-            .addGroup(panelAdmControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAdmControlLayout.createSequentialGroup()
-                    .addContainerGap(457, Short.MAX_VALUE)
-                    .addComponent(jLabel11)
-                    .addGap(226, 226, 226)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         tabAdministrador.addTab("Control", panelAdmControl);
@@ -684,7 +691,7 @@ private ImageIcon iconMiniatura;
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1151, Short.MAX_VALUE)
+            .addGap(0, 877, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -707,7 +714,7 @@ private ImageIcon iconMiniatura;
             .addGroup(panelCitasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tabCitaCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Menu.addTab("Cita", panelCitas);
@@ -783,7 +790,7 @@ private ImageIcon iconMiniatura;
                             .addGroup(panelTutoriasLayout.createSequentialGroup()
                                 .addGap(402, 402, 402)
                                 .addComponent(jLabel14)))
-                        .addGap(0, 274, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelTutoriasLayout.setVerticalGroup(
@@ -800,7 +807,7 @@ private ImageIcon iconMiniatura;
                     .addComponent(Aceptar))
                 .addGap(53, 53, 53)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(RegistroTutoria)
@@ -809,7 +816,7 @@ private ImageIcon iconMiniatura;
 
         Menu.addTab("Tutoria", panelTutorias);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sistema de Tutorias");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -819,16 +826,16 @@ private ImageIcon iconMiniatura;
         panelEncabezadoLayout.setHorizontalGroup(
             panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(701, Short.MAX_VALUE))
         );
         panelEncabezadoLayout.setVerticalGroup(
             panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -836,12 +843,12 @@ private ImageIcon iconMiniatura;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 1268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -849,8 +856,7 @@ private ImageIcon iconMiniatura;
                 .addContainerGap()
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Menu)
-                .addContainerGap())
+                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 538, Short.MAX_VALUE))
         );
 
         pack();
@@ -1087,7 +1093,70 @@ private ImageIcon iconMiniatura;
     }//GEN-LAST:event_txtVerCitasNumControlActionPerformed
 
     private void btnVerCitasBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCitasBuscarActionPerformed
-        // TODO add your handling code here:
+        String numControl = txtVerCitasNumControl.getText().trim();
+
+        if (numControl.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número de control.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 1. Buscar el Tutorado por número de control
+        Tutorado tutoradoEncontrado = null;
+        // 'tutorados' es tu lista List<Tutorado> listaTotalTutoradosGeneral que cargas al inicio
+        for (Tutorado tdo : tutorados) { 
+            if (tdo.getNc() != null && tdo.getNc().equalsIgnoreCase(numControl)) {
+                tutoradoEncontrado = tdo;
+                break;
+            }
+        }
+
+        if (tutoradoEncontrado == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un tutorado con el número de control: " + numControl, "No Encontrado", JOptionPane.INFORMATION_MESSAGE);
+            // Limpiar la tabla si no se encuentra el tutorado
+            citasDelTutorado.clear();
+            modeloTablaVerCitas.fireTableDataChanged(); // Notificar al modelo para que actualice la vista
+            return;
+        }
+
+        // 2. Filtrar la lista 'citas' (this.citas, que contiene todas las citas del sistema)
+        // para encontrar aquellas que pertenezcan a las tutorías del tutoradoEncontrado.
+        // Esto es un poco indirecto ya que la Cita no está directamente ligada al Tutorado,
+        // sino a través de una Tutoria.
+        // Primero, necesitas obtener la lista de Tutorias para el tutoradoEncontrado.
+
+        List<Tutoria> tutoriasDelTutorado = tutoradoEncontrado.getTutoriaList(); // Asumiendo que Tutorado tiene getTutoriaList()
+
+        citasDelTutorado.clear(); // Limpiar resultados anteriores
+
+        if (tutoriasDelTutorado != null && !tutoriasDelTutorado.isEmpty()) {
+            for (Tutoria tutoria : tutoriasDelTutorado) {
+                if (tutoria.getIdCita() != null) {
+                    // Comprobar si la cita ya está en la lista para evitar duplicados si es posible
+                    // (aunque cada tutoría debería tener una cita única o la cita debería ser la misma instancia).
+                    if (!citasDelTutorado.contains(tutoria.getIdCita())) {
+                        citasDelTutorado.add(tutoria.getIdCita());
+                    }
+                }
+            }
+        }
+
+        if (citasDelTutorado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El tutorado " + tutoradoEncontrado.getNombre() + " no tiene citas registradas a través de tutorías.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        // 3. Actualizar el modelo de la tabla
+        // Si MTcita (o tu modelo) tiene un método para actualizar sus datos, úsalo.
+        // Por ejemplo, si MTcita tuviera un método setCitas(List<Cita> nuevasCitas):
+        // modeloTablaVerCitas.setCitas(citasDelTutorado);
+        // Si no, necesitas re-crear el modelo o modificar su lista interna y notificar.
+        // La forma más simple si MTcita toma la lista en el constructor y no la modifica internamente:
+        modeloTablaVerCitas = new MTcita(citasDelTutorado); // Re-crear con la nueva lista filtrada
+        tabVerCitasCitas.setModel(modeloTablaVerCitas); 
+        // O si tienes un método en MTcita como actualizarListaDatos:
+        // ((MTcita)modeloTablaVerCitas).actualizarListaDatos(citasDelTutorado); // Necesitarías un cast y el método en MTcita
+
+        // Para que el JTable se repinte correctamente si la estructura no cambió pero los datos sí:
+        // modeloTablaVerCitas.fireTableDataChanged(); // Esto ya lo haría el constructor o actualizarListaDatos
     }//GEN-LAST:event_btnVerCitasBuscarActionPerformed
     
     /**
@@ -1163,7 +1232,6 @@ private ImageIcon iconMiniatura;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1179,6 +1247,7 @@ private ImageIcon iconMiniatura;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable ltutorados;
     private javax.swing.JButton moverEst;
     private javax.swing.JButton moverTut;
@@ -1191,14 +1260,14 @@ private ImageIcon iconMiniatura;
     private javax.swing.JPanel panelTutores;
     private javax.swing.JPanel panelTutorias;
     private javax.swing.JPanel panelVerCitas;
+    private javax.swing.JTable tabAdmCitas;
+    private javax.swing.JTable tabAdmEstudiantes;
+    private javax.swing.JTable tabAdmTutores;
+    private javax.swing.JTable tabAdmTutorias;
     private javax.swing.JTabbedPane tabAdministrador;
     private javax.swing.JTabbedPane tabCitaCrear;
     private javax.swing.JTabbedPane tabVerCitas;
     private javax.swing.JTable tabVerCitasCitas;
-    private javax.swing.JTable ttutores;
-    private javax.swing.JTable ttutores1;
-    private javax.swing.JTable ttutores2;
-    private javax.swing.JTable ttutores3;
     private javax.swing.JList<String> tutoradoss;
     private javax.swing.JTextField txtVerCitasNumControl;
     // End of variables declaration//GEN-END:variables
