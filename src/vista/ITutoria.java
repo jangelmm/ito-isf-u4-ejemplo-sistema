@@ -264,7 +264,7 @@ public class ITutoria extends javax.swing.JFrame {
         dateSeleccionarFecha = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tabTutorados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

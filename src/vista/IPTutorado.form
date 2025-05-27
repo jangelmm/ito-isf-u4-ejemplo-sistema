@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -46,7 +46,7 @@
                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtNumeroControl" max="32767" attributes="0"/>
-                      <Component id="cobGenero" pref="192" max="32767" attributes="0"/>
+                      <Component id="cobGenero" max="32767" attributes="0"/>
                       <Component id="jDfecha" alignment="1" max="32767" attributes="0"/>
                       <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNumTarjeta" alignment="1" max="32767" attributes="0"/>
