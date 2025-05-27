@@ -835,8 +835,7 @@ private ImageIcon iconMiniatura;
 
         jPanel5.setBackground(new java.awt.Color(204, 153, 0));
 
-        jLabel1.setFont(new java.awt.Font("Dubai Light", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Dubai Light", 0, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sistema de Tutorias");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
