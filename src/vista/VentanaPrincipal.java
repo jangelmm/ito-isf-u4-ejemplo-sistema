@@ -4,6 +4,7 @@
  */
 package vista;
 
+import control.ComentariosRevisionTallerJpaController;
 import control.UsuariosJpaController;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -14,7 +15,12 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ComentariosRevisionTaller;
 import modelo.Usuarios;
 
 /**
@@ -33,6 +39,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblCorreo.setText("Correo: " + u.getCorreo());
         lblRol.setText("Rol : " + u.getRol());
         lblNumControl.setText("Número de control: " + u.getNumeroControl());
+        
+        // Manipulacion del DialogGestionUusarios
+        cargarUsuariosEnTabla();
+        seleccionarUsuarios();
     }
 
     /**
@@ -49,20 +59,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         encabezado = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cboRol = new javax.swing.JComboBox<>();
-        txtID = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        cboURol = new javax.swing.JComboBox<>();
+        txtUID = new javax.swing.JTextField();
+        txtUNombre = new javax.swing.JTextField();
+        txtUEmail = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        txtUNumControl = new javax.swing.JTextField();
         encabezado1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ttUsuarios = new javax.swing.JTable();
@@ -127,41 +135,64 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel4.setText("Nombre:");
 
-        jLabel5.setText("Apellido:");
-
         jLabel6.setText("Email:");
 
-        jLabel7.setText("Contraseña:");
+        jLabel7.setText("Núm. de Control:");
 
         jLabel8.setText("Rol:");
 
-        cboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Docente", "Estudiante" }));
-        cboRol.addActionListener(new java.awt.event.ActionListener() {
+        cboURol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DOCENTE", "TALLERISTA", "ADMINISTRADOR" }));
+        cboURol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboRolActionPerformed(evt);
+                cboURolActionPerformed(evt);
             }
         });
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtUNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                txtUNombreActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        txtUEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                txtUEmailActionPerformed(evt);
             }
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        txtUNumControl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUNumControlActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,19 +208,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboRol, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNombre)
-                    .addComponent(txtID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                    .addComponent(txtUEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboURol, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtUNombre)
+                    .addComponent(txtUID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUNumControl, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,34 +237,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnEliminar)
                 .addGap(18, 18, 18)
                 .addComponent(btnLimpiar)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(encabezado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtUEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboURol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(78, 78, 78))
         );
 
         encabezado1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -249,7 +274,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Correo", "Rol", "Núm. de Control"
+                "ID", "Nombre", "Email", "Rol", "Núm. de Control"
             }
         ));
         jScrollPane1.setViewportView(ttUsuarios);
@@ -277,7 +302,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(encabezado1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -463,11 +488,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCrear)
+                .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnModificar)
-                    .addComponent(btnEliminar2)
-                    .addComponent(btnLimpiar2))
+                    .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCrear)
+                        .addComponent(btnEliminar2)
+                        .addComponent(btnLimpiar2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(encabezado2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -676,17 +702,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_opcionAyudaActionPerformed
 
-    private void cboRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboRolActionPerformed
+    private void cboURolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboURolActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboRolActionPerformed
+    }//GEN-LAST:event_cboURolActionPerformed
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+    private void txtUNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_txtUNombreActionPerformed
 
     private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
         // TODO add your handling code here:
@@ -715,44 +737,230 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionActionPerformed
 
-    /*
-    public void cargarUsuariosEnTabla(JTable tabla) {
-        List<Usuarios> usuarios = usuariosJpaController.findUsuariosEntities();
-        DefaultTableModel modelo = new DefaultTableModel(
-            new Object[]{"ID", "Nombre", "Correo", "Rol"}, 0
-        );
+    private void txtUEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUEmailActionPerformed
 
-        for (Usuarios u : usuarios) {
-            modelo.addRow(new Object[]{
-                u.getIdUsuario(),
-                u.getNombre(),
-                u.getCorreo(),
-                u.getRol()
-            });
+    private void txtUNumControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUNumControlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUNumControlActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        // Crear una instancia de la entidad
+        Usuarios nuevo = new Usuarios();
+        nuevo.setNombre(txtUNombre.getText());
+        nuevo.setCorreo(txtUEmail.getText());
+        nuevo.setRol(cboURol.getSelectedItem().toString());
+        nuevo.setNumeroControl(txtUNumControl.getText());
+
+        try {
+            UsuariosJpaController controller = new UsuariosJpaController(Persistence.createEntityManagerFactory("AcademicPlusPU"));
+            controller.create(nuevo); // Método de instancia, no static
+            cargarUsuariosEnTabla(); // Refresca la tabla
+            limpiarCamposUsuario();  // Limpia los campos del formulario
+            JOptionPane.showMessageDialog(this, "Usuario insertado exitosamente");
+        } catch (Exception e) {
+            System.err.println("Error al insertar el usuario: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        if (txtUID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un usuario para modificar.");
+            return;
         }
 
-        tabla.setModel(modelo);
-    }
-    */
-    
-    /*
-    private void cargarUsuariosEnTabla() {
-        UsuariosJpaController uJpaC = new UsuariosJpaController();
-        List<Usuarios> usuarios = uJpaC.findUsuariosEntities();
-        DefaultTableModel modelo = (DefaultTableModel) ttUsuarios.getModel();
-        modelo.setRowCount(0); // Limpia la tabla
+        try {
+            int id = Integer.parseInt(txtUID.getText());
 
-        for (Usuarios u : usuarios) {
-            modelo.addRow(new Object[]{
-                u.getIdUsuario(),
-                u.getNombre(),
-                u.getCorreo(),
-                u.getRol(),
-                u.getNumeroControl()
-            });
+            // Crear controlador JPA
+            UsuariosJpaController controller = new UsuariosJpaController(Persistence.createEntityManagerFactory("AcademicPlusPU"));
+
+            // Obtener el usuario desde la base de datos
+            Usuarios usuarioExistente = controller.findUsuarios(id);
+
+            if (usuarioExistente != null) {
+                // Actualizar los valores
+                usuarioExistente.setNombre(txtUNombre.getText());
+                usuarioExistente.setCorreo(txtUEmail.getText());
+                usuarioExistente.setRol(cboURol.getSelectedItem().toString());
+                usuarioExistente.setNumeroControl(txtUNumControl.getText());
+
+                // Guardar los cambios
+                controller.edit(usuarioExistente);
+
+                cargarUsuariosEnTabla();
+                limpiarCamposUsuario();
+                JOptionPane.showMessageDialog(this, "Usuario modificado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario no fue encontrado.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al actualizar usuario: " + e.getMessage());
         }
-    }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int id = Integer.parseInt(txtUID.getText()); // ID del usuario a eliminar
+        int idUsuarioGenerico = 1; // ID del usuario genérico (sistema)
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "¿Estás segura de que deseas eliminar este usuario?\nSe reasignarán sus registros al usuario genérico.", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademicPlusPU");
+            EntityManager em = emf.createEntityManager();
+
+            try {
+                em.getTransaction().begin();
+                // Reasignar referencias en ComentarioRevisionTaller (idUsuarioComentarista)
+                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Notificaciones (idUsuarioDestinatario)
+                em.createQuery("UPDATE Notificaciones n SET n.idUsuarioDestinatario.idUsuario = :nuevoId WHERE n.idUsuarioDestinatario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Evidencias (idUsuarioSubio)
+                em.createQuery("UPDATE Evidencias e SET e.idUsuarioSubio.idUsuario = :nuevoId WHERE e.idUsuarioSubio.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en BitacorasEventos (idUsuarioRegistra)
+                em.createQuery("UPDATE BitacorasEventos b SET b.idUsuarioRegistra.idUsuario = :nuevoId WHERE b.idUsuarioRegistra.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en EventoParticipantesTalleres (idTallerista)
+                em.createQuery("UPDATE EventoParticipantesTalleres ept SET ept.idTallerista.idUsuario = :nuevoId WHERE ept.idTallerista.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Convocatorias (idUsuarioPublica)
+                em.createQuery("UPDATE Convocatorias c SET c.idUsuarioPublica.idUsuario = :nuevoId WHERE c.idUsuarioPublica.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Eventos (idDocenteResponsable)
+                em.createQuery("UPDATE Eventos e SET e.idDocenteResponsable.idUsuario = :nuevoId WHERE e.idDocenteResponsable.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Talleres (idUsuarioProponente)
+                em.createQuery("UPDATE Talleres t SET t.idUsuarioProponente.idUsuario = :nuevoId WHERE t.idUsuarioProponente.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+/*
+                // Reasignar relaciones (ejemplo con comentario_revision, notificacion, etc.)
+                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Notificaciones n SET n.usuario.idUsuario = :nuevoId WHERE n.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Evidencias e SET e.usuario.idUsuario = :nuevoId WHERE e.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Bitacora b SET b.usuario.idUsuario = :nuevoId WHERE b.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
 */
+                // Buscar y eliminar el usuario
+                Usuarios usuarioAEliminar = em.find(Usuarios.class, id);
+                if (usuarioAEliminar != null) {
+                    em.remove(usuarioAEliminar);
+                }
+
+                em.getTransaction().commit();
+
+                cargarUsuariosEnTabla(); // Refresca la tabla
+                limpiarCamposUsuario(); // Limpia los campos
+                JOptionPane.showMessageDialog(this, "Usuario eliminado y registros reasignados.");
+            } catch (Exception e) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al eliminar usuario: " + e.getMessage());
+            } finally {
+                em.close();
+                emf.close();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCamposUsuario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void limpiarCamposUsuario() {
+        txtUID.setText("");
+        txtUNombre.setText("");
+        txtUEmail.setText("");
+        cboURol.setSelectedIndex(0);
+        txtUNumControl.setText("");
+    }
+    
+    // Manipulacion de DialogGestionUsuarios
+    private void cargarUsuariosEnTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) ttUsuarios.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla
+
+        try {
+            UsuariosJpaController controller = new UsuariosJpaController(Persistence.createEntityManagerFactory("AcademicPlusPU"));
+            List<Usuarios> listaUsuarios = controller.findUsuariosEntities();
+
+            for (Usuarios u : listaUsuarios) {
+                Object[] fila = new Object[]{
+                    u.getIdUsuario(),
+                    u.getNombre(),
+                    u.getCorreo(),
+                    u.getRol(),
+                    u.getNumeroControl()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar los usuarios: " + e.getMessage());
+        }
+    }
+    // Muestra en elementos filas de la tabla
+    private void seleccionarUsuarios() {
+        ttUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                limpiarCamposUsuario();
+                int selectedRow = ttUsuarios.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) ttUsuarios.getModel();
+                    
+                    txtUID.setText(String.valueOf((int) model.getValueAt(selectedRow, 0)));
+                    txtUNombre.setText(model.getValueAt(selectedRow, 1).toString());
+                    txtUEmail.setText(model.getValueAt(selectedRow, 2).toString());
+                    cboURol.setSelectedItem(model.getValueAt(selectedRow, 3).toString());
+                    txtUNumControl.setText(model.getValueAt(selectedRow, 4).toString());
+                }
+            }
+        });
+    }
     
     /**
      * @param args the command line arguments
@@ -793,31 +1001,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog DialogGestionEventos;
     private javax.swing.JDialog DialogGestionUsuarios;
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnActualizar1;
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEliminar1;
     private javax.swing.JButton btnEliminar2;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnLimpiar1;
     private javax.swing.JButton btnLimpiar2;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cboEstado;
-    private javax.swing.JComboBox<String> cboRol;
-    private javax.swing.JComboBox<String> cboRol1;
     private javax.swing.JComboBox<String> cboTipo;
+    private javax.swing.JComboBox<String> cboURol;
     private javax.swing.JLabel encabezado;
     private javax.swing.JLabel encabezado1;
     private javax.swing.JLabel encabezado2;
-    private javax.swing.JLabel encabezado3;
     private javax.swing.JLabel encabezado4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -827,22 +1025,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblNombre;
@@ -867,17 +1057,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelEstatus;
     private javax.swing.JTable ttUsuarios;
     private javax.swing.JTable ttUsuarios1;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtApellido1;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHFin;
     private javax.swing.JTextField txtHInicio;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtID1;
     private javax.swing.JTextField txtLugar;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtNombre2;
+    private javax.swing.JTextField txtUEmail;
+    private javax.swing.JTextField txtUID;
+    private javax.swing.JTextField txtUNombre;
+    private javax.swing.JTextField txtUNumControl;
     // End of variables declaration//GEN-END:variables
 }
