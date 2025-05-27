@@ -61,6 +61,7 @@ tutorias/
 │   │   ├── Tutorado.java
 │   │   └── Tutoria.java
 │   └── vista
+│       ├── IMenuTutorias.java
 │       ├── IPCita.form
 │       ├── IPCita.java
 │       ├── IPTutorado.form
@@ -77,6 +78,7 @@ tutorias/
 ├── .gitignore
 ├── build.xml
 ├── manifest.mf
+├── project_overview.md
 └── script.py
 ```
 
@@ -86,6 +88,14 @@ tutorias/
 
 ```text
 /dist/
+/nbproject/private/
+/build/
+
+```
+
+### `project_overview.md`
+
+```markdown
 
 ```
 
@@ -1615,76 +1625,172 @@ public class DatosTablaCitas {
 package modelo;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author jesus
- */
-public class MTablaCita extends AbstractTableModel{
+@SuppressWarnings("serial") // Añade esto si no tienes serialVersionUID y quieres quitar el warning
+public class MTablaCita extends AbstractTableModel {
 
     private ArrayList<DatosTablaCitas> datosCitas;
-    String encabezados[] = {" Tutorado ", " Asistencia ", " Acción "};
-    Class clasesC[] = {String.class, Boolean.class, String.class};
+    private final String[] encabezados = {"Tutorado", "Asistencia", "Acción"};
+    private final Class<?>[] clasesColumnas = {String.class, Boolean.class, String.class};
 
-    public MTablaCita(ArrayList mtc){
-        datosCitas = mtc;
+    public MTablaCita(ArrayList<DatosTablaCitas> listaDatosCitas) {
+        this.datosCitas = (listaDatosCitas != null) ? listaDatosCitas : new ArrayList<>();
     }
-    
-    public boolean isCellEditable(int r, int c){
-        if(c == 1){
-            return true;
-        }
-        if(c == 2 && datosCitas.get(r).getAsistencia() == true){
-            return true;
-        }
-        return false;
-    }
-            
+
     @Override
-    public String getColumnName(int c){
-        return encabezados[c];
+    public String getColumnName(int column) {
+        return encabezados[column];
     }
-    
+
     @Override
     public int getRowCount() {
-        return datosCitas.size();
+        // Una fila extra para los totales
+        return datosCitas.size() + 1;
     }
 
     @Override
     public int getColumnCount() {
         return encabezados.length;
     }
-    
+
     @Override
-    public Class getColumnClass(int c){
-        return clasesC[c];
+    public Class<?> getColumnClass(int columnIndex) {
+        // Para la última fila, si quieres mostrar texto, asegúrate que la columna pueda manejar String.
+        // Como la columna "Acción" (índice 2) ya es String, está bien.
+        return clasesColumnas[columnIndex];
+    }
+
+    /**
+     * Método para calcular el total de asistencias.
+     */
+    public int calcularTotalAsistencias() {
+        int totalAsistencias = 0;
+        for (DatosTablaCitas dato : datosCitas) {
+            if (dato.getAsistencia()) { // Asume que getAsistencia() devuelve boolean
+                totalAsistencias++;
+            }
+        }
+        return totalAsistencias;
     }
 
     @Override
-    public Object getValueAt(int r, int c) {
-        switch(c){
-            case 0:
-                return datosCitas.get(r).getTutorado().getNombre();
-            case 1:
-                return datosCitas.get(r).getAsistencia();
-            case 2:
-                return datosCitas.get(r).getAccion();
-            default: 
+    // Dentro de MTablaCita.java
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if (rowIndex == datosCitas.size()) { // Fila de totales
+            switch (columnIndex) {
+                case 0: // Columna "Tutorado"
+                    return "Total Asistencias:"; // Etiqueta
+                case 1: // Columna "Asistencia"
+                    // Para la fila de totales, esta columna no debe mostrar un checkbox activo.
+                    // Devolver null o un String vacío si la columna espera Boolean pero no quieres un checkbox.
+                    // O, si quieres que esté vacía y no muestre el renderer de Boolean,
+                    // podrías necesitar un renderer personalizado para esta celda específica,
+                    // o simplemente devolver un String vacío y asegurar que getColumnClass
+                    // puede manejarlo (aunque getColumnClass se define por columna, no por celda).
+                    // Lo más simple es devolver null para que el renderer de Boolean muestre una celda vacía/desmarcada.
+                    return null; // O false, si quieres un checkbox desmarcado
+                case 2: // Columna "Acción"
+                    return "" + calcularTotalAsistencias(); // Mostrar el conteo como String aquí
+                default:
+                    return "";
+            }
+        }
+
+        // Si no es la fila de totales, es una fila de datos normal
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return null;
+        }
+
+        DatosTablaCitas fila = datosCitas.get(rowIndex);
+        switch (columnIndex) {
+            case 0: // Tutorado
+                return (fila.getTutorado() != null) ? fila.getTutorado().getNombre() : "N/A";
+            case 1: // Asistencia
+                return fila.getAsistencia();
+            case 2: // Acción
+                return fila.getAccion();
+            default:
                 return null;
         }
     }
-    
-    public void getValueAt(Object dato, int r, int c){
-        if(c == 1){
-            datosCitas.get(r).setAsistencia((Boolean) dato);
-        }  
-    }
-    
-    
-}
 
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        // La fila de totales no es editable
+        if (rowIndex == datosCitas.size()) {
+            return false;
+        }
+
+        // Lógica de editabilidad para las filas de datos (como la tenías antes)
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return false;
+        }
+        if (columnIndex == 1) { // Columna "Asistencia"
+            return true;
+        }
+        if (columnIndex == 2) { // Columna "Acción"
+            Boolean asistenciaMarcada = datosCitas.get(rowIndex).getAsistencia();
+            return asistenciaMarcada != null && asistenciaMarcada;
+        }
+        return false;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        // No permitir edición en la fila de totales
+        if (rowIndex == datosCitas.size()) {
+            return;
+        }
+
+        if (rowIndex < 0 || rowIndex >= datosCitas.size()) {
+            return;
+        }
+
+        DatosTablaCitas fila = datosCitas.get(rowIndex);
+        boolean asistenciaCambioEstado = false;
+
+        if (columnIndex == 1) { // Cambió la "Asistencia"
+            if (aValue instanceof Boolean) {
+                boolean nuevaAsistencia = (Boolean) aValue;
+                if (fila.getAsistencia() != nuevaAsistencia) {
+                    fila.setAsistencia(nuevaAsistencia);
+                    fireTableCellUpdated(rowIndex, columnIndex);
+                    asistenciaCambioEstado = true;
+
+                    if (!nuevaAsistencia) {
+                        String valorPorDefectoAccion = "Sin acción";
+                        if (!valorPorDefectoAccion.equals(fila.getAccion())) {
+                            fila.setAccion(valorPorDefectoAccion);
+                            fireTableCellUpdated(rowIndex, 2);
+                        }
+                    }
+                    // Notificar que la fila de totales necesita ser actualizada
+                    fireTableCellUpdated(datosCitas.size(), 0); // Para la etiqueta "Total Asistencias:"
+                    fireTableCellUpdated(datosCitas.size(), 1); // Para el valor del conteo
+                }
+            }
+        } else if (columnIndex == 2) { // Cambió la "Acción"
+            if (aValue instanceof String) {
+                if (!aValue.equals(fila.getAccion())) {
+                    fila.setAccion((String) aValue);
+                    fireTableCellUpdated(rowIndex, columnIndex);
+                }
+            }
+        }
+
+        if (asistenciaCambioEstado) {
+        fireTableRowsUpdated(rowIndex, rowIndex); 
+        fireTableCellUpdated(datosCitas.size(), 0); // Etiqueta en col 0
+        fireTableCellUpdated(datosCitas.size(), 2); // Conteo en col 2
+    }
+    }
+
+    public void actualizarListaDatos(ArrayList<DatosTablaCitas> nuevosDatos) {
+        this.datosCitas = (nuevosDatos != null) ? nuevosDatos : new ArrayList<>();
+        fireTableDataChanged(); // Esto repintará toda la tabla, incluyendo la fila de totales
+    }
+}
 ```
 
 ### `src\modelo\MTcita.java`
@@ -1780,7 +1886,7 @@ import modelo.Tutor;
 public class MTtutor extends AbstractTableModel{
     
     private List<Tutor> lt;
-    private String encabezados[] = {"No. de Tarjeta", " Nombre ", " Carrera ", " Dias ", " Horario "};
+    private String encabezados[] = {"No. de Tarjeta", " Nombre ", " Carrera ", " Dias ", " Horario ", "No. de tutorados"};
     
     public MTtutor(List<Tutor> tutores){
         lt = tutores;
@@ -1811,6 +1917,8 @@ public class MTtutor extends AbstractTableModel{
                 return lt.get(rowIndex).getDias();
             case 4:
                 return lt.get(rowIndex).getHoras();
+            case 5:
+                return lt.get(rowIndex).getNumeroDeTutorados();
             default:
                 return null;
         }
@@ -2056,7 +2164,17 @@ public class Tutor implements Serializable {
     public void setHoras(String horas) {
         this.horas = horas;
     }
-
+    
+    // Metodo en clase tutor que regresa el Num de tutorados
+    public int getNumeroDeTutorados() {
+        if (tutoradoList != null) {
+            return tutoradoList.size();
+        } else {
+            return 0;
+        }
+    }
+    
+    // Regresa la lista de tutorados que tiene el tutor
     public List<Tutorado> getTutoradoList() {
         return tutoradoList;
     }
@@ -2397,6 +2515,1198 @@ public class Tutoria implements Serializable {
 
 ```
 
+### `src\vista\IMenuTutorias.java`
+
+```java
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tutorias;
+
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+
+import Control.AdmDatos;
+import Control.CitaJpaController;
+import Control.TutorJpaController;
+import Control.TutoradoJpaController;
+import Control.TutoriaJpaController;
+import Modelo.Cita;
+import Modelo.DatosTablaCitas;
+import Modelo.MTablaCita;
+import Modelo.MTtutor;
+import Modelo.Tutor;
+import Modelo.Tutorado;
+import Modelo.Tutoria;
+import static Modelo.Tutoria_.cita;
+import java.awt.Image;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+
+/**
+ *
+ * @author Hp EliteBook
+ */
+public class IMenuTutorias extends javax.swing.JFrame {
+private Tutor tutor;
+private TutorJpaController cTutor;
+private List<Tutor> tutores;
+private Tutorado tutorado;
+private TutoradoJpaController cTutorado;
+private List<Tutorado> tutorados;
+private MTtutor mtt;
+private DefaultListModel mestudiantes, mtutorados;
+private Map<String,Tutorado> tutorado_nom = new HashMap<>();
+private final String SELECCIONA = "Selecciona Tutor";
+private final String SELECCIONADO  = "Tutor Seleccionado";
+private String[] Carreras = {"Sistemas","Civil","Administracion", "Electronica"};
+private SpinnerNumberModel snm;
+private int max = 50; //Regla del negocioy
+private int min = 0;
+private Cita cita;
+private List<Cita> citas;
+private AdmDatos adm;
+private List<Tutorado> tutorados_s;
+private Map<String,Tutor> tutor_nom = new HashMap<>();
+private Map<Integer,Cita> cita_horas = new HashMap<>();
+private MTablaCita modTabCita;
+private ArrayList<DatosTablaCitas> datosCitas;
+private CitaJpaController cCita;
+private Tutoria tutoria;
+private TutoriaJpaController cTutoria;
+private List<Tutoria> tutorias;
+private Date fecha;
+private ImageIcon iconMiniatura;
+
+    /**
+     * Creates new form IMenuTutorias
+     */
+    public IMenuTutorias() {
+        initComponents();
+        adm = new AdmDatos();
+        cTutor = new TutorJpaController(AdmDatos.getEntityManagerFactory());
+        tutores = cTutor.findTutorEntities();
+        cTutorado = new TutoradoJpaController(AdmDatos.getEntityManagerFactory());
+        tutorados = cTutorado.findTutoradoEntities();
+        cCita = new CitaJpaController(AdmDatos.getEntityManagerFactory());
+        citas = cCita.findCitaEntities();
+        cTutoria =  new TutoriaJpaController(AdmDatos.getEntityManagerFactory());
+        // Inicializacion de Agregar Tutor
+        mtt = new MTtutor(tutores);
+        ttutores.setModel(mtt);
+        configurarComboBox();
+        configurarJSpinner();
+        // Inicializacion de Crear Tutoria
+        FechaActual.setText("Fecha: " + getFecha());
+        cargarTutoresCita();   
+        //Inicializacion de Asignar Tutor
+        cargarTutores();
+        cargarEstudiantes();
+        estudiantes.setModel(mestudiantes);
+        estudiantes.setSelectionMode(1);
+        tutoradoss.setModel(mtutorados);
+        iconMiniatura = redimensionarImagen("/tutorias/Tutor.jpeg", 350, 500);
+        ImagenTutor.setIcon(iconMiniatura);
+       
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        Menu = new javax.swing.JTabbedPane();
+        PTutorados = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        PTutores = new javax.swing.JPanel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        PInicio = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ttutores = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        ttutores1 = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        ttutores2 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        ttutores3 = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        AgregarTutor = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        dn = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        ddh = new javax.swing.JTextField();
+        dnt = new javax.swing.JSpinner();
+        cbCarreras = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        ImagenTutor = new javax.swing.JLabel();
+        AsignarTutor = new javax.swing.JPanel();
+        moverTut = new javax.swing.JButton();
+        asignarTutorado = new javax.swing.JButton();
+        aceptarTutor = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        bct = new javax.swing.JButton();
+        LTutores = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        estudiantes = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tutoradoss = new javax.swing.JList<>();
+        moverEst = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        PCitas = new javax.swing.JPanel();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        PTutorias = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        RegistroTutoria = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ltutorados = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
+        ListaTutor = new javax.swing.JComboBox<>();
+        Aceptar = new javax.swing.JButton();
+        FechaActual = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Menu.setBackground(new java.awt.Color(102, 0, 0));
+        Menu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        Menu.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+
+        jPanel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel12.setText("Buscar Citas");
+
+        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel21.setText("Ingrese No Control");
+
+        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButton2.setText("Buscar");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(44, 44, 44)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(289, 289, 289)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(333, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel21))
+                .addGap(113, 113, 113)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(211, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("VerCitas", jPanel4);
+
+        javax.swing.GroupLayout PTutoradosLayout = new javax.swing.GroupLayout(PTutorados);
+        PTutorados.setLayout(PTutoradosLayout);
+        PTutoradosLayout.setHorizontalGroup(
+            PTutoradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PTutoradosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1))
+        );
+        PTutoradosLayout.setVerticalGroup(
+            PTutoradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+
+        Menu.addTab("Tutorado", PTutorados);
+
+        jTabbedPane2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        ttutores.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ttutores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane1.setViewportView(ttutores);
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel2.setText("Control de Registrados");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Instituto Tecnológico de Oaxaca");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel4.setText("Tutores Registrados");
+
+        ttutores1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ttutores1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane5.setViewportView(ttutores1);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel5.setText("Estudiantes Registrados");
+
+        ttutores2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ttutores2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane6.setViewportView(ttutores2);
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel6.setText("Citas Creadas");
+
+        ttutores3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        ttutores3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane7.setViewportView(ttutores3);
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel11.setText("Tutorias Creadas");
+
+        javax.swing.GroupLayout PInicioLayout = new javax.swing.GroupLayout(PInicio);
+        PInicio.setLayout(PInicioLayout);
+        PInicioLayout.setHorizontalGroup(
+            PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PInicioLayout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(157, 157, 157))
+            .addGroup(PInicioLayout.createSequentialGroup()
+                .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PInicioLayout.createSequentialGroup()
+                        .addGap(747, 747, 747)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PInicioLayout.createSequentialGroup()
+                        .addGap(404, 404, 404)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PInicioLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PInicioLayout.createSequentialGroup()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PInicioLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PInicioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(190, 190, 190))
+            .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PInicioLayout.createSequentialGroup()
+                    .addGap(198, 198, 198)
+                    .addComponent(jLabel11)
+                    .addContainerGap(703, Short.MAX_VALUE)))
+        );
+        PInicioLayout.setVerticalGroup(
+            PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PInicioLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel2)
+                .addGap(56, 56, 56)
+                .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(48, 48, 48)
+                .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PInicioLayout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41))
+            .addGroup(PInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PInicioLayout.createSequentialGroup()
+                    .addContainerGap(439, Short.MAX_VALUE)
+                    .addComponent(jLabel11)
+                    .addGap(226, 226, 226)))
+        );
+
+        jTabbedPane2.addTab("Control", PInicio);
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel7.setText("No Targeta:");
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel8.setText("Nombre:");
+
+        dn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        dn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dnActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel9.setText("Carrera");
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel10.setText("Dias/Horas:");
+
+        ddh.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        ddh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ddhActionPerformed(evt);
+            }
+        });
+
+        dnt.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+
+        cbCarreras.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCarreras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCarrerasActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jButton1.setText("Agregar Registro");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
+        jLabel15.setText("Tutores");
+
+        javax.swing.GroupLayout AgregarTutorLayout = new javax.swing.GroupLayout(AgregarTutor);
+        AgregarTutor.setLayout(AgregarTutorLayout);
+        AgregarTutorLayout.setHorizontalGroup(
+            AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AgregarTutorLayout.createSequentialGroup()
+                .addGap(464, 464, 464)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(AgregarTutorLayout.createSequentialGroup()
+                .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AgregarTutorLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
+                        .addGap(35, 35, 35)
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ddh, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dn, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dnt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(AgregarTutorLayout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ImagenTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+        AgregarTutorLayout.setVerticalGroup(
+            AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AgregarTutorLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AgregarTutorLayout.createSequentialGroup()
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(dnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(dn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(56, 56, 56)
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(ddh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54)
+                        .addGroup(AgregarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(89, 89, 89)
+                        .addComponent(jButton1))
+                    .addComponent(ImagenTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Agregar Tutor", AgregarTutor);
+
+        moverTut.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        moverTut.setText("< Mover Estudiante");
+        moverTut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moverTutActionPerformed(evt);
+            }
+        });
+
+        asignarTutorado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        asignarTutorado.setText("Asignar Tutorado");
+        asignarTutorado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asignarTutoradoActionPerformed(evt);
+            }
+        });
+
+        aceptarTutor.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        aceptarTutor.setText("Aceptar Tutor");
+        aceptarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarTutorActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel16.setText("Estudiantes Disponibles");
+
+        bct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bct.setText("Cambiar Tutor");
+        bct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bctActionPerformed(evt);
+            }
+        });
+
+        LTutores.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LTutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel17.setText("Selecciona Tutor:");
+
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel18.setText("Estudiantes Asignados");
+
+        estudiantes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        estudiantes.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(estudiantes);
+
+        tutoradoss.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tutoradoss.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(tutoradoss);
+
+        moverEst.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        moverEst.setText("Mover Estudiante >");
+        moverEst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moverEstActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Asignar Tutor");
+
+        javax.swing.GroupLayout AsignarTutorLayout = new javax.swing.GroupLayout(AsignarTutor);
+        AsignarTutor.setLayout(AsignarTutorLayout);
+        AsignarTutorLayout.setHorizontalGroup(
+            AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AsignarTutorLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LTutores, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(moverTut)
+                                    .addComponent(moverEst)
+                                    .addGroup(AsignarTutorLayout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(asignarTutorado)))
+                                .addGap(14, 14, 14)))
+                        .addGap(18, 18, 18)
+                        .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                                .addComponent(aceptarTutor)
+                                .addGap(35, 35, 35)
+                                .addComponent(bct))
+                            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(AsignarTutorLayout.createSequentialGroup()
+                        .addGap(399, 399, 399)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel18)
+                .addGap(145, 145, 145))
+        );
+        AsignarTutorLayout.setVerticalGroup(
+            AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AsignarTutorLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel19)
+                .addGap(61, 61, 61)
+                .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LTutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aceptarTutor)
+                    .addComponent(bct)
+                    .addComponent(jLabel17))
+                .addGap(98, 98, 98)
+                .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel18))
+                .addGap(31, 31, 31)
+                .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(AsignarTutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AsignarTutorLayout.createSequentialGroup()
+                            .addComponent(moverTut)
+                            .addGap(38, 38, 38)
+                            .addComponent(moverEst)
+                            .addGap(57, 57, 57))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(asignarTutorado)
+                .addGap(60, 60, 60))
+        );
+
+        jTabbedPane2.addTab("Asignar Tutor", AsignarTutor);
+
+        javax.swing.GroupLayout PTutoresLayout = new javax.swing.GroupLayout(PTutores);
+        PTutores.setLayout(PTutoresLayout);
+        PTutoresLayout.setHorizontalGroup(
+            PTutoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane2)
+        );
+        PTutoresLayout.setVerticalGroup(
+            PTutoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PTutoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2)
+                .addContainerGap())
+        );
+
+        Menu.addTab("Administrador", PTutores);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1084, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 603, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Crear Cita", jPanel1);
+
+        javax.swing.GroupLayout PCitasLayout = new javax.swing.GroupLayout(PCitas);
+        PCitas.setLayout(PCitasLayout);
+        PCitasLayout.setHorizontalGroup(
+            PCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PCitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane3)
+                .addContainerGap())
+        );
+        PCitasLayout.setVerticalGroup(
+            PCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PCitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(108, Short.MAX_VALUE))
+        );
+
+        Menu.addTab("Cita", PCitas);
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel13.setText("Registro de Asistencia");
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel14.setText("Registro de Tutoria");
+
+        RegistroTutoria.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        RegistroTutoria.setText("Registrar Tutoria");
+
+        ltutorados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        ltutorados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(ltutorados);
+
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel20.setText("Tutor");
+
+        ListaTutor.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        ListaTutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ListaTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListaTutorActionPerformed(evt);
+            }
+        });
+
+        Aceptar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        Aceptar.setText("Aceptar");
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarActionPerformed(evt);
+            }
+        });
+
+        FechaActual.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        FechaActual.setText("Fecha: ");
+
+        javax.swing.GroupLayout PTutoriasLayout = new javax.swing.GroupLayout(PTutorias);
+        PTutorias.setLayout(PTutoriasLayout);
+        PTutoriasLayout.setHorizontalGroup(
+            PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTutoriasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTutoriasLayout.createSequentialGroup()
+                        .addComponent(RegistroTutoria)
+                        .addGap(432, 432, 432))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTutoriasLayout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(422, 422, 422))))
+            .addGroup(PTutoriasLayout.createSequentialGroup()
+                .addGroup(PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PTutoriasLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane2))
+                    .addGroup(PTutoriasLayout.createSequentialGroup()
+                        .addGroup(PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PTutoriasLayout.createSequentialGroup()
+                                .addGap(190, 190, 190)
+                                .addComponent(jLabel20)
+                                .addGap(68, 68, 68)
+                                .addComponent(ListaTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(102, 102, 102)
+                                .addComponent(Aceptar))
+                            .addGroup(PTutoriasLayout.createSequentialGroup()
+                                .addGap(439, 439, 439)
+                                .addComponent(FechaActual))
+                            .addGroup(PTutoriasLayout.createSequentialGroup()
+                                .addGap(402, 402, 402)
+                                .addComponent(jLabel14)))
+                        .addGap(0, 150, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        PTutoriasLayout.setVerticalGroup(
+            PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PTutoriasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FechaActual)
+                .addGap(35, 35, 35)
+                .addGroup(PTutoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(ListaTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Aceptar))
+                .addGap(53, 53, 53)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(RegistroTutoria)
+                .addGap(94, 94, 94))
+        );
+
+        Menu.addTab("Tutoria", PTutorias);
+
+        jPanel5.setBackground(new java.awt.Color(204, 153, 0));
+
+        jLabel1.setFont(new java.awt.Font("Dubai Light", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Sistema de Tutorias");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(349, 349, 349)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 1268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Menu)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    public String getFecha(){
+        fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fecha);
+    }
+    
+    public void cargarTutoresCita(){
+        ListaTutor.removeAllItems();
+        tutor_nom.clear();
+        cita_horas.clear();        
+        ListaTutor.addItem(SELECCIONA);
+        int nc = 1;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String ff = formato.format(fecha);
+        citas.sort(Comparator.comparing((Cita c) -> c.getIdtutor().getNombre())
+            .thenComparing(Cita::getHora));
+        for(Cita dCita: citas){
+            if(ff.equals(formato.format(dCita.getFecha())) && dCita.getEstado().equals("0")){
+                ListaTutor.addItem(dCita.getIdtutor().getNombre() + " - Hora: " + dCita.getHora() +":00");
+                tutor_nom.put(dCita.getIdtutor().getNombre() + " - Hora: " + dCita.getHora() +":00",dCita.getIdtutor());
+                cita_horas.put(nc++,dCita);
+            }
+        }
+    }
+    public void cargarTutores(){
+        LTutores.removeAllItems();
+        LTutores.addItem("Selecciona Tutor");
+        for(Tutor dtutor: tutores) LTutores.addItem(dtutor.getNombre());
+    }
+    public void cargarEstudiantes(){
+        mestudiantes = new DefaultListModel();
+        mtutorados = new DefaultListModel();
+        mestudiantes.clear();
+        for(Tutorado dtutorado : tutorados) 
+            if(dtutorado.getIdtutor() == null){
+                mestudiantes.addElement(dtutorado.getNombre());
+                tutorado_nom.put(dtutorado.getNombre(),dtutorado);
+            }
+    }
+    public void configurarComboBox(){
+        cbCarreras.removeAllItems();
+        for(int x = 0; x < Carreras.length; x++ )cbCarreras.addItem(Carreras[x]);  
+    }
+    
+    public void configurarJSpinner(){
+        //int inicio = tutor.getTutoradoCollection()
+        min = cTutor.getTutorCount()+1;
+        snm = new SpinnerNumberModel(min, min, max, 1);    
+        dnt.setModel(snm);  
+    }
+    
+    private void dnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_dnActionPerformed
+
+    private void ddhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ddhActionPerformed
+
+    private void cbCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCarrerasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCarrerasActionPerformed
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        tutor = new Tutor();
+        tutor.setNumtar( (int) dnt.getValue());
+        tutor.setNombre( dn.getText());
+        tutor.setCarrera((String) cbCarreras.getSelectedItem());
+        tutor.setDiashoras(ddh.getText());
+        cTutor.create(tutor);
+        tutores.add(tutor);
+        mtt.fireTableDataChanged();
+        cargarTutores();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
+        ImageIcon icono = new ImageIcon(getClass().getResource(ruta)); // o ruta absoluta
+        Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagen);
+    }
+    
+    private void moverTutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moverTutActionPerformed
+        // TODO add your handling code here:
+        int iest_sel[] = tutoradoss.getSelectedIndices();
+        for (int x = iest_sel.length-1; x >= 0; x--){
+            mestudiantes.addElement(mtutorados.get(iest_sel[x]));
+            mtutorados.remove(iest_sel[x]);
+        }
+        moverTut.setEnabled(!mtutorados.isEmpty());
+        moverEst.setEnabled(!mestudiantes.isEmpty());
+    }//GEN-LAST:event_moverTutActionPerformed
+
+    private void asignarTutoradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarTutoradoActionPerformed
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(this,"Confirma la asignacion de tutor " + LTutores.getSelectedItem() + "?") == 0){
+            for(int nts = 0; nts < mtutorados.size(); nts++){
+                Tutorado t = tutorado_nom.get(mtutorados.get(nts));
+                t.setIdtutor(tutor);
+                try{
+                    cTutorado.edit(t);
+                } catch (Exception ex){
+                    Logger.getLogger(ITutorado.class.getName()).log(Level.SEVERE,null,ex);
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_asignarTutoradoActionPerformed
+        
+    public void cargarTutoresTutoria(){
+        ListaTutor.removeAllItems();
+        tutor_nom.clear();
+        cita_horas.clear();        
+        ListaTutor.addItem(SELECCIONA);
+        int nc = 1;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String ff = formato.format(fecha);
+        citas.sort(Comparator.comparing((Cita c) -> c.getIdtutor().getNombre())
+            .thenComparing(Cita::getHora));
+        for(Cita dCita: citas){
+            if(ff.equals(formato.format(dCita.getFecha())) && dCita.getEstado().equals("0")){
+                ListaTutor.addItem(dCita.getIdtutor().getNombre() + " - Hora: " + dCita.getHora() +":00");
+                tutor_nom.put(dCita.getIdtutor().getNombre() + " - Hora: " + dCita.getHora() +":00",dCita.getIdtutor());
+                cita_horas.put(nc++,dCita);
+            }
+        }
+    }
+    private void aceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarTutorActionPerformed
+        // TODO add your handling code here:
+        if(LTutores.getSelectedItem().equals(SELECCIONA))
+        JOptionPane.showMessageDialog(this,"Selecciona un Tutor");
+        else
+        if(JOptionPane.showConfirmDialog(this,"Confirme Selecciona al tutor " + LTutores.getSelectedItem()+"?") == 0){
+            tutor = tutores.get(LTutores.getSelectedIndex()-1);
+            LTutores.setEnabled(false);
+            jLabel17.setText(SELECCIONADO);
+            aceptarTutor.setEnabled(false);
+            if(!mestudiantes.isEmpty()) moverEst.setEnabled(true);
+        }
+    }//GEN-LAST:event_aceptarTutorActionPerformed
+
+    private void bctActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bctActionPerformed
+        // TODO add your handling code here:
+        LTutores.setEnabled(true);
+        jLabel1.setText(SELECCIONA);
+        aceptarTutor.setEnabled(true);
+    }//GEN-LAST:event_bctActionPerformed
+
+    private void moverEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moverEstActionPerformed
+        // TODO add your handling code here:
+        int iest_sel[] = estudiantes.getSelectedIndices();
+        for (int x = iest_sel.length-1; x >= 0; x--){
+            mtutorados.addElement(mestudiantes.get(iest_sel[x]));
+            mestudiantes.remove(iest_sel[x]);
+        }
+        moverEst.setEnabled(!mestudiantes.isEmpty());
+        moverTut.setEnabled(!mtutorados.isEmpty());
+    }//GEN-LAST:event_moverEstActionPerformed
+
+    private void ListaTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaTutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ListaTutorActionPerformed
+
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        // TODO add your handling code here:
+        if(!(ListaTutor.getSelectedItem().equals(SELECCIONA))){
+
+            cita = cita_horas.get(ListaTutor.getSelectedIndex());
+
+            tutorados_s = new ArrayList<>();
+            for (Tutorado dt: tutorados)
+            if(dt.getIdtutor()!= null && dt.getIdtutor().equals(cita.getIdtutor())) tutorados_s.add(dt);
+
+            datosCitas = new ArrayList<>();
+            for(Tutorado dt: tutorados_s){
+                DatosTablaCitas dtc = new DatosTablaCitas(dt);
+                datosCitas.add(dtc);
+            }
+            modTabCita = new MTablaCita(datosCitas);
+            ltutorados.setModel(modTabCita);
+        } else JOptionPane.showMessageDialog(this,"Seleccione un Tutor - Hola");
+    }//GEN-LAST:event_AceptarActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(IMenuTutorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(IMenuTutorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(IMenuTutorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(IMenuTutorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        try {
+            FlatMacDarkLaf.setup();
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
+        }
+
+        
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new IMenuTutorias().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aceptar;
+    private javax.swing.JPanel AgregarTutor;
+    private javax.swing.JPanel AsignarTutor;
+    private javax.swing.JLabel FechaActual;
+    private javax.swing.JLabel ImagenTutor;
+    private javax.swing.JComboBox<String> LTutores;
+    private javax.swing.JComboBox<String> ListaTutor;
+    private javax.swing.JTabbedPane Menu;
+    private javax.swing.JPanel PCitas;
+    private javax.swing.JPanel PInicio;
+    private javax.swing.JPanel PTutorados;
+    private javax.swing.JPanel PTutores;
+    private javax.swing.JPanel PTutorias;
+    private javax.swing.JButton RegistroTutoria;
+    private javax.swing.JButton aceptarTutor;
+    private javax.swing.JButton asignarTutorado;
+    private javax.swing.JButton bct;
+    private javax.swing.JComboBox<String> cbCarreras;
+    private javax.swing.JTextField ddh;
+    private javax.swing.JTextField dn;
+    private javax.swing.JSpinner dnt;
+    private javax.swing.JList<String> estudiantes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable ltutorados;
+    private javax.swing.JButton moverEst;
+    private javax.swing.JButton moverTut;
+    private javax.swing.JTable ttutores;
+    private javax.swing.JTable ttutores1;
+    private javax.swing.JTable ttutores2;
+    private javax.swing.JTable ttutores3;
+    private javax.swing.JList<String> tutoradoss;
+    // End of variables declaration//GEN-END:variables
+}
+
+```
+
 ### `src\vista\IPCita.java`
 
 ```java
@@ -2407,6 +3717,7 @@ public class Tutoria implements Serializable {
 package vista;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import control.AdmDatos;
 import control.CitaJpaController;
 import control.TutorJpaController;
@@ -2526,7 +3837,7 @@ public class IPCita extends javax.swing.JFrame {
 
         jLabel2.setText("Asunto");
 
-        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PENDIENTE", "COMPLETADA", "CANCELADA" }));
+        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "REALIZADA", "CANCELADA", "PENDIENTE" }));
 
         jLabel3.setText("Num. Tarjeta de Tutor");
 
@@ -2845,7 +4156,8 @@ public class IPCita extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(IPCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        UIManager.setLookAndFeel(new FlatDarkLaf());
+        //UIManager.setLookAndFeel(new FlatDarkLaf());
+        UIManager.setLookAndFeel(new FlatLightLaf());
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -3981,6 +5293,7 @@ public class ITutor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCh15 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         ttutores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -4006,7 +5319,6 @@ public class ITutor extends javax.swing.JDialog {
         jCh12 = new javax.swing.JCheckBox();
         jCh13 = new javax.swing.JCheckBox();
         jCh14 = new javax.swing.JCheckBox();
-        jCh15 = new javax.swing.JCheckBox();
         jCh16 = new javax.swing.JCheckBox();
         jCh17 = new javax.swing.JCheckBox();
         jCh18 = new javax.swing.JCheckBox();
@@ -4015,6 +5327,8 @@ public class ITutor extends javax.swing.JDialog {
         btnActualizarTutor = new javax.swing.JButton();
         btnEliminarTutor = new javax.swing.JButton();
         cboCarrera = new javax.swing.JComboBox<>();
+
+        jCh15.setText("15:00-16:00");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -4030,12 +5344,15 @@ public class ITutor extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ttutores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ttutores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ttutoresMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(ttutores);
+        ttutores.getAccessibleContext().setAccessibleName("");
+        ttutores.getAccessibleContext().setAccessibleDescription("");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Tutores");
@@ -4085,8 +5402,6 @@ public class ITutor extends javax.swing.JDialog {
 
         jCh14.setText("14:00-15:00");
 
-        jCh15.setText("15:00-16:00");
-
         jCh16.setText("16:00-17:00");
 
         jCh17.setText("17:00-18:00");
@@ -4123,133 +5438,141 @@ public class ITutor extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(77, 77, 77)
-                        .addComponent(JspiNumTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jCLunes)
-                            .addComponent(jCMartes)
-                            .addComponent(jCMiercoles)
-                            .addComponent(jCJueves)
-                            .addComponent(jCViernes)
-                            .addComponent(jCSabado)
                             .addComponent(btnLimpiarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAgregarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
+                            .addComponent(btnAgregarTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnActualizarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(627, 627, 627))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCh13)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnActualizarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                    .addComponent(btnEliminarTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jCh12)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCh19))
-                                .addComponent(jCh14)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jCh8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCh15))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jCh11)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCh18))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jCh10)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCh17))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jCh9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCh16))
-                                .addComponent(jCh7, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cboCarrera, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jCLunes)
+                                    .addComponent(jCMartes)
+                                    .addComponent(jCMiercoles)
+                                    .addComponent(jCJueves)
+                                    .addComponent(jCViernes)
+                                    .addComponent(jCSabado))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cboCarrera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(JspiNumTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(174, 174, 174))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jCh12)
+                                                    .addComponent(jCh8)
+                                                    .addComponent(jCh11)
+                                                    .addComponent(jCh10)
+                                                    .addComponent(jCh9)
+                                                    .addComponent(jCh7)
+                                                    .addComponent(jCh13))
+                                                .addGap(26, 26, 26)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(jCh19)
+                                                    .addComponent(jCh14)
+                                                    .addComponent(jCh18, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jCh17, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jCh16, javax.swing.GroupLayout.Alignment.LEADING))))))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(256, 256, 256)
+                        .addComponent(jScrollPane1)))
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(49, 49, 49)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(26, 26, 26))
+                        .addGap(14, 14, 14))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(JspiNumTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(cboCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCLunes)
-                            .addComponent(jCh7)
-                            .addComponent(jCh14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCMartes)
-                            .addComponent(jCh8)
-                            .addComponent(jCh15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCMiercoles)
-                            .addComponent(jCh9)
-                            .addComponent(jCh16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCh10)
-                                .addComponent(jCh17))
-                            .addComponent(jCJueves))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCViernes)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCh11)
-                                .addComponent(jCh18)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCSabado)
-                            .addComponent(jCh19)
-                            .addComponent(jCh12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCh13)
-                        .addGap(14, 14, 14)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCLunes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCMartes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCMiercoles)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCJueves)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCViernes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCSabado))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JspiNumTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCh7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh12))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCh14)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(jCh16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh17)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCh19)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCh13)))
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAgregarTutor)
                             .addComponent(btnActualizarTutor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnLimpiarDatos)
-                            .addComponent(btnEliminarTutor))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                            .addComponent(btnEliminarTutor))))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -4281,7 +5604,7 @@ public class ITutor extends javax.swing.JDialog {
         cboCarrera.setSelectedItem(ttutores.getValueAt(fila, 2).toString());
         marcarDiasDesdeCadena(ttutores.getValueAt(fila, 3).toString());
         marcarHorasDesdeCadena(ttutores.getValueAt(fila, 4).toString());
-        
+        //tutoradorDetutor(ttutores.getValueAt(fila, 5).toString());
     }//GEN-LAST:event_ttutoresMouseClicked
 
     private void btnActualizarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTutorActionPerformed
@@ -4299,6 +5622,7 @@ public class ITutor extends javax.swing.JDialog {
             tutor.setCarrera(cboCarrera.getSelectedItem().toString());
             tutor.setDias(generarCadenaDias());
             tutor.setHoras(generarIntervalosHorarios());
+            //tutor.
             
             cTutor.edit(tutor);
             
@@ -4357,6 +5681,10 @@ public class ITutor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarTutorActionPerformed
 
+    public void tutoradorDetutor(List<Tutor> tutores) {
+        ;
+    }
+    
     public void marcarHorasDesdeCadena(String intervalo) {
         // Limpiar primero todas las horas
         jCh7.setSelected(false);
@@ -4942,9 +6270,10 @@ package vista;
 import com.formdev.flatlaf.FlatLightLaf;
 import control.AdmDatos;
 import control.CitaJpaController;
-import control.TutorJpaController;
-import control.TutoradoJpaController;
+import control.TutorJpaController; // No se usa directamente aquí, pero es parte del contexto
+import control.TutoradoJpaController; // No se usa directamente aquí
 import control.TutoriaJpaController;
+import control.exceptions.IllegalOrphanException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -4955,12 +6284,14 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import modelo.Cita;
-import modelo.DatosTablaCitas;
+import modelo.DatosTablaCitas; // Asumo que esta clase la usas para MTablaCita
 import modelo.MTablaCita;
-import modelo.MTtutor;
+// import modelo.MTtutor; // No se usa en esta clase directamente
 import modelo.Tutor;
 import modelo.Tutorado;
 import modelo.Tutoria;
@@ -4971,84 +6302,214 @@ import modelo.Tutoria;
  */
 public class ITutoria extends javax.swing.JFrame {
 
-    private Tutor tutor;
-    private TutorJpaController cTutor;
-    private List<Tutor> tutores;
-    private Tutorado tutorado;
-    private Cita cita;
-    private List<Cita> citas;
-    private TutoradoJpaController cTutorado;
-    private AdmDatos adm;
-    private List<Tutorado> tutorados;
-    private List<Tutorado> tutorados_a;
-    private Map<String, Tutor> tutor_nom = new HashMap<>();
-    private Map<String, Cita> cita_nom = new HashMap<>();
-    private MTtutor mtt;
-    private MTablaCita modTablaCita;
-    private ArrayList<DatosTablaCitas> datosCitas;
-    private CitaJpaController cCita;
-    private final String SELECCIONA = "Selecciona Tutor";
-    private final String SELECCIONADO = "Tutor Seleccionado";
-    private Tutoria tutoria;
-    private TutoriaJpaController cTutoria;
+    //<editor-fold defaultstate="collapsed" desc="Variables de instancia y constantes">
+    private Tutor tutorSeleccionado; // Sigue siendo útil para saber con qué tutor se está trabajando una vez se selecciona una cita
+    private Cita citaSeleccionada;
+
+    private final CitaJpaController cCita;
+    private final TutoradoJpaController cTutoradoController;
+    private final TutoriaJpaController cTutoria;
+    private final AdmDatos adm;
+
+    private List<Cita> listaTotalCitas; // Cargar todas las citas al inicio
+    private List<Tutorado> listaTotalTutoradosGeneral;
+
+    // citaMap ahora usará un String que puede incluir el nombre del tutor y la fecha para ser único
+    private final Map<String, Cita> citaMap = new HashMap<>();
+
+    private MTablaCita modeloTablaTutoradosEnCita;
+    private List<DatosTablaCitas> datosParaTablaTutorados;
+
+    private final String SELECCIONA_CITA_TEXT = "Seleccione Cita de Hoy"; // O un texto similar
+    private final String NO_HAY_CITAS_TEXT = "No hay citas para esta fecha";
     
-    // Añade estas variables adicionales
-    private Map<String, Tutor> tutorMap = new HashMap<>();
-    private Map<String, Cita> citaMap = new HashMap<>();
-    private MTablaCita tableModel;
-    private List<Tutorado> currentTutorados = new ArrayList<>();
+    private boolean uiInicializada = false; // Nueva bandera
     
-            
+    //</editor-fold>
+    
     public ITutoria() {
         initComponents();
-        
         setLocationRelativeTo(null);
-        
+
+        // 2. Controladores y datos maestros
         adm = new AdmDatos();
-        cTutor = new TutorJpaController(adm.getEnf());
-        tutores = cTutor.findTutorEntities();
-        cTutorado = new TutoradoJpaController(adm.getEnf());
-        tutorados = cTutorado.findTutoradoEntities();
         cCita = new CitaJpaController(adm.getEnf());
-        citas = cCita.findCitaEntities();
+        cTutoradoController = new TutoradoJpaController(adm.getEnf());
         cTutoria = new TutoriaJpaController(adm.getEnf());
-        cargarTutores();
-    }
-    public void cargarTutores(){
-        cboTutores.removeAllItems();
-        cboTutores.addItem(SELECCIONA);
-        tutorMap.clear();
+        listaTotalCitas = cCita.findCitaEntities();
+        listaTotalTutoradosGeneral = cTutoradoController.findTutoradoEntities();
 
-        for(Tutor t : tutores) {
-            cboTutores.addItem(t.getNombre());
-            tutorMap.put(t.getNombre(), t);
-        }
-    }
-    public void cargarCitas(Tutor tutor) {
+        // 3. Modelo de la tabla y asignación a JTable
+        datosParaTablaTutorados = new ArrayList<>();
+        modeloTablaTutoradosEnCita = new MTablaCita((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); // Aquí ya no necesitas el cast (ArrayList) si datosParaTablaTutorados es ArrayList
+        tabTutorados.setModel(modeloTablaTutoradosEnCita);
+
+        // 4. Configuración inicial de otros componentes UI
         cboCitas.removeAllItems();
-        citaMap.clear();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT);
+        dateSeleccionarFecha.setDate(null);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        for(Cita c : citas) {
-            // Corregir la verificación del tutor y estado
-            if(c.getTutor().equals(tutor) && !"Realizada".equals(c.getEstado())) {
-                String fecha = sdf.format(c.getFecha());
-                cboCitas.addItem(fecha);
-                citaMap.put(fecha, c);
+        // 5. Añadir Listeners DESPUÉS de que todo lo referenciado por ellos esté inicializado
+        dateSeleccionarFecha.getDateEditor().addPropertyChangeListener(evt -> {
+            if (uiInicializada && "date".equals(evt.getPropertyName())) {
+                dateSeleccionarFechaPropertyChange(evt);
+            }
+        });
+        // Considera si necesitas action listener para cboCitas aquí, o si btnAceptarCita es suficiente.
+        // cboCitas.addActionListener(evt -> cboCitasActionPerformed(evt));
+
+
+        // 6. Establecer estado inicial de la UI
+        actualizarEstadoComponentes();
+
+        // 7. Marcar UI como completamente inicializada
+        uiInicializada = true;
+    }
+    
+
+    
+    private void actualizarEstadoComponentes() {
+        boolean fechaHaSidoSeleccionada = (dateSeleccionarFecha.getDate() != null);
+
+        boolean citaValidaSeleccionableEnCombo = false;
+        if (fechaHaSidoSeleccionada && cboCitas.getItemCount() > 0 && cboCitas.getSelectedIndex() > 0) {
+            Object selectedItemObj = cboCitas.getSelectedItem();
+            if (selectedItemObj != null) {
+                String selectedItemText = selectedItemObj.toString();
+                if (!SELECCIONA_CITA_TEXT.equals(selectedItemText) && !NO_HAY_CITAS_TEXT.equals(selectedItemText)) {
+                    citaValidaSeleccionableEnCombo = true;
+                }
+            }
+        }
+
+        // Una cita está "confirmada" si this.citaSeleccionada y this.tutorSeleccionado tienen valor
+        // (lo que ocurre DESPUÉS de presionar btnAceptarCita)
+        boolean citaHaSidoConfirmada = (this.citaSeleccionada != null && this.tutorSeleccionado != null);
+
+        // Habilitar ComboBox de Citas si hay fecha
+        cboCitas.setEnabled(fechaHaSidoSeleccionada);
+        jLabel3.setEnabled(fechaHaSidoSeleccionada); // Etiqueta "Cita:"
+
+        // Habilitar botón AceptarCita si hay una cita válida seleccionable en el combo
+        btnAceptarCita.setEnabled(dateSeleccionarFecha.getDate() != null);
+
+        // Componentes que dependen de que una cita haya sido confirmada
+        jLabel2.setEnabled(citaHaSidoConfirmada); // "Tutorados"
+        jScrollPane1.setEnabled(citaHaSidoConfirmada);
+        tabTutorados.setEnabled(citaHaSidoConfirmada);
+        // Considerar si el rowCount de la tabla es > 0 para habilitar registrar.
+        // Si la tabla está vacía porque el tutor no tiene tutorados, igual se debe poder registrar
+        // la tutoría (aunque no haya acciones individuales). Esto depende de tu lógica de negocio.
+        // Por ahora, lo mantendremos así:
+        btnRegistrarTutoria.setEnabled(citaHaSidoConfirmada && tabTutorados.getRowCount() > 0);
+
+
+        // Lógica de limpieza si los prerrequisitos no se cumplen
+        if (!fechaHaSidoSeleccionada) {
+            // Si no hay fecha, cboCitas ya debería estar reseteado por dateSeleccionarFechaPropertyChange
+            // pero podemos asegurarlo.
+            if (cboCitas.getItemCount() == 0 || !SELECCIONA_CITA_TEXT.equals(cboCitas.getItemAt(0))) {
+                cboCitas.removeAllItems();
+                cboCitas.addItem(SELECCIONA_CITA_TEXT);
+            } else if (cboCitas.getSelectedIndex() !=0 && cboCitas.getItemCount() > 0) {
+                 cboCitas.setSelectedIndex(0);
+            }
+            // Si no hay fecha, no puede haber cita ni tutor seleccionado confirmados
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
+        }
+
+        if (!citaHaSidoConfirmada) {
+            // Si no hay cita confirmada, la tabla de tutorados debe estar vacía.
+            // popularTablaTutorados(null) ya se encarga de limpiar 'datosParaTablaTutorados'
+            // y llamar a actualizarListaDatos en el modelo.
+            // Así que esta limpieza aquí podría ser redundante si popularTablaTutorados(null) se llama correctamente.
+            if (datosParaTablaTutorados != null && !datosParaTablaTutorados.isEmpty()) {
+                datosParaTablaTutorados.clear();
+                 if (modeloTablaTutoradosEnCita != null) { // Comprobar si el modelo está inicializado
+                    modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados);
+                }
             }
         }
     }
     
-    private void actualizarTabla() {
-        tableModel = new MTablaCita((ArrayList) currentTutorados);
-        jTable1.setModel(tableModel);
+    private void cargarCitasComboBox(Tutor tutor) {
+        cboCitas.removeAllItems();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT);
+        citaMap.clear();
+        citaSeleccionada = null;
 
-        // Configurar combo box de acciones
-        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
-        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"});
-        accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
+        if (tutor == null) {
+            actualizarEstadoComponentes();
+            return;
+        }
+
+        System.out.println("Cargando citas para tutor: " + tutor.getNombre()); // DEBUG
+        
+        SimpleDateFormat sdfFechaUnicamente = new SimpleDateFormat("dd/MM/yyyy");
+        boolean hayCitasDisponibles = false;
+
+        for (Cita c : listaTotalCitas) {
+            // Comprueba que la cita pertenezca al tutor seleccionado Y que su estado sea "PENDIENTE"
+            if (c.getTutor() != null && c.getTutor().equals(tutor) && "PENDIENTE".equalsIgnoreCase(c.getEstado())) {
+                // ... el resto de la lógica para formatear displayText y añadir a cboCitas y citaMap permanece igual ...
+                String fechaFormateada = (c.getFecha() != null) ? sdfFechaUnicamente.format(c.getFecha()) : "Fecha N/A";
+                String horaFormateada = (c.getHora() != null) ? String.format("%02d:00", c.getHora()) : "Hora N/A";
+                String displayText = String.format("%s a las %s (%s)", fechaFormateada, horaFormateada, c.getAsunto());
+
+                cboCitas.addItem(displayText);
+                citaMap.put(displayText, c);
+                hayCitasDisponibles = true;
+            }
+        }
+        
+        System.out.println("Items en cboCitas después de cargar: " + cboCitas.getItemCount()); // DEBUG
+        if (!hayCitasDisponibles && cboCitas.getItemCount() <=1 ) { // Si solo queda el "Seleccione Cita"
+            cboCitas.addItem("No hay citas pendientes para este tutor");
+             System.out.println("Añadido 'No hay citas...' Items: " + cboCitas.getItemCount()); // DEBUG
+        }
+        actualizarEstadoComponentes();
     }
+    
+    private void popularTablaTutorados(Tutor tutorDeLaCita) {
+        if (datosParaTablaTutorados == null) { // Asegurar que la lista de datos exista
+            datosParaTablaTutorados = new ArrayList<>();
+        }
+        datosParaTablaTutorados.clear();
 
+        if (tutorDeLaCita != null) {
+            for (Tutorado unTutorado : listaTotalTutoradosGeneral) {
+                if (unTutorado.getTutor() != null && unTutorado.getTutor().equals(tutorDeLaCita)) {
+                    datosParaTablaTutorados.add(new DatosTablaCitas(unTutorado));
+                }
+            }
+        }
+
+        // Comprobación crucial ANTES de usar el modelo
+        if (modeloTablaTutoradosEnCita != null) {
+            modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); // No necesitas el cast si datosParaTablaTutorados es ArrayList
+        } else {
+            // Esto indica un problema de inicialización más profundo si ocurre fuera del arranque inicial.
+            System.err.println("ERROR: modeloTablaTutoradosEnCita es null en popularTablaTutorados. La tabla no se actualizará.");
+            // Podrías intentar re-inicializarlo como último recurso, pero es mejor encontrar la causa raíz.
+            // modeloTablaTutoradosEnCita = new MTablaCita(datosParaTablaTutorados);
+            // tabTutorados.setModel(modeloTablaTutoradosEnCita);
+        }
+
+        // La reconfiguración del editor solo si la tabla y el modelo existen
+        if (tabTutorados != null && tabTutorados.getColumnCount() > 2 && modeloTablaTutoradosEnCita != null) {
+            TableColumn accionesColumn = tabTutorados.getColumnModel().getColumn(2);
+            JComboBox<String> comboBoxEditor = new JComboBox<>(new String[]{"Sin acción", "Asesoría", "Trámite", "Atención Médica / Psicológica"});
+            accionesColumn.setCellEditor(new DefaultCellEditor(comboBoxEditor));
+            // System.out.println("Editor de JComboBox para columna 'Acción' re-configurado.");
+        } else if (tabTutorados != null && modeloTablaTutoradosEnCita != null) { // Modelo existe pero no columnas suficientes
+            // System.out.println("Advertencia: La tabla no tiene suficientes columnas para configurar el editor de 'Acción'. Columnas: " + tabTutorados.getColumnCount());
+        }
+
+        if (uiInicializada) { // Solo llama si la UI está lista
+            actualizarEstadoComponentes();
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -5056,20 +6517,19 @@ public class ITutoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        cboTutores = new javax.swing.JComboBox<>();
+        tabTutorados = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboCitas = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        btnAceptarTutor = new javax.swing.JButton();
         btnAceptarCita = new javax.swing.JButton();
         btnRegistrarTutoria = new javax.swing.JButton();
+        dateSeleccionarFecha = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabTutorados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -5080,27 +6540,16 @@ public class ITutoria extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel1.setText("Tutor:");
-
-        cboTutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jScrollPane1.setViewportView(tabTutorados);
 
         jLabel2.setText("Tutorados");
 
-        jLabel3.setText("Cita:");
+        jLabel3.setText("Tutor / Hora");
 
         cboCitas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Realizando una Tutoria");
-
-        btnAceptarTutor.setText("Aceptar");
-        btnAceptarTutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarTutorActionPerformed(evt);
-            }
-        });
 
         btnAceptarCita.setText("Aceptar");
         btnAceptarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -5115,6 +6564,14 @@ public class ITutoria extends javax.swing.JFrame {
                 btnRegistrarTutoriaActionPerformed(evt);
             }
         });
+
+        dateSeleccionarFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateSeleccionarFechaPropertyChange(evt);
+            }
+        });
+
+        jLabel5.setText("Fecha:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -5136,36 +6593,33 @@ public class ITutoria extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(52, 52, 52)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAceptarTutor)
-                            .addComponent(btnAceptarCita))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRegistrarTutoria)
-                        .addGap(162, 162, 162))))
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateSeleccionarFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboCitas, 0, 200, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnAceptarCita)
+                        .addGap(25, 25, 25))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jLabel4)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboTutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnAceptarTutor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateSeleccionarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -5197,118 +6651,267 @@ public class ITutoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarCitaActionPerformed
-        String selectedFecha = (String) cboCitas.getSelectedItem();
-        if (selectedFecha == null || selectedFecha.equals(SELECCIONA)) {
-            JOptionPane.showMessageDialog(this, "Selecciona una cita válida.");
+        if (dateSeleccionarFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Primero debe seleccionar una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        cita = citaMap.get(selectedFecha);
-        if (cita == null) {
-            JOptionPane.showMessageDialog(this, "Cita no encontrada.");
+        // Valida que no sea el placeholder o el mensaje "No hay citas..."
+        if (cboCitas.getSelectedIndex() <= 0 || 
+            SELECCIONA_CITA_TEXT.equals(cboCitas.getSelectedItem()) || 
+            NO_HAY_CITAS_TEXT.equals(cboCitas.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Seleccione una cita válida de la lista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
+            popularTablaTutorados(null); // Limpia la tabla
+            // actualizarEstadoComponentes(); // popularTablaTutorados ya lo llama
             return;
         }
 
-        // Obtener tutorados asociados al tutor
-        currentTutorados = new ArrayList<>();
-        for (Tutorado t : tutorados) {
-            if (t.getTutor() != null && t.getTutor().equals(tutor)) {
-                currentTutorados.add(t);
+        String citaDisplayText = (String) cboCitas.getSelectedItem();
+        Cita citaDelCombo = citaMap.get(citaDisplayText);
+
+        if (citaDelCombo != null) {
+            if (citaDelCombo.getTutor() == null) {
+                JOptionPane.showMessageDialog(this, "La cita seleccionada no tiene un tutor asignado. No se puede proceder.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
+                this.citaSeleccionada = null;
+                this.tutorSeleccionado = null;
+                popularTablaTutorados(null);
+                return;
             }
+            this.citaSeleccionada = citaDelCombo;
+            this.tutorSeleccionado = this.citaSeleccionada.getTutor(); // Establecer el tutor basado en la cita
+
+            popularTablaTutorados(this.tutorSeleccionado); // Popular tabla con tutorados de este tutor
+        } else {
+            JOptionPane.showMessageDialog(this, "Cita seleccionada no encontrada en el mapa. Intente de nuevo.", "Error Interno", JOptionPane.ERROR_MESSAGE);
+            this.citaSeleccionada = null;
+            this.tutorSeleccionado = null;
+            popularTablaTutorados(null);
         }
-
-        // Actualizar modelo de tabla
-        datosCitas = new ArrayList<>();
-        for (Tutorado t : currentTutorados) {
-            datosCitas.add(new DatosTablaCitas(t));
-        }
-
-        modTablaCita = new MTablaCita(datosCitas);
-        jTable1.setModel(modTablaCita);
-
-        // Configurar combo de acciones
-        TableColumn accionesColumn = jTable1.getColumnModel().getColumn(2);
-        JComboBox<String> comboBox = new JComboBox<>(
-            new String[]{"Sin acción", "Seguimiento", "Recomendación", "Aprobado"}
-        );
-        accionesColumn.setCellEditor(new DefaultCellEditor(comboBox));
+        // actualizarEstadoComponentes(); // popularTablaTutorados ya lo llama// Actualizar el estado de la UI
     }//GEN-LAST:event_btnAceptarCitaActionPerformed
 
     private void btnRegistrarTutoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTutoriaActionPerformed
-        if (tutor == null || cita == null || currentTutorados.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete todos los campos primero.");
+        if (citaSeleccionada == null || citaSeleccionada.getTutor() == null) {
+            JOptionPane.showMessageDialog(this, "Debe tener una cita válida aceptada (con tutor asignado).", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Asegurar que la cita tiene el tutor asignado
-        cita.setTutor(tutor);  // Asumiendo que Cita tiene un campo Tutor con setTutor()
+        // No es necesario verificar datosParaTablaTutorados.isEmpty() aquí si el modelo
+        // maneja una fila de totales, porque getRowCount() sería al menos 1.
+        // Es mejor verificar si hay datos *reales* de tutorados.
+        if (datosParaTablaTutorados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay tutorados listados para esta cita para registrar.", "Información Incompleta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        TableModel model = jTable1.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String nombre = (String) model.getValueAt(i, 0);
-            String accion = (String) model.getValueAt(i, 2);
+        if (this.tutorSeleccionado != null && !citaSeleccionada.getTutor().equals(this.tutorSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Inconsistencia de datos del tutor. Por favor, re-seleccione la cita.", "Error de Consistencia", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            Tutorado tutoradoActual = null;
-            for (Tutorado t : currentTutorados) {
-                if (t.getNombre().equals(nombre)) {
-                    tutoradoActual = t;
-                    break;
-                }
-            }
+        int tutoriasRegistradasExitosamente = 0;
 
-            if (tutoradoActual != null) {
+        // Iterar SOLAMENTE sobre las filas de datos, NO sobre la fila de totales.
+        // El tamaño de 'datosParaTablaTutorados' es el número de filas de datos reales.
+        for (int i = 0; i < datosParaTablaTutorados.size(); i++) { // <<--- CAMBIO IMPORTANTE AQUÍ
+            DatosTablaCitas datosFila = datosParaTablaTutorados.get(i); // Ahora 'i' siempre será un índice válido para datosParaTablaTutorados
+            Tutorado tutoradoDeLaFila = datosFila.getTutorado();
+
+            // Obtener valores de la tabla (modelo) para la fila 'i' (que corresponde a una fila de datos)
+            Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
+            String accion = (String) modeloTablaTutoradosEnCita.getValueAt(i, 2);
+
+            if (tutoradoDeLaFila != null && asistencia != null && asistencia) {
                 Tutoria nuevaTutoria = new Tutoria();
-                nuevaTutoria.setIdCita(cita);  // Método correcto
-                nuevaTutoria.setIdTutorado(tutoradoActual);  // Método correcto
-                nuevaTutoria.setAcciones(accion);  // Método correcto
+                nuevaTutoria.setIdCita(citaSeleccionada);
+                nuevaTutoria.setIdTutorado(tutoradoDeLaFila);
+                nuevaTutoria.setAcciones((accion == null || accion.equals("Sin acción") || accion.trim().isEmpty()) ? "Asistencia registrada." : accion);
 
                 try {
                     cTutoria.create(nuevaTutoria);
+                    tutoriasRegistradasExitosamente++;
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error al guardar tutoría: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(this, "Error al guardar tutoría para " + tutoradoDeLaFila.getNombre() + ": " + ex.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 }
             }
         }
 
-        // Actualizar estado de la cita
-        cita.setEstado("Realizada");
-        try {
-            cCita.edit(cita);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar cita: " + ex.getMessage());
+        // ... (resto del método para actualizar estado de cita y limpiar, como lo tenías)
+        if (tutoriasRegistradasExitosamente > 0) {
+            try {
+                Cita citaParaActualizar = cCita.findCita(citaSeleccionada.getIdCita());
+                if (citaParaActualizar != null) {
+                    citaParaActualizar.setEstado("REALIZADA");
+                    cCita.edit(citaParaActualizar);
+                    int indexEnListaMaestra = listaTotalCitas.indexOf(citaSeleccionada);
+                    if (indexEnListaMaestra != -1) {
+                        listaTotalCitas.set(indexEnListaMaestra, citaParaActualizar);
+                    }
+                    citaSeleccionada = citaParaActualizar;
+                    JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente + " tutoría(s) registrada(s) exitosamente. La cita ha sido marcada como 'REALIZADA'.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: No se pudo recargar la cita para actualizar su estado.", "Error de Actualización", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IllegalOrphanException ioe) {
+                JOptionPane.showMessageDialog(this, "Error de relación al actualizar cita (IllegalOrphanException): " +
+                    ioe.getMessage() + (ioe.getMessages() != null ? "\nDetalles: " + String.join(", ", ioe.getMessages()) : ""),
+                    "Error de Datos", JOptionPane.ERROR_MESSAGE);
+                ioe.printStackTrace();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, tutoriasRegistradasExitosamente +
+                    " tutoría(s) registrada(s), pero hubo un error al actualizar el estado de la cita: " + ex.getMessage(),
+                    "Error Parcial al Actualizar Cita", JOptionPane.WARNING_MESSAGE);
+                ex.printStackTrace();
+            }
+        } else if (!datosParaTablaTutorados.isEmpty()) { // Se modificó esta condición para ser más precisa
+            boolean algunaAsistenciaMarcada = false;
+            for (int i = 0; i < datosParaTablaTutorados.size(); i++) { // Iterar sobre datos reales
+                Boolean asistencia = (Boolean) modeloTablaTutoradosEnCita.getValueAt(i, 1);
+                if (asistencia != null && asistencia) {
+                    algunaAsistenciaMarcada = true;
+                    break;
+                }
+            }
+            if(!algunaAsistenciaMarcada){
+                 JOptionPane.showMessageDialog(this, "No se marcaron asistencias. La cita no se marcará como 'REALIZADA'.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                 JOptionPane.showMessageDialog(this, "No se registraron tutorías aunque hubo asistencias marcadas (posible error previo). Verifique.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else { // datosParaTablaTutorados está vacío
+             JOptionPane.showMessageDialog(this, "No hay tutorados en la lista para registrar.", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        JOptionPane.showMessageDialog(this, "Tutoría registrada exitosamente!");
-        limpiarCampos();
+        limpiarCamposYInterfaz();
     }//GEN-LAST:event_btnRegistrarTutoriaActionPerformed
 
-    private void btnAceptarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarTutorActionPerformed
-        if (cboTutores.getSelectedItem().equals(SELECCIONA)) {
-            JOptionPane.showMessageDialog(this, "Selecciona un tutor válido.");
+    private void cboTutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTutoresActionPerformed
+        
+    }//GEN-LAST:event_cboTutoresActionPerformed
+
+    private void dateSeleccionarFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateSeleccionarFechaPropertyChange
+        // El listener ya filtra por evt.getPropertyName() == "date"
+        java.util.Date fechaSeleccionada = dateSeleccionarFecha.getDate();
+
+        // Limpiar selecciones previas y tabla independientemente de si hay nueva fecha o no.
+        // Esto asegura que al cambiar la fecha (incluso a null), la tabla se limpie.
+        this.citaSeleccionada = null;
+        this.tutorSeleccionado = null; // El tutor se deriva de la cita
+        popularTablaTutorados(null); // Limpia la tabla
+
+        if (fechaSeleccionada != null) {
+            cargarCitasDelDia(fechaSeleccionada); // Carga nuevas citas y actualiza UI
+        } else {
+            // Si la fecha se borra, limpiar cboCitas
+            cboCitas.removeAllItems();
+            cboCitas.addItem(SELECCIONA_CITA_TEXT);
+            citaMap.clear();
+            actualizarEstadoComponentes(); // Actualiza la UI
+        }
+    }//GEN-LAST:event_dateSeleccionarFechaPropertyChange
+    
+    private void cboCitasActionPerformed(java.awt.event.ActionEvent evt) {
+        // Si se selecciona "Seleccione Cita" o no hay citas válidas,
+        // limpiar la selección de cita y actualizar componentes.
+        if (cboCitas.getSelectedIndex() <= 0 ||
+            SELECCIONA_CITA_TEXT.equals(cboCitas.getSelectedItem()) ||
+            "No hay citas pendientes para este tutor".equals(cboCitas.getSelectedItem())) {
+
+            citaSeleccionada = null; // Anular la cita seleccionada
+            // Limpiar la tabla si la cita ya no es válida
+            datosParaTablaTutorados.clear();
+            if (modeloTablaTutoradosEnCita != null) { // Asegurarse que el modelo no es null
+                 modeloTablaTutoradosEnCita.fireTableDataChanged();
+            }
+        } else {
+            // Una cita válida ha sido seleccionada en el ComboBox.
+            // No establecemos 'citaSeleccionada' aquí, eso lo hace btnAceptarCita.
+            // La acción aquí es principalmente para actualizar el estado de los botones.
+        }
+        actualizarEstadoComponentes(); // Asegura que el estado de btnAceptarCita se reevalúe
+    }
+
+
+    private void limpiarCamposYInterfaz() {
+        tutorSeleccionado = null;
+        citaSeleccionada = null;
+
+        // Desactivar temporalmente el listener del JDateChooser para evitar llamadas recursivas o prematuras
+        // Esto es una técnica común si el setDate(null) dispara el evento y causa problemas.
+        boolean listenerWasActive = uiInicializada;
+        uiInicializada = false; // Desactivar temporalmente el procesamiento del evento
+        dateSeleccionarFecha.setDate(null);
+        uiInicializada = listenerWasActive; // Restaurar estado del listener
+
+        cboCitas.removeAllItems();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT);
+        citaMap.clear();
+
+        if(datosParaTablaTutorados == null) datosParaTablaTutorados = new ArrayList<>();
+        datosParaTablaTutorados.clear();
+
+        if(modeloTablaTutoradosEnCita != null) { // Comprobar nulidad
+            modeloTablaTutoradosEnCita.actualizarListaDatos((ArrayList<DatosTablaCitas>) datosParaTablaTutorados); 
+        } else {
+            // Si el modelo es null aquí, hay un problema de inicialización.
+            // Como mínimo, la lista de datos está vacía.
+            System.err.println("ADVERTENCIA: modeloTablaTutoradosEnCita es null en limpiarCamposYInterfaz.");
+        }
+        actualizarEstadoComponentes();
+    }
+    
+    private void cargarCitasDelDia(java.util.Date fechaSeleccionada) {
+        cboCitas.removeAllItems();
+        cboCitas.addItem(SELECCIONA_CITA_TEXT); // Placeholder inicial
+        citaMap.clear();
+
+        // Cuando se carga por fecha, la cita y el tutor seleccionados previamente deben resetearse
+        // hasta que el usuario explícitamente acepte una nueva cita.
+        this.citaSeleccionada = null; 
+        this.tutorSeleccionado = null;
+
+        if (fechaSeleccionada == null) {
+            actualizarEstadoComponentes(); // Actualiza la UI (ej. deshabilita btnAceptarCita)
             return;
         }
 
-        String nombreTutor = (String) cboTutores.getSelectedItem();
-        tutor = tutorMap.get(nombreTutor);
+        SimpleDateFormat sdfCompararFecha = new SimpleDateFormat("yyyyMMdd");
+        String fechaSeleccionadaStr = sdfCompararFecha.format(fechaSeleccionada);
+        boolean hayCitasDisponibles = false;
 
-        if (tutor != null) {
-            cargarCitas(tutor);
-        } else {
-            JOptionPane.showMessageDialog(this, "Tutor no encontrado.");
+        // System.out.println("Filtrando citas para la fecha: " + fechaSeleccionadaStr);
+
+        for (Cita c : listaTotalCitas) {
+            if (c.getFecha() != null && "PENDIENTE".equalsIgnoreCase(c.getEstado())) {
+                String fechaCitaStr = sdfCompararFecha.format(c.getFecha());
+                if (fechaCitaStr.equals(fechaSeleccionadaStr)) {
+                    String tutorNombre = (c.getTutor() != null && c.getTutor().getNombre() != null) ? c.getTutor().getNombre() : "Tutor Desconocido";
+                    String horaFormateada = (c.getHora() != null) ? String.format("%02d:00", c.getHora()) : "Hora N/A";
+                    String asunto = (c.getAsunto() != null && !c.getAsunto().isEmpty()) ? c.getAsunto() : "Sin Asunto";
+
+                    String displayText = String.format("Tutor: %s - %s (%s)", tutorNombre, horaFormateada, asunto);
+
+                    cboCitas.addItem(displayText);
+                    citaMap.put(displayText, c);
+                    hayCitasDisponibles = true;
+                }
+            }
         }
-    }//GEN-LAST:event_btnAceptarTutorActionPerformed
 
-    // Método auxiliar para limpiar campos después de guardar
-    private void limpiarCampos() {
-        cboTutores.setSelectedIndex(0);
-        cboCitas.removeAllItems();
-        currentTutorados.clear();
-        datosCitas.clear();
-        modTablaCita = new MTablaCita(new ArrayList<>());
-        jTable1.setModel(modTablaCita);
-        tutor = null;
-        cita = null;
+        if (!hayCitasDisponibles) { // Si no se añadió ninguna cita real
+            // Y solo está el item "Seleccione Cita..."
+            if (cboCitas.getItemCount() <= 1) {
+                 cboCitas.addItem(NO_HAY_CITAS_TEXT);
+            }
+        }
+
+        if (cboCitas.getItemCount() > 0) {
+            cboCitas.setSelectedIndex(0); // Dejar "Seleccione Cita..." por defecto
+        }
+        actualizarEstadoComponentes();
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -5346,17 +6949,16 @@ public class ITutoria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarCita;
-    private javax.swing.JButton btnAceptarTutor;
     private javax.swing.JButton btnRegistrarTutoria;
     private javax.swing.JComboBox<String> cboCitas;
-    private javax.swing.JComboBox<String> cboTutores;
-    private javax.swing.JLabel jLabel1;
+    private com.toedter.calendar.JDateChooser dateSeleccionarFecha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabTutorados;
     // End of variables declaration//GEN-END:variables
 }
 
