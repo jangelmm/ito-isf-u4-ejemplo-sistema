@@ -38,6 +38,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public VentanaPrincipal(Usuarios u) {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        
         this.usuarioActual = u;
         lblBienvenida.setText("!Bienvenido, " + u.getNombre() + "!");
         lblNombre.setText("Nombre: " + u.getNombre());
@@ -139,6 +142,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnVerComentarios = new javax.swing.JButton();
         btnElliminarTaller = new javax.swing.JButton();
         txtFecha_Hora = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
         DialogGestionConvocatorias = new javax.swing.JDialog();
         TITULO = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -162,25 +167,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         cboEventoAsociado = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         txtFieldFechaInscripción = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
         DialogInscripcionEventoTaller = new javax.swing.JDialog();
         btnInscribirme = new javax.swing.JButton();
-        btnVerMisInscripciones = new javax.swing.JButton();
-        jLabel23 = new javax.swing.JLabel();
         TITULO6 = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        lstEventosDisponibles = new javax.swing.JList<>();
         jScrollPane11 = new javax.swing.JScrollPane();
         tblTalleresDisponibles = new javax.swing.JTable();
         TITULO7 = new javax.swing.JLabel();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        taMostrarDetSelec = new javax.swing.JTextArea();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnDesinscribirme = new javax.swing.JToggleButton();
         DialogGestionEvidencias = new javax.swing.JDialog();
         jLabel14 = new javax.swing.JLabel();
         TITULO2 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblEvidencias = new javax.swing.JTable();
         txtNombreTaller4 = new javax.swing.JLabel();
-        txtFieldArchivo = new javax.swing.JTextField();
         txtNombreTaller5 = new javax.swing.JLabel();
         TITULO3 = new javax.swing.JLabel();
         txtFieldTituloEvidencia = new javax.swing.JTextField();
@@ -191,7 +194,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnSubirEvidencia = new javax.swing.JButton();
         btnDescargarEvidencia = new javax.swing.JButton();
         btnEliminarEvidencia = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        panelGeneral = new javax.swing.JPanel();
+        panelEncabezado = new javax.swing.JPanel();
         lblBienvenida = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel24 = new javax.swing.JLabel();
         panelEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -402,8 +410,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(encabezado1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -613,8 +621,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(encabezado2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         txtNombreTaller6.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
@@ -658,10 +666,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        TITULO4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO4.setText("Talleres Registrados");
 
-        TITULO5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO5.setText("Gestión de Talleres");
 
         tblTalleres.setModel(new javax.swing.table.DefaultTableModel(
@@ -694,16 +702,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnEditarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditarTaller.setText("Editar Taller");
 
-        btnAgregarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAgregarTaller.setText("Agregar Taller");
 
-        btnVerComentarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnVerComentarios.setText("Ver comentarios");
 
-        btnElliminarTaller.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnElliminarTaller.setText("Eliminar Taller");
 
         txtFecha_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
@@ -713,132 +717,131 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionTalleres.getContentPane().setLayout(DialogGestionTalleresLayout);
         DialogGestionTalleresLayout.setHorizontalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                    .addComponent(txtMaterialReq)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel19)
-                                        .addComponent(cboEstadoTaller)
-                                        .addComponent(jLabel22)
-                                        .addComponent(jLabel18))
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                            .addGap(76, 76, 76)
-                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombreTaller6)
-                                    .addComponent(txtCupoMaximo)
-                                    .addComponent(txtFecha_Hora)
-                                    .addComponent(txtDuracion))
-                                .addGap(81, 81, 81)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(54, 54, 54)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(btnAgregarTaller)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditarTaller)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnElliminarTaller)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVerComentarios)))
-                .addContainerGap(52, Short.MAX_VALUE))
-            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TITULO5)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(TITULO5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(txtMaterialReq)
+                                        .addGap(76, 76, 76)
+                                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombreTaller6)
+                                            .addComponent(txtCupoMaximo)
+                                            .addComponent(txtFecha_Hora)
+                                            .addComponent(txtDuracion))
+                                        .addGap(81, 81, 81)
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)))
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(57, 57, 57)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel19)
+                                    .addComponent(cboEstadoTaller))
+                                .addGap(18, 18, 18)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboEventoAsociado1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboEventoAsociado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(18, 18, 18))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(btnAgregarTaller)
+                .addGap(89, 89, 89)
+                .addComponent(btnEditarTaller)
+                .addGap(131, 131, 131)
+                .addComponent(btnElliminarTaller)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVerComentarios)
+                .addGap(36, 36, 36))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGap(343, 343, 343)
                 .addComponent(TITULO4)
-                .addGap(194, 194, 194))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DialogGestionTalleresLayout.setVerticalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addComponent(TITULO5)
+                .addGap(25, 25, 25)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(TITULO5))
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(TITULO4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                                .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                                .addGap(65, 65, 65)
-                                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMaterialReq, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(14, 14, 14)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                                .addGap(40, 40, 40)
-                                                .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addComponent(txtCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtMaterialReq, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnElliminarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerComentarios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
+                    .addComponent(btnAgregarTaller)
+                    .addComponent(btnEditarTaller)
+                    .addComponent(btnElliminarTaller)
+                    .addComponent(btnVerComentarios))
+                .addGap(21, 21, 21)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(TITULO4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
-        DialogGestionConvocatorias.setPreferredSize(new java.awt.Dimension(850, 500));
-
-        TITULO.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO.setText("Gestión de Convocatorias");
 
         tblConvocatorias.setModel(new javax.swing.table.DefaultTableModel(
@@ -882,13 +885,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel11.setText("Descripción convocatoria:");
 
-        btnPublicar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPublicar.setText("Publicar/Guardar");
 
         txtNombreTaller1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtNombreTaller1.setText("Fecha límite:");
 
-        btnEliminarConvocatoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEliminarConvocatoria.setText("Eliminar Convocatoria");
 
         txtFieldFehcaLímite.addActionListener(new java.awt.event.ActionListener() {
@@ -897,13 +898,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnModificar.setText("Modificar");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel12.setText("Para taller:");
 
-        TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO1.setText("Lista de Convocatorias Existentes");
 
         cboTallerAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -924,114 +924,109 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionConvocatoriasLayout.setHorizontalGroup(
             DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                         .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
                             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                .addComponent(txtNombreTaller)
-                                .addGap(97, 97, 97)
-                                .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombreTaller2)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel12)
-                                    .addComponent(txtNombreTaller1)
-                                    .addComponent(txtNombreTaller3))
-                                .addGap(27, 27, 27)
-                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFieldPublicoObjetivo)
-                                    .addComponent(txtFieldFehcaLímite)
-                                    .addComponent(txtFieldFechaInscripción)
-                                    .addComponent(cboEventoAsociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58))
+                                    .addComponent(TITULO)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                            .addGap(29, 29, 29)
+                                            .addComponent(btnPublicar)
+                                            .addGap(211, 211, 211)
+                                            .addComponent(btnModificar)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnEliminarConvocatoria))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel11)
+                                                .addComponent(txtNombreTaller1)
+                                                .addComponent(txtNombreTaller))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(txtNombreTaller2))
+                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(txtFieldFehcaLímite)
+                                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                                                    .addGap(18, 18, 18)
+                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel13)
+                                                        .addComponent(jLabel12)
+                                                        .addComponent(txtNombreTaller3))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtFieldFechaInscripción)
+                                                .addComponent(cboEventoAsociado, 0, 216, Short.MAX_VALUE)
+                                                .addComponent(cboTallerAsociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtFieldPublicoObjetivo))))))
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addGap(282, 282, 282)
+                                .addComponent(TITULO1)))
+                        .addGap(0, 60, Short.MAX_VALUE))
                     .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addComponent(TITULO)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TITULO1)
-                        .addGap(101, 101, 101))
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(btnPublicar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarConvocatoria)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(jSeparator5))
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         DialogGestionConvocatoriasLayout.setVerticalGroup(
             DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TITULO)
+                .addGap(28, 28, 28)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldFechaInscripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(TITULO))
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(TITULO1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(12, 12, 12)
                         .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFieldFehcaLímite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFieldFechaInscripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboEventoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboEventoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16)
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFieldPublicoObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                            .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addComponent(txtFieldFehcaLímite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldPublicoObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPublicar)
+                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnModificar)
+                        .addComponent(btnEliminarConvocatoria)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TITULO1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
-        btnInscribirme.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnInscribirme.setText("Inscribirme");
+        btnInscribirme.setText("Inscribirse al Evento/Taller");
 
-        btnVerMisInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnVerMisInscripciones.setText("Ver Mis Inscripciones");
-
-        jLabel23.setText("jLabel1");
-
-        TITULO6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO6.setText("Inscripción a Eventos/Talleres");
-
-        lstEventosDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane10.setViewportView(lstEventosDisponibles);
 
         tblTalleresDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1046,12 +1041,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane11.setViewportView(tblTalleresDisponibles);
 
-        TITULO7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TITULO7.setText("Eventos/Talleres Disponibles:");
 
-        taMostrarDetSelec.setColumns(20);
-        taMostrarDetSelec.setRows(5);
-        jScrollPane12.setViewportView(taMostrarDetSelec);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(jTable1);
+
+        btnDesinscribirme.setText("Anular Inscripción");
 
         javax.swing.GroupLayout DialogInscripcionEventoTallerLayout = new javax.swing.GroupLayout(DialogInscripcionEventoTaller.getContentPane());
         DialogInscripcionEventoTaller.getContentPane().setLayout(DialogInscripcionEventoTallerLayout);
@@ -1060,54 +1065,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
                 .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                                    .addGap(251, 251, 251)
-                                    .addComponent(btnInscribirme)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnVerMisInscripciones)
-                                    .addGap(155, 155, 155))
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TITULO6)
-                            .addComponent(TITULO7))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                            .addComponent(TITULO7))
+                        .addGap(0, 647, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addComponent(btnInscribirme)
+                        .addGap(311, 311, 311))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addComponent(btnDesinscribirme)
+                        .addGap(328, 328, 328))))
         );
         DialogInscripcionEventoTallerLayout.setVerticalGroup(
             DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(TITULO6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TITULO7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnInscribirme)
                 .addGap(18, 18, 18)
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane12)
-                    .addComponent(jScrollPane10)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVerMisInscripciones, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInscribirme, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(btnDesinscribirme)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel14.setText("Descripción Evidencia:");
 
-        TITULO2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TITULO2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO2.setText("Gestión de Evidencias para: [Nombre Taller/Evento]");
 
         tblEvidencias.setModel(new javax.swing.table.DefaultTableModel(
@@ -1126,16 +1126,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtNombreTaller4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtNombreTaller4.setText("Archivo:");
 
-        txtFieldArchivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldArchivoActionPerformed(evt);
-            }
-        });
-
         txtNombreTaller5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtNombreTaller5.setText("Título Evidencia:");
 
-        TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO3.setText("Evidencias Subidas");
 
         txtFieldTituloEvidencia.addActionListener(new java.awt.event.ActionListener() {
@@ -1154,16 +1148,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         taDescripcionEvidencia.setRows(5);
         jScrollPane7.setViewportView(taDescripcionEvidencia);
 
-        btnSeleccionarArchivo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSeleccionarArchivo.setText("Seleccionar Archivo");
 
-        btnSubirEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSubirEvidencia.setText("Subir Evidencia");
 
-        btnDescargarEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDescargarEvidencia.setText("Descargar Evidencia");
 
-        btnEliminarEvidencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEliminarEvidencia.setText("Eliminar Evidencia");
 
         javax.swing.GroupLayout DialogGestionEvidenciasLayout = new javax.swing.GroupLayout(DialogGestionEvidencias.getContentPane());
@@ -1174,130 +1164,124 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TITULO2)
-                            .addComponent(TITULO3)
-                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                        .addComponent(txtNombreTaller4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtFieldArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel14)
-                                            .addComponent(txtNombreTaller5))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                                        .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(47, 47, 47)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(TITULO2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGap(0, 65, Short.MAX_VALUE)
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(txtNombreTaller5))
+                                .addGap(14, 14, 14)
+                                .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7))
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(txtNombreTaller4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20))))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator6)
+                            .addComponent(TITULO3)
+                            .addComponent(jScrollPane6)
                             .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
                                 .addComponent(btnSeleccionarArchivo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(97, 97, 97)
                                 .addComponent(btnSubirEvidencia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(88, 88, 88)
                                 .addComponent(btnDescargarEvidencia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                                 .addComponent(btnEliminarEvidencia)))
-                        .addGap(110, 110, 110))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         DialogGestionEvidenciasLayout.setVerticalGroup(
             DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(TITULO2)
-                .addGap(18, 18, 18)
-                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(txtNombreTaller4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TITULO2)
+                        .addGap(18, 18, 18)
                         .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFieldArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreTaller4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TITULO3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSeleccionarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSubirEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDescargarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(btnSeleccionarArchivo)
+                    .addComponent(btnSubirEvidencia)
+                    .addComponent(btnDescargarEvidencia)
+                    .addComponent(btnEliminarEvidencia))
+                .addGap(496, 496, 496))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AcademicPlus - Ventana Principal");
+        setPreferredSize(new java.awt.Dimension(800, 800));
+
+        panelGeneral.setLayout(new java.awt.GridLayout(2, 0));
+
+        panelEncabezado.setMinimumSize(new java.awt.Dimension(20, 40));
+        panelEncabezado.setLayout(new java.awt.GridLayout(3, 0));
 
         lblBienvenida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBienvenida.setText("¡Bienvenido, !");
+        lblBienvenida.setText("Bienvenido al Sistema");
         lblBienvenida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelEncabezado.add(lblBienvenida);
+        panelEncabezado.add(jSeparator1);
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario_muestra.png"))); // NOI18N
+        jLabel24.setText("AcademicPlus");
+        panelEncabezado.add(jLabel24);
+
+        panelGeneral.add(panelEncabezado);
+
+        panelEstatus.setLayout(new java.awt.GridLayout(5, 1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Estatus del usuario");
+        panelEstatus.add(jLabel1);
 
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombre.setText("Nombre: ");
+        panelEstatus.add(lblNombre);
 
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCorreo.setText("Correo: ");
         lblCorreo.setPreferredSize(new java.awt.Dimension(50, 16));
+        panelEstatus.add(lblCorreo);
 
         lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblRol.setText("Rol: ");
+        panelEstatus.add(lblRol);
 
         lblNumControl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNumControl.setText("Número de control: ");
+        panelEstatus.add(lblNumControl);
 
-        javax.swing.GroupLayout panelEstatusLayout = new javax.swing.GroupLayout(panelEstatus);
-        panelEstatus.setLayout(panelEstatusLayout);
-        panelEstatusLayout.setHorizontalGroup(
-            panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstatusLayout.createSequentialGroup()
-                .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelEstatusLayout.createSequentialGroup()
-                        .addGap(235, 235, 235)
-                        .addGroup(panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelEstatusLayout.createSequentialGroup()
-                        .addGap(305, 305, 305)
-                        .addComponent(jLabel1)))
-                .addContainerGap(253, Short.MAX_VALUE))
-        );
-        panelEstatusLayout.setVerticalGroup(
-            panelEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstatusLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(lblNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRol)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNumControl)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+        panelGeneral.add(panelEstatus);
 
         menuArchivo.setText("Archivo");
         menuBarraPrincipal.add(menuArchivo);
@@ -1321,12 +1305,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuGestion.add(opcionEventos);
 
         opcionTalleres.setText("Talleres");
+        opcionTalleres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionTalleresActionPerformed(evt);
+            }
+        });
         menuGestion.add(opcionTalleres);
 
         opcionConvocatorias.setText("Convocatorias");
+        opcionConvocatorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionConvocatoriasActionPerformed(evt);
+            }
+        });
         menuGestion.add(opcionConvocatorias);
 
         opcionEvidencias.setText("Evidencias");
+        opcionEvidencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionEvidenciasActionPerformed(evt);
+            }
+        });
         menuGestion.add(opcionEvidencias);
 
         menuBarraPrincipal.add(menuGestion);
@@ -1384,34 +1383,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(panelGeneral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(lblBienvenida)
-                .addGap(18, 18, 18)
-                .addComponent(panelEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+            .addComponent(panelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcionInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInscripcionActionPerformed
-        // TODO add your handling code here:
+        DialogInscripcionEventoTaller.setVisible(true);
+        DialogInscripcionEventoTaller.setSize(900, 600);
+        DialogInscripcionEventoTaller.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionInscripcionActionPerformed
 
     private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
         // TODO add your handling code here:
         DialogGestionUsuarios.setVisible(true);
-        DialogGestionUsuarios.setSize(750,450);
+        DialogGestionUsuarios.setSize(850,550);
         DialogGestionUsuarios.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionUsuariosActionPerformed
 
@@ -1452,7 +1443,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
         // TODO add your handling code here:
         DialogGestionEventos.setVisible(true);
-        DialogGestionEventos.setSize(750, 450);
+        DialogGestionEventos.setSize(1050, 650);
         DialogGestionEventos.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionEventosActionPerformed
 
@@ -1786,10 +1777,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldFechaInscripciónActionPerformed
 
-    private void txtFieldArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldArchivoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldArchivoActionPerformed
-
     private void txtFieldTituloEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloEvidenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldTituloEvidenciaActionPerformed
@@ -1813,6 +1800,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void txtFieldDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldDuracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldDuracionActionPerformed
+
+    private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
+        DialogGestionTalleres.setVisible(true);
+        DialogGestionTalleres.setSize(950, 650);
+        DialogGestionTalleres.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionTalleresActionPerformed
+
+    private void opcionConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionConvocatoriasActionPerformed
+        DialogGestionConvocatorias.setVisible(true);
+        DialogGestionConvocatorias.setSize(950,550);
+        DialogGestionConvocatorias.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionConvocatoriasActionPerformed
+
+    private void opcionEvidenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEvidenciasActionPerformed
+        DialogGestionEvidencias.setVisible(true);
+        DialogGestionEvidencias.setSize(950, 650);
+        DialogGestionEvidencias.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionEvidenciasActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -1989,6 +1994,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarTaller;
     private javax.swing.JButton btnDescargarEvidencia;
+    private javax.swing.JToggleButton btnDesinscribirme;
     private javax.swing.JButton btnECrear;
     private javax.swing.JButton btnEEliminar;
     private javax.swing.JButton btnELimpiar;
@@ -2005,7 +2011,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnSeleccionarArchivo;
     private javax.swing.JButton btnSubirEvidencia;
     private javax.swing.JButton btnVerComentarios;
-    private javax.swing.JButton btnVerMisInscripciones;
     private com.toedter.calendar.JCalendar calendario;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JLabel cboEstadoTaller;
@@ -2035,7 +2040,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2048,7 +2053,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2057,13 +2061,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNumControl;
     private javax.swing.JLabel lblRol;
-    private javax.swing.JList<String> lstEventosDisponibles;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuBar menuBarraPrincipal;
@@ -2080,12 +2090,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionSalir;
     private javax.swing.JMenuItem opcionTalleres;
     private javax.swing.JMenuItem opcionUsuarios;
+    private javax.swing.JPanel panelEncabezado;
     private javax.swing.JPanel panelEstatus;
+    private javax.swing.JPanel panelGeneral;
     private javax.swing.JPasswordField passContrasena;
     private javax.swing.JTextArea taDescripcionConvocatoria;
     private javax.swing.JTextArea taDescripcionEvidencia;
     private javax.swing.JTextArea taDescripcionTaller;
-    private javax.swing.JTextArea taMostrarDetSelec;
     private javax.swing.JTable tblConvocatorias;
     private javax.swing.JTable tblEvidencias;
     private javax.swing.JTable tblTalleres;
@@ -2100,7 +2111,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtEInicio;
     private javax.swing.JTextField txtENombre;
     private javax.swing.JLabel txtFecha_Hora;
-    private javax.swing.JTextField txtFieldArchivo;
     private javax.swing.JTextField txtFieldDuracion;
     private javax.swing.JTextField txtFieldFechaInscripción;
     private javax.swing.JTextField txtFieldFecha_Hora;
