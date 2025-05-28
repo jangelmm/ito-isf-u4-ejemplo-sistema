@@ -29,7 +29,11 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -47,6 +51,20 @@ import modelo.Eventos;
 import modelo.Evidencias;
 import modelo.Talleres;
 import modelo.Usuarios;
+
+
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Element; // Para alineación
+import com.lowagie.text.Phrase; // Para celdas de tabla
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException; 
 
 /**
  *
@@ -180,6 +198,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtEID = new javax.swing.JTextField();
         btnEventoSubirEvidencia = new javax.swing.JButton();
+        btnGenerarReporte = new javax.swing.JButton();
         DialogGestionTalleres = new javax.swing.JDialog();
         txtNombreTaller6 = new javax.swing.JLabel();
         txtFieldNombreTaller = new javax.swing.JTextField();
@@ -567,6 +586,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnGenerarReporte.setText("GenerarReporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -617,11 +643,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
-                                .addComponent(btnEventoSubirEvidencia))))
+                                .addComponent(btnEventoSubirEvidencia)
+                                .addGap(52, 52, 52)
+                                .addComponent(btnGenerarReporte))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(encabezado4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,7 +699,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnEModificar)
                     .addComponent(btnEEliminar)
                     .addComponent(btnELimpiar)
-                    .addComponent(btnEventoSubirEvidencia))
+                    .addComponent(btnEventoSubirEvidencia)
+                    .addComponent(btnGenerarReporte))
                 .addGap(16, 16, 16))
         );
 
@@ -813,12 +842,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(btnAgregarTaller)
-                        .addGap(132, 132, 132)
+                        .addGap(119, 119, 119)
                         .addComponent(btnActualizarTaller)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(114, 114, 114)
                         .addComponent(btnLimpiarTalleres)
-                        .addGap(203, 203, 203)
-                        .addComponent(btnElliminarTaller))
+                        .addGap(112, 112, 112)
+                        .addComponent(btnElliminarTaller)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1202,8 +1232,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnEliminarAsignacion)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
-
-        DialogGestionEvidencias.setMaximumSize(new java.awt.Dimension(500, 300));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel14.setText("Tipo de Evidencia:");
@@ -2894,6 +2922,108 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void txtRolAsignadoEnDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolAsignadoEnDialogActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRolAsignadoEnDialogActionPerformed
+
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        // 1. Obtener el Evento seleccionado
+        int filaSeleccionada = ttEventos.getSelectedRow(); // Asumiendo que ttEventos es tu tabla de eventos
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionEventos, "Por favor, seleccione un evento de la tabla para generar el reporte.", "Evento no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Eventos eventoSeleccionado = null;
+        if (this.listaEventosCargados != null && filaSeleccionada < this.listaEventosCargados.size()) {
+            eventoSeleccionado = this.listaEventosCargados.get(filaSeleccionada);
+        }
+
+        if (eventoSeleccionado == null) {
+            JOptionPane.showMessageDialog(DialogGestionEventos, "No se pudo obtener la información del evento seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. Preguntar al usuario dónde guardar el archivo PDF
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte PDF del Evento");
+        // Sugerir un nombre de archivo
+        String nombreArchivoSugerido = "Reporte_Evento_" + eventoSeleccionado.getNombre().replaceAll("[^a-zA-Z0-9.-]", "_") + ".pdf";
+        fileChooser.setSelectedFile(new File(nombreArchivoSugerido));
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf"));
+
+        int userSelection = fileChooser.showSaveDialog(DialogGestionEventos); // Padre del diálogo
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File archivoParaGuardar = fileChooser.getSelectedFile();
+            String rutaDestino = archivoParaGuardar.getAbsolutePath();
+            // Asegurarse de que el archivo termine con .pdf
+            if (!rutaDestino.toLowerCase().endsWith(".pdf")) {
+                rutaDestino += ".pdf";
+            }
+
+            try {
+                // 3. Obtener datos adicionales (Talleres y Participantes del Evento)
+                // eptController ya debería estar inicializado en el constructor de VentanaPrincipal
+                if (eptController == null) {
+                     eptController = new EventoParticipantesTalleresJpaController(Conexion.getEMF());
+                }
+                List<EventoParticipantesTalleres> todasLasParticipaciones = eptController.findEventoParticipantesTalleresEntities();
+
+                Map<Talleres, List<Usuarios>> talleresConInstructores = new HashMap<>();
+                List<Usuarios> participantesDelEvento = new ArrayList<>(); // Lista general de participantes
+                Set<Integer> idsTalleresDelEvento = new HashSet<>();
+
+                if (todasLasParticipaciones != null) {
+                    for (EventoParticipantesTalleres ept : todasLasParticipaciones) {
+                        if (ept.getIdEvento() != null && ept.getIdEvento().equals(eventoSeleccionado)) {
+                            Talleres taller = ept.getIdTallerImpartido();
+                            Usuarios usuario = ept.getIdTallerista();
+                            String rol = ept.getRolParticipante();
+
+                            if (taller != null && usuario != null && rol != null) {
+                                 idsTalleresDelEvento.add(taller.getIdTaller()); // Guardar IDs de talleres
+                                if (rol.equalsIgnoreCase("INSTRUCTOR") || rol.equalsIgnoreCase("PONENTE")) {
+                                    talleresConInstructores.computeIfAbsent(taller, k -> new ArrayList<>()).add(usuario);
+                                } else if (rol.equalsIgnoreCase("PARTICIPANTE") || rol.equalsIgnoreCase("ASISTENTE_EVENTO")) {
+                                    // Añadir a la lista general de participantes del evento (podrías querer refinar esto por taller)
+                                    if (!participantesDelEvento.contains(usuario)) { // Evitar duplicados si un usuario participa en varios talleres
+                                        participantesDelEvento.add(usuario);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Obtener los objetos Talleres completos si solo tenemos los IDs (o si talleresConInstructores.keySet() no es suficiente)
+                List<Talleres> talleresDelEvento = new ArrayList<>();
+                if (!idsTalleresDelEvento.isEmpty()) {
+                    TalleresJpaController tallerCtrl = new TalleresJpaController(Conexion.getEMF());
+                    for(Integer idTaller : idsTalleresDelEvento) {
+                        Talleres t = tallerCtrl.findTalleres(idTaller);
+                        if (t != null) talleresDelEvento.add(t);
+                    }
+                }
+
+
+                // 4. Llamar al método que genera el PDF
+                generarDocumentoPDFEvento(rutaDestino, eventoSeleccionado, talleresDelEvento, talleresConInstructores, participantesDelEvento);
+
+                JOptionPane.showMessageDialog(DialogGestionEventos, "Reporte PDF generado exitosamente en:\n" + rutaDestino, "Reporte Generado", JOptionPane.INFORMATION_MESSAGE);
+
+                // Opcional: Abrir el archivo PDF generado
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().open(new File(rutaDestino));
+                    } catch (IOException ex) {
+                        System.err.println("Error al abrir el PDF: " + ex.getMessage());
+                    }
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DialogGestionEventos, "Error al generar el reporte PDF: " + e.getMessage(), "Error de Generación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -3420,7 +3550,117 @@ private void cargarTalleresParaAsignacionComboBox() {
         txtRolAsignadoEnDialog.setText("INSTRUCTOR"); // Valor por defecto
         if (tblListaAsignaciones != null) tblListaAsignaciones.clearSelection();
     }
-       
+    
+    //ReportePDF
+    private void generarDocumentoPDFEvento(String filePath, Eventos evento,
+                                         List<Talleres> talleresDelEvento,
+                                         Map<Talleres, List<Usuarios>> instructoresPorTaller,
+                                         List<Usuarios> participantes) throws DocumentException, FileNotFoundException {
+
+        Document document = new Document(); // Usa com.lowagie.text.Document
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            document.open();
+
+            // --- Definición de Fuentes ---
+            Font fuenteTituloPrincipal = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Font.BOLD);
+            Font fuenteSubtituloSeccion = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+            Font fuenteNormal = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Font fuenteEncabezadoTabla = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10); // <--- DEFINICIÓN
+            Font fuenteCelda = FontFactory.getFont(FontFactory.HELVETICA, 9);                // <--- DEFINICIÓN
+
+            // --- Título del Reporte ---
+            Paragraph tituloReporte = new Paragraph("Reporte del Evento: " + (evento.getNombre() != null ? evento.getNombre() : "N/A"), fuenteTituloPrincipal);
+            tituloReporte.setAlignment(Element.ALIGN_CENTER);
+            document.add(tituloReporte);
+            document.add(new Paragraph("\n")); 
+
+            // --- Detalles del Evento ---
+            document.add(new Paragraph("Detalles del Evento:", fuenteSubtituloSeccion));
+            document.add(new Paragraph("Fecha: " + (evento.getFechaEvento() != null ? new SimpleDateFormat("dd/MM/yyyy").format(evento.getFechaEvento()) : "N/A"), fuenteNormal));
+            document.add(new Paragraph("Lugar: " + (evento.getLugarEvento() != null ? evento.getLugarEvento() : "N/A"), fuenteNormal));
+            document.add(new Paragraph("Estado: " + (evento.getEstadoEvento() != null ? evento.getEstadoEvento() : "N/A"), fuenteNormal));
+            document.add(new Paragraph("Descripción: " + (evento.getDescripcionPublica() != null ? evento.getDescripcionPublica() : ""), fuenteNormal));
+            document.add(new Paragraph("\n"));
+
+            // --- Sección de Talleres ---
+            document.add(new Paragraph("Talleres Ofrecidos en el Evento:", fuenteSubtituloSeccion));
+            if (talleresDelEvento == null || talleresDelEvento.isEmpty()) {
+                document.add(new Paragraph("  No hay talleres registrados para este evento.", fuenteNormal));
+            } else {
+                PdfPTable tablaTalleres = new PdfPTable(3); 
+                tablaTalleres.setWidthPercentage(100); 
+                tablaTalleres.setSpacingBefore(10f);
+                tablaTalleres.setSpacingAfter(10f);
+
+                tablaTalleres.addCell(new PdfPCell(new Phrase("Nombre del Taller", fuenteEncabezadoTabla)));
+                tablaTalleres.addCell(new PdfPCell(new Phrase("Descripción Breve", fuenteEncabezadoTabla)));
+                tablaTalleres.addCell(new PdfPCell(new Phrase("Instructor(es)", fuenteEncabezadoTabla)));
+
+                for (Talleres taller : talleresDelEvento) {
+                    tablaTalleres.addCell(new Phrase(taller.getNombre() != null ? taller.getNombre() : "N/A", fuenteCelda));
+                    tablaTalleres.addCell(new Phrase(taller.getDescripcionPublica() != null ? taller.getDescripcionPublica() : "N/A", fuenteCelda));
+
+                    StringBuilder nombresInstructores = new StringBuilder();
+                    List<Usuarios> instructores = instructoresPorTaller.get(taller);
+                    if (instructores != null && !instructores.isEmpty()) {
+                        for (int i = 0; i < instructores.size(); i++) {
+                            nombresInstructores.append(instructores.get(i).getNombre());
+                            if (i < instructores.size() - 1) {
+                                nombresInstructores.append(",\n"); // Salto de línea para múltiples instructores
+                            }
+                        }
+                    } else {
+                        nombresInstructores.append("No asignado(s)");
+                    }
+                    tablaTalleres.addCell(new Phrase(nombresInstructores.toString(), fuenteCelda));
+                }
+                document.add(tablaTalleres);
+            }
+            document.add(new Paragraph("\n"));
+
+            // --- Sección de Participantes ---
+            document.add(new Paragraph("Participantes del Evento/Talleres:", fuenteSubtituloSeccion));
+            if (participantes == null || participantes.isEmpty()) {
+                document.add(new Paragraph("  No hay participantes registrados.", fuenteNormal));
+            } else {
+                PdfPTable tablaParticipantes = new PdfPTable(3); 
+                tablaParticipantes.setWidthPercentage(100);
+                tablaParticipantes.setSpacingBefore(10f);
+
+                tablaParticipantes.addCell(new PdfPCell(new Phrase("Nombre Participante", fuenteEncabezadoTabla)));
+                tablaParticipantes.addCell(new PdfPCell(new Phrase("Correo", fuenteEncabezadoTabla)));
+                tablaParticipantes.addCell(new PdfPCell(new Phrase("No. Control", fuenteEncabezadoTabla)));
+
+                Set<Integer> idsParticipantesUnicos = new HashSet<>(); 
+                for (Usuarios p : participantes) {
+                    if (p != null && p.getIdUsuario() != null && idsParticipantesUnicos.add(p.getIdUsuario())) { 
+                         tablaParticipantes.addCell(new Phrase(p.getNombre() != null ? p.getNombre() : "N/A", fuenteCelda));
+                         tablaParticipantes.addCell(new Phrase(p.getCorreo() != null ? p.getCorreo() : "N/A", fuenteCelda));
+                         tablaParticipantes.addCell(new Phrase(p.getNumeroControl() != null ? p.getNumeroControl() : "N/A", fuenteCelda));
+                    }
+                }
+                document.add(tablaParticipantes);
+            }
+
+        } catch (DocumentException | FileNotFoundException de) {
+            System.err.println("Error de Documento/Archivo al generar PDF: " + de.getMessage());
+            de.printStackTrace();
+            throw de; 
+        } catch (Exception e) { // Captura general por si algo más falla
+            System.err.println("Error general al generar PDF: " + e.getMessage());
+            e.printStackTrace();
+            // Envolver en DocumentException o una excepción personalizada si prefieres
+            // para mantener la firma del método, o cambiar la firma del método a 'throws Exception'.
+            // Aquí relanzo como RuntimeException para no cambiar la firma, pero puedes ajustarlo.
+            throw new RuntimeException("Error inesperado durante la generación del PDF", e);
+        } finally {
+            if (document != null && document.isOpen()) {
+                document.close(); // ¡Muy importante cerrar el documento!
+            }
+        }
+    }
         /**
      * @param args the command line arguments
      */
@@ -3486,6 +3726,7 @@ private void cargarTalleresParaAsignacionComboBox() {
     private javax.swing.JButton btnEliminarEvidencia;
     private javax.swing.JButton btnElliminarTaller;
     private javax.swing.JButton btnEventoSubirEvidencia;
+    private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnGuardarAsignacion;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnLimpiarConvocatorias;

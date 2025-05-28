@@ -405,10 +405,12 @@
                                           <Component id="jLabel5" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="btnELimpiar" min="-2" pref="85" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                                       <Component id="btnEventoSubirEvidencia" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                                      <Component id="btnGenerarReporte" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -417,7 +419,7 @@
                               <Component id="encabezado4" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="63" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -481,6 +483,7 @@
                           <Component id="btnEEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnELimpiar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnEventoSubirEvidencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGenerarReporte" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
@@ -629,6 +632,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEventoSubirEvidenciaActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnGenerarReporte">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="GenerarReporte"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerarReporteActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -645,15 +656,16 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="btnAgregarTaller" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
                           <Component id="btnActualizarTaller" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                           <Component id="btnLimpiarTalleres" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                           <Component id="btnElliminarTaller" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -1471,11 +1483,6 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="DialogGestionEvidencias">
-      <Properties>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[500, 300]"/>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
