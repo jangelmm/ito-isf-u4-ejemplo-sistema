@@ -239,7 +239,8 @@ public class Talleres implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Talleres[ idTaller=" + idTaller + " ]";
+        return idTaller + " / " + nombre;
+        //return "modelo.Talleres[ idTaller=" + idTaller + " ]";
     }
     
 }

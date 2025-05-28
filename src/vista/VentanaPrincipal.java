@@ -7,6 +7,7 @@ package vista;
 import control.ComentariosRevisionTallerJpaController;
 import control.Conexion;
 import control.ConvocatoriasJpaController;
+import control.EventoParticipantesTalleresJpaController;
 import control.EventosJpaController;
 import control.EvidenciasJpaController;
 import control.TalleresJpaController;
@@ -14,9 +15,14 @@ import control.UsuariosJpaController;
 import control.exceptions.IllegalOrphanException;
 import control.exceptions.NonexistentEntityException;
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
@@ -30,6 +36,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.BitacorasEventos;
@@ -50,6 +57,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Usuarios usuarioActual;
     private List<Convocatorias> listaConvocatoriasCargadas;
     
+    private List<Talleres> listaTalleresCargados; // ¡Asegúrate de que esta línea exista!
+    private List<Eventos> listaEventosCargados; // ¡Asegúrate de que esta línea exista!
+    
+    private Eventos eventoContextoEvidencias;
+    private Talleres tallerContextoEvidencias;
+    private File archivoEvidenciaSeleccionado; // Para guardar el archivo elegido por JFileChooser
+    
+    private List<EventoParticipantesTalleres> ofertasDeTalleresDisponibles;
+    private List<EventoParticipantesTalleres> misInscripcionesEnTalleres;
+    private EventoParticipantesTalleresJpaController eptController;
+    
+    
+    private List<Evidencias> listaEvidenciasCargadasDialogo; // ¡AÑADIR ESTA LÍNEA!
+    
+    private List<Usuarios> listaInstructoresCargados; // Para cboInstructorParaAsignar
+    private List<EventoParticipantesTalleres> listaAsignacionesActuales; 
+    
     public VentanaPrincipal(Usuarios u) {
         initComponents();
         
@@ -62,6 +86,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblRol.setText("Rol : " + u.getRol());
         lblNumControl.setText("Número de control: " + u.getNumeroControl());
         
+        this.listaTalleresCargados = new ArrayList<>(); // Inicializar
+        this.listaEventosCargados = new ArrayList<>();   // Inicializar
+        this.listaEvidenciasCargadasDialogo = new ArrayList<>(); // Inicializar
+        
+        this.eptController = new EventoParticipantesTalleresJpaController(Conexion.getEMF());
+        this.ofertasDeTalleresDisponibles = new ArrayList<>();
+        this.misInscripcionesEnTalleres = new ArrayList<>();
+        
+        this.listaInstructoresCargados = new ArrayList<>();
+        this.listaAsignacionesActuales = new ArrayList<>();
+        
+        
         // Manipulacion del DialogGestionUusarios
         cargarUsuariosEnTabla();
         seleccionarUsuarios();
@@ -71,11 +107,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         //Manipulación de Talleres
         cargarPonentesEnComboBox();
-        cargarEventosAsociadosEnComboBox();
+        //cargarEventosAsociadosEnComboBox();
         cargarTalleresEnTabla();
         
         //Manipulación de Eventos
         cargarConvocatoriasEnTabla();
+        
+        fileChooserElegirArchivo.setVisible(false);
+       
+        cargarEventosParaAsignacionComboBox();
+        cargarTalleresParaAsignacionComboBox();
+        cargarInstructoresParaAsignacionComboBox();
+        cargarTablaDeAsignaciones();
     }
 
     /**
@@ -136,6 +179,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEFin = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtEID = new javax.swing.JTextField();
+        btnEventoSubirEvidencia = new javax.swing.JButton();
         DialogGestionTalleres = new javax.swing.JDialog();
         txtNombreTaller6 = new javax.swing.JLabel();
         txtFieldNombreTaller = new javax.swing.JTextField();
@@ -181,31 +225,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         dateChooserFechaInscripcion = new com.toedter.calendar.JDateChooser();
         btnLimpiarConvocatorias = new javax.swing.JButton();
         DialogInscripcionEventoTaller = new javax.swing.JDialog();
-        btnInscribirme = new javax.swing.JButton();
-        TITULO6 = new javax.swing.JLabel();
+        btnGuardarAsignacion = new javax.swing.JButton();
+        lblEventoAsignar = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
-        tblTalleresDisponibles = new javax.swing.JTable();
+        tblListaAsignaciones = new javax.swing.JTable();
         TITULO7 = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnDesinscribirme = new javax.swing.JToggleButton();
+        btnEliminarAsignacion = new javax.swing.JToggleButton();
+        cboEventoParaAsignar = new javax.swing.JComboBox<>();
+        lblTallerAsignar = new javax.swing.JLabel();
+        cboTallerParaAsignar = new javax.swing.JComboBox<>();
+        lblInstructorAsignar = new javax.swing.JLabel();
+        cboInstructorParaAsignar = new javax.swing.JComboBox<>();
+        lblRolAsignar = new javax.swing.JLabel();
+        txtRolAsignadoEnDialog = new javax.swing.JTextField();
+        btnLimpiarFormAsignacion = new javax.swing.JButton();
+        lblTablaAsignaciones = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
         DialogGestionEvidencias = new javax.swing.JDialog();
         jLabel14 = new javax.swing.JLabel();
         TITULO2 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblEvidencias = new javax.swing.JTable();
-        txtNombreTaller4 = new javax.swing.JLabel();
         txtNombreTaller5 = new javax.swing.JLabel();
         TITULO3 = new javax.swing.JLabel();
-        txtFieldTituloEvidencia = new javax.swing.JTextField();
-        jFileChooser1 = new javax.swing.JFileChooser();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        taDescripcionEvidencia = new javax.swing.JTextArea();
-        btnSeleccionarArchivo = new javax.swing.JButton();
+        txtDescripción = new javax.swing.JTextField();
+        fileChooserElegirArchivo = new javax.swing.JFileChooser();
         btnSubirEvidencia = new javax.swing.JButton();
         btnDescargarEvidencia = new javax.swing.JButton();
         btnEliminarEvidencia = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
+        cobTipoEvidencia = new javax.swing.JComboBox<>();
+        SeleccionarArchivoEvidencia = new javax.swing.JButton();
         panelGeneral = new javax.swing.JPanel();
         panelEncabezado = new javax.swing.JPanel();
         lblBienvenida = new javax.swing.JLabel();
@@ -224,7 +274,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         opcionEventos = new javax.swing.JMenuItem();
         opcionTalleres = new javax.swing.JMenuItem();
         opcionConvocatorias = new javax.swing.JMenuItem();
-        opcionEvidencias = new javax.swing.JMenuItem();
         menuReportes = new javax.swing.JMenu();
         menuInscripcion = new javax.swing.JMenu();
         opcionInscripcion = new javax.swing.JMenuItem();
@@ -511,6 +560,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         txtEID.setEditable(false);
 
+        btnEventoSubirEvidencia.setText("Subir Evidencia");
+        btnEventoSubirEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoSubirEvidenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -558,7 +614,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                     .addComponent(txtEFin)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnEventoSubirEvidencia))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(encabezado4)))
@@ -611,7 +670,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnECrear)
                     .addComponent(btnEModificar)
                     .addComponent(btnEEliminar)
-                    .addComponent(btnELimpiar))
+                    .addComponent(btnELimpiar)
+                    .addComponent(btnEventoSubirEvidencia))
                 .addGap(16, 16, 16))
         );
 
@@ -753,11 +813,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(btnAgregarTaller)
-                        .addGap(162, 162, 162)
+                        .addGap(132, 132, 132)
                         .addComponent(btnActualizarTaller)
-                        .addGap(157, 157, 157)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLimpiarTalleres)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                        .addGap(203, 203, 203)
                         .addComponent(btnElliminarTaller))
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                         .addContainerGap()
@@ -797,7 +857,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cboEstadoTaller2, 0, 391, Short.MAX_VALUE)
                                             .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 1, Short.MAX_VALUE))
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addGap(18, 18, 18))
         );
@@ -1014,12 +1074,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        btnInscribirme.setText("Inscribirse al Evento/Taller");
+        btnGuardarAsignacion.setText("Guardar Asignación");
+        btnGuardarAsignacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarAsignacionActionPerformed(evt);
+            }
+        });
 
-        TITULO6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TITULO6.setText("Inscripción a Eventos/Talleres");
+        lblEventoAsignar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblEventoAsignar.setText("Seleccionar Evento:");
 
-        tblTalleresDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+        tblListaAsignaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1030,76 +1095,121 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane11.setViewportView(tblTalleresDisponibles);
+        jScrollPane11.setViewportView(tblListaAsignaciones);
 
-        TITULO7.setText("Eventos/Talleres Disponibles:");
+        TITULO7.setText("Eventos Disponibles:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btnEliminarAsignacion.setText("Eliminar Asignación Seleccionada");
+        btnEliminarAsignacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAsignacionActionPerformed(evt);
             }
-        ));
-        jScrollPane10.setViewportView(jTable1);
+        });
 
-        btnDesinscribirme.setText("Anular Inscripción");
+        lblTallerAsignar.setText("Seleccionar Taller:");
+
+        lblInstructorAsignar.setText("Seleccionar Instructor/Ponente:");
+
+        lblRolAsignar.setText("Rol Asignado:");
+
+        txtRolAsignadoEnDialog.setText("INSTRUCTOR");
+        txtRolAsignadoEnDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRolAsignadoEnDialogActionPerformed(evt);
+            }
+        });
+
+        btnLimpiarFormAsignacion.setText("Limpiar Asignación");
+
+        lblTablaAsignaciones.setText("Asignaciones Existentes de Instructores a Talleres/Eventos");
 
         javax.swing.GroupLayout DialogInscripcionEventoTallerLayout = new javax.swing.GroupLayout(DialogInscripcionEventoTaller.getContentPane());
         DialogInscripcionEventoTaller.getContentPane().setLayout(DialogInscripcionEventoTallerLayout);
         DialogInscripcionEventoTallerLayout.setHorizontalGroup(
             DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminarAsignacion))
                     .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TITULO6)
-                            .addComponent(TITULO7))
-                        .addGap(0, 647, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addComponent(btnInscribirme)
-                        .addGap(311, 311, 311))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addComponent(btnDesinscribirme)
-                        .addGap(328, 328, 328))))
+                            .addComponent(jScrollPane11)
+                            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTablaAsignaciones)
+                                    .addComponent(lblEventoAsignar)
+                                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblInstructorAsignar)
+                                            .addComponent(TITULO7))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cboInstructorParaAsignar, 0, 209, Short.MAX_VALUE)
+                                            .addComponent(cboEventoParaAsignar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(34, 34, 34)
+                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblTallerAsignar)
+                                            .addComponent(lblRolAsignar))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cboTallerParaAsignar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtRolAsignadoEnDialog, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnGuardarAsignacion)
+                                            .addComponent(btnLimpiarFormAsignacion))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(17, 17, 17))
+            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 1090, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         DialogInscripcionEventoTallerLayout.setVerticalGroup(
             DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(TITULO6)
+                .addComponent(lblEventoAsignar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TITULO7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnInscribirme)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO7)
+                            .addComponent(cboEventoParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblInstructorAsignar)
+                            .addComponent(cboInstructorParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTallerAsignar)
+                            .addComponent(cboTallerParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardarAsignacion))
+                        .addGap(27, 27, 27)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblRolAsignar)
+                            .addComponent(txtRolAsignadoEnDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpiarFormAsignacion))))
+                .addGap(30, 30, 30)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(lblTablaAsignaciones)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDesinscribirme)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminarAsignacion)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
+        DialogGestionEvidencias.setMaximumSize(new java.awt.Dimension(500, 300));
+
         jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        jLabel14.setText("Descripción Evidencia:");
+        jLabel14.setText("Tipo de Evidencia:");
 
         TITULO2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TITULO2.setText("Gestión de Evidencias para: [Nombre Taller/Evento]");
+        TITULO2.setText("Gestión de Evidencias para Evento");
 
         tblEvidencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1114,38 +1224,53 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tblEvidencias);
 
-        txtNombreTaller4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller4.setText("Archivo:");
-
         txtNombreTaller5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller5.setText("Título Evidencia:");
+        txtNombreTaller5.setText("Descripción");
 
         TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO3.setText("Evidencias Subidas");
 
-        txtFieldTituloEvidencia.addActionListener(new java.awt.event.ActionListener() {
+        txtDescripción.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldTituloEvidenciaActionPerformed(evt);
+                txtDescripciónActionPerformed(evt);
             }
         });
 
-        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+        fileChooserElegirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser1ActionPerformed(evt);
+                fileChooserElegirArchivoActionPerformed(evt);
             }
         });
-
-        taDescripcionEvidencia.setColumns(20);
-        taDescripcionEvidencia.setRows(5);
-        jScrollPane7.setViewportView(taDescripcionEvidencia);
-
-        btnSeleccionarArchivo.setText("Seleccionar Archivo");
 
         btnSubirEvidencia.setText("Subir Evidencia");
+        btnSubirEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubirEvidenciaActionPerformed(evt);
+            }
+        });
 
         btnDescargarEvidencia.setText("Descargar Evidencia");
+        btnDescargarEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarEvidenciaActionPerformed(evt);
+            }
+        });
 
         btnEliminarEvidencia.setText("Eliminar Evidencia");
+        btnEliminarEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarEvidenciaActionPerformed(evt);
+            }
+        });
+
+        cobTipoEvidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FOTO", "VIDEO", "DOCUMENTO_GENERAL", "LISTA_ASISTENCIA", "RECONOCIMIENTO_PDF", "OTRO" }));
+
+        SeleccionarArchivoEvidencia.setText("Seleccionar Archivo");
+        SeleccionarArchivoEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeleccionarArchivoEvidenciaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DialogGestionEvidenciasLayout = new javax.swing.GroupLayout(DialogGestionEvidencias.getContentPane());
         DialogGestionEvidencias.getContentPane().setLayout(DialogGestionEvidenciasLayout);
@@ -1155,79 +1280,68 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO3)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGap(417, 417, 417)
+                                .addComponent(btnEliminarEvidencia)))
+                        .addGap(0, 35, Short.MAX_VALUE))
+                    .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
                         .addComponent(TITULO2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(txtNombreTaller5))
-                                .addGap(14, 14, 14)
-                                .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane7))
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(txtNombreTaller4)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))))
+                        .addComponent(txtNombreTaller5)
+                        .addGap(47, 47, 47)
+                        .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))))
+            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator6)
-                            .addComponent(TITULO3)
-                            .addComponent(jScrollPane6)
-                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addComponent(btnSeleccionarArchivo)
-                                .addGap(97, 97, 97)
-                                .addComponent(btnSubirEvidencia)
-                                .addGap(88, 88, 88)
-                                .addComponent(btnDescargarEvidencia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                                .addComponent(btnEliminarEvidencia)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(SeleccionarArchivoEvidencia)
+                        .addGap(92, 92, 92)
+                        .addComponent(btnSubirEvidencia)
+                        .addGap(91, 91, 91)
+                        .addComponent(btnDescargarEvidencia)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         DialogGestionEvidenciasLayout.setVerticalGroup(
             DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(txtNombreTaller4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(TITULO2)
-                        .addGap(18, 18, 18)
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel14)
-                        .addGap(8, 8, 8)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addComponent(TITULO2)
                 .addGap(18, 18, 18)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(26, 26, 26)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(TITULO3)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSeleccionarArchivo)
+                    .addComponent(SeleccionarArchivoEvidencia)
                     .addComponent(btnSubirEvidencia)
                     .addComponent(btnDescargarEvidencia)
                     .addComponent(btnEliminarEvidencia))
-                .addGap(496, 496, 496))
+                .addGap(223, 223, 223)
+                .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AcademicPlus - Ventana Principal");
-        setPreferredSize(new java.awt.Dimension(800, 800));
 
         panelGeneral.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -1311,14 +1425,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         menuGestion.add(opcionConvocatorias);
 
-        opcionEvidencias.setText("Evidencias");
-        opcionEvidencias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionEvidenciasActionPerformed(evt);
-            }
-        });
-        menuGestion.add(opcionEvidencias);
-
         menuBarraPrincipal.add(menuGestion);
 
         menuReportes.setText("Reportes");
@@ -1386,7 +1492,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void opcionInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInscripcionActionPerformed
         DialogInscripcionEventoTaller.setVisible(true);
-        DialogInscripcionEventoTaller.setSize(900, 600);
+        DialogInscripcionEventoTaller.setSize(1500, 650);
         DialogInscripcionEventoTaller.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionInscripcionActionPerformed
 
@@ -1434,7 +1540,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
         // TODO add your handling code here:
         DialogGestionEventos.setVisible(true);
-        DialogGestionEventos.setSize(1050, 650);
+        DialogGestionEventos.setSize(1050, 550);
         DialogGestionEventos.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionEventosActionPerformed
 
@@ -1794,13 +1900,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldTituloConvocatoriaActionPerformed
 
-    private void txtFieldTituloEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloEvidenciaActionPerformed
+    private void txtDescripciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripciónActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldTituloEvidenciaActionPerformed
-
-    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFileChooser1ActionPerformed
+    }//GEN-LAST:event_txtDescripciónActionPerformed
 
     private void txtFieldNombreTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreTallerActionPerformed
         // TODO add your handling code here:
@@ -1821,12 +1923,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionConvocatorias.setSize(950,550);
         DialogGestionConvocatorias.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionConvocatoriasActionPerformed
-
-    private void opcionEvidenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEvidenciasActionPerformed
-        DialogGestionEvidencias.setVisible(true);
-        DialogGestionEvidencias.setSize(950, 650);
-        DialogGestionEvidencias.setLocationRelativeTo(this);
-    }//GEN-LAST:event_opcionEvidenciasActionPerformed
 
     private void btnEEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEEliminarActionPerformed
         if (txtEID.getText().isEmpty()) {
@@ -2493,6 +2589,311 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnLimpiarTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTalleresActionPerformed
         limpiarCamposFormularioTaller();
     }//GEN-LAST:event_btnLimpiarTalleresActionPerformed
+
+    private void btnEventoSubirEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoSubirEvidenciaActionPerformed
+        int filaSeleccionada = ttEventos.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionEventos, "Seleccione un evento de la tabla.", "Evento no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Null check para listaEventosCargados
+        if (this.listaEventosCargados == null || filaSeleccionada >= this.listaEventosCargados.size()) {
+             JOptionPane.showMessageDialog(DialogGestionEventos, "Error: No se pueden obtener los datos del evento (lista no cargada o índice fuera de rango).", "Error de Datos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Eventos eventoSeleccionado = this.listaEventosCargados.get(filaSeleccionada); 
+
+        abrirDialogoEvidencias(eventoSeleccionado, null); 
+    }//GEN-LAST:event_btnEventoSubirEvidenciaActionPerformed
+
+    private void btnSubirEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirEvidenciaActionPerformed
+        if (this.eventoContextoEvidencias == null) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Error: Contexto de Evento no establecido.", "Error de Contexto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (this.archivoEvidenciaSeleccionado == null || !this.archivoEvidenciaSeleccionado.exists()) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Por favor, seleccione un archivo válido primero.", "Archivo no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String descripcion = txtDescripción.getText().trim(); // txtDescripción es tu JTextField
+
+        if (cobTipoEvidencia.getSelectedItem() == null || cobTipoEvidencia.getSelectedItem().toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Por favor, seleccione un tipo de evidencia.", "Tipo no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String tipoEvidencia = cobTipoEvidencia.getSelectedItem().toString();
+
+        // --- INICIO: Lógica de Guardado de Archivo Físico (DEBES ADAPTAR ESTA PARTE) ---
+        String nombreArchivoOriginal = this.archivoEvidenciaSeleccionado.getName();
+        // Define un directorio base para tus evidencias. ESTO ES SOLO UN EJEMPLO.
+        // Deberías hacerlo configurable o usar una ruta más robusta.
+        String directorioBaseEvidencias = "C:/academicplus_evidencias/"; // ¡EJEMPLO! CAMBIA ESTO
+
+        // Crear subdirectorios por evento (opcional pero recomendado)
+        File directorioEvento = new File(directorioBaseEvidencias + "evento_" + this.eventoContextoEvidencias.getIdEvento());
+        if (!directorioEvento.exists()) {
+            directorioEvento.mkdirs(); // Crea el directorio si no existe, incluyendo padres
+        }
+
+        // Crear un nombre de archivo único o usar el original (cuidado con colisiones)
+        // Para este ejemplo, usaremos el original dentro del subdirectorio del evento.
+        String rutaDestinoEnServidor = directorioEvento.getAbsolutePath() + File.separator + nombreArchivoOriginal;
+        Path pathDestino = Paths.get(rutaDestinoEnServidor);
+        Path pathFuente = this.archivoEvidenciaSeleccionado.toPath();
+
+        try {
+            Files.copy(pathFuente, pathDestino, StandardCopyOption.REPLACE_EXISTING); // Copia el archivo
+            System.out.println("Archivo copiado a: " + rutaDestinoEnServidor);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Error al copiar el archivo al servidor: " + ex.getMessage(), "Error de Archivo", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+            return; // No continuar si el archivo no se pudo copiar
+        }
+        // --- FIN: Lógica de Guardado de Archivo Físico ---
+
+        Evidencias nuevaEvidencia = new Evidencias();
+        nuevaEvidencia.setDescripcion(descripcion);
+        nuevaEvidencia.setRutaArchivo(rutaDestinoEnServidor); // Guarda la ruta donde se copió el archivo
+        nuevaEvidencia.setTipoEvidencia(tipoEvidencia);
+        nuevaEvidencia.setIdEvento(this.eventoContextoEvidencias);
+        if (this.tallerContextoEvidencias != null) {
+            nuevaEvidencia.setIdTallerAsociado(this.tallerContextoEvidencias);
+        }
+        nuevaEvidencia.setIdUsuarioSubio(this.usuarioActual);
+        nuevaEvidencia.setFechaSubida(new Date());
+
+        try {
+            EvidenciasJpaController controller = new EvidenciasJpaController(Conexion.getEMF());
+            controller.create(nuevaEvidencia);
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Evidencia subida exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarEvidenciasEnTabla();
+            limpiarCamposFormularioEvidencia();
+            // this.archivoEvidenciaSeleccionado = null; // Ya se limpia en limpiarCamposFormularioEvidencia
+            // if (txtRutaArchivoEvidenciaDisplay != null) txtRutaArchivoEvidenciaDisplay.setText("");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Error al guardar la evidencia en la BD: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            // Considerar eliminar el archivo físico si la inserción en BD falla, para evitar archivos huérfanos.
+            // try { Files.deleteIfExists(pathDestino); } catch (IOException ioex) { /* log error */ }
+        }
+    }//GEN-LAST:event_btnSubirEvidenciaActionPerformed
+
+    private void btnDescargarEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarEvidenciaActionPerformed
+        int filaSeleccionada = tblEvidencias.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Seleccione una evidencia de la tabla para descargar.", "Evidencia no seleccionada", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (this.listaEvidenciasCargadasDialogo != null && filaSeleccionada < this.listaEvidenciasCargadasDialogo.size()) {
+            Evidencias evidenciaSeleccionada = this.listaEvidenciasCargadasDialogo.get(filaSeleccionada);
+            String rutaArchivoAlmacenado = evidenciaSeleccionada.getRutaArchivo(); // Esta es la ruta donde está guardado en tu sistema
+
+            try {
+                File archivoEnServidor = new File(rutaArchivoAlmacenado);
+                if (archivoEnServidor.exists()) {
+                    JFileChooser fileSaver = new JFileChooser();
+                    fileSaver.setSelectedFile(new File(archivoEnServidor.getName())); // Sugerir nombre original del archivo
+                    fileSaver.setDialogTitle("Guardar evidencia como...");
+
+                    int resultado = fileSaver.showSaveDialog(DialogGestionEvidencias);
+                    if (resultado == JFileChooser.APPROVE_OPTION) {
+                        File archivoDestinoUsuario = fileSaver.getSelectedFile();
+                        // Implementar la lógica de copia del archivo desde 'archivoEnServidor' a 'archivoDestinoUsuario'
+                        // Ejemplo:
+                        // java.nio.file.Files.copy(archivoEnServidor.toPath(), archivoDestinoUsuario.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        JOptionPane.showMessageDialog(DialogGestionEvidencias, "Archivo descargado exitosamente en: " + archivoDestinoUsuario.getAbsolutePath(), "Descarga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(DialogGestionEvidencias, "El archivo de la evidencia no fue encontrado en el servidor: " + rutaArchivoAlmacenado, "Archivo No Encontrado", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) { // Capturar IOException y otras
+                JOptionPane.showMessageDialog(DialogGestionEvidencias, "Error al intentar descargar el archivo: " + e.getMessage(), "Error de Archivo", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "No se pudo obtener la información de la evidencia seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDescargarEvidenciaActionPerformed
+
+    private void btnEliminarEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEvidenciaActionPerformed
+        int filaSeleccionada = tblEvidencias.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionEvidencias, "Seleccione una evidencia de la tabla para eliminar.", "Evidencia no seleccionada", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (this.listaEvidenciasCargadasDialogo == null || filaSeleccionada >= this.listaEvidenciasCargadasDialogo.size()) {
+             JOptionPane.showMessageDialog(DialogGestionEvidencias, "Error al obtener datos de la evidencia.", "Error Interno", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Evidencias evidenciaSeleccionada = this.listaEvidenciasCargadasDialogo.get(filaSeleccionada);
+        int idEvidencia = evidenciaSeleccionada.getIdEvidencia();
+        String rutaArchivoFisico = evidenciaSeleccionada.getRutaArchivo();
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionEvidencias,
+            "¿Está seguro de que desea eliminar esta evidencia?\nEl archivo asociado ("+ new File(rutaArchivoFisico).getName() +") también será eliminado permanentemente.",
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            EvidenciasJpaController controller = new EvidenciasJpaController(Conexion.getEMF());
+            try {
+                controller.destroy(idEvidencia); // Eliminar de la BD
+
+                // Eliminar el archivo físico del servidor/disco
+                File archivoAEliminar = new File(rutaArchivoFisico);
+                if (archivoAEliminar.exists()) {
+                    if (!archivoAEliminar.delete()) {
+                        // No bloquea la eliminación de la BD, pero informa al usuario
+                        JOptionPane.showMessageDialog(DialogGestionEvidencias, "Registro de evidencia eliminado de la BD, pero no se pudo borrar el archivo físico del servidor: " + rutaArchivoFisico + ". Contacte al administrador.", "Advertencia de Archivo", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                     JOptionPane.showMessageDialog(DialogGestionEvidencias, "Registro de evidencia eliminado de la BD, pero el archivo físico no se encontró en el servidor para ser borrado: " + rutaArchivoFisico, "Advertencia de Archivo", JOptionPane.WARNING_MESSAGE);
+                }
+
+                cargarEvidenciasEnTabla(); 
+                limpiarCamposFormularioEvidencia();
+                JOptionPane.showMessageDialog(DialogGestionEvidencias, "Evidencia eliminada exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NonexistentEntityException ex) {
+                JOptionPane.showMessageDialog(DialogGestionEvidencias, "La evidencia que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+                 cargarEvidenciasEnTabla(); 
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DialogGestionEvidencias, "Ocurrió un error al eliminar la evidencia: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarEvidenciaActionPerformed
+
+    private void fileChooserElegirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserElegirArchivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileChooserElegirArchivoActionPerformed
+
+    private void SeleccionarArchivoEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarArchivoEvidenciaActionPerformed
+        // fileChooserElegirArchivo es tu componente JFileChooser ya declarado e inicializado
+        if (fileChooserElegirArchivo == null) { // Doble chequeo por si acaso
+            fileChooserElegirArchivo = new JFileChooser(); // Debería estar inicializado en initComponents
+        }
+
+        fileChooserElegirArchivo.setSize(500, 250);
+        fileChooserElegirArchivo.setVisible(true);
+        int resultado = fileChooserElegirArchivo.showOpenDialog(DialogGestionEvidencias); // Mostrar el diálogo para abrir archivo
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            this.archivoEvidenciaSeleccionado = fileChooserElegirArchivo.getSelectedFile();
+
+            // Opcional: Mostrar la ruta en un JTextField (si lo tienes en tu UI)
+            // Si tienes un JTextField llamado txtRutaArchivoEvidenciaDisplay:
+            // if (txtRutaArchivoEvidenciaDisplay != null) {
+                //     txtRutaArchivoEvidenciaDisplay.setText(this.archivoEvidenciaSeleccionado.getAbsolutePath());
+                // } else {
+                //     System.out.println("Archivo seleccionado (ruta no visible en UI): " + this.archivoEvidenciaSeleccionado.getAbsolutePath());
+                // }
+            // Como no tienes txtRutaArchivoEvidenciaDisplay, puedes mostrarlo en consola o en un JOptionPane por ahora:
+            System.out.println("Archivo seleccionado: " + this.archivoEvidenciaSeleccionado.getAbsolutePath());
+            // Opcionalmente, podrías poner el nombre del archivo en el txtDescripción si es relevante:
+            // if (txtDescripción.getText().isEmpty()) {
+                //    txtDescripción.setText(this.archivoEvidenciaSeleccionado.getName());
+                // }
+
+        } else { // Si el usuario cancela o cierra el diálogo
+            this.archivoEvidenciaSeleccionado = null;
+            // if (txtRutaArchivoEvidenciaDisplay != null) {
+                //     txtRutaArchivoEvidenciaDisplay.setText("");
+                // }
+            System.out.println("Selección de archivo cancelada.");
+        }
+    }//GEN-LAST:event_SeleccionarArchivoEvidenciaActionPerformed
+
+    private void btnGuardarAsignacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAsignacionActionPerformed
+        Eventos eventoSeleccionado = (Eventos) cboEventoParaAsignar.getSelectedItem();
+        Talleres tallerSeleccionado = (Talleres) cboTallerParaAsignar.getSelectedItem();
+        Usuarios instructorSeleccionado = (Usuarios) cboInstructorParaAsignar.getSelectedItem();
+        String rolAsignado = txtRolAsignadoEnDialog.getText().trim(); // Nombre de tu JTextField para el rol
+
+        if (eventoSeleccionado == null || tallerSeleccionado == null || instructorSeleccionado == null) {
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Debe seleccionar un Evento, Taller e Instructor.", "Datos Incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (rolAsignado.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "El rol asignado no puede estar vacío (ej. INSTRUCTOR, PONENTE).", "Rol Requerido", JOptionPane.WARNING_MESSAGE);
+            txtRolAsignadoEnDialog.requestFocus();
+            return;
+        }
+
+        // Opcional: Verificar si ya existe esta asignación exacta (Evento, Taller, Instructor)
+        // La BD tiene un UNIQUE constraint, pero una verificación previa es más amigable.
+        // for (EventoParticipantesTalleres ept : listaAsignacionesActuales) {
+        //     if (ept.getIdEvento().equals(eventoSeleccionado) &&
+        //         ept.getIdTallerImpartido().equals(tallerSeleccionado) &&
+        //         ept.getIdTallerista().equals(instructorSeleccionado)) {
+        //         JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Este instructor ya está asignado a este taller en este evento.", "Asignación Duplicada", JOptionPane.WARNING_MESSAGE);
+        //         return;
+        //     }
+        // }
+
+        EventoParticipantesTalleres nuevaAsignacion = new EventoParticipantesTalleres();
+        nuevaAsignacion.setIdEvento(eventoSeleccionado);
+        nuevaAsignacion.setIdTallerImpartido(tallerSeleccionado);
+        nuevaAsignacion.setIdTallerista(instructorSeleccionado);
+        nuevaAsignacion.setRolParticipante(rolAsignado.toUpperCase()); // Guardar en mayúsculas por consistencia
+
+        try {
+            eptController.create(nuevaAsignacion);
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, 
+                "Instructor '" + instructorSeleccionado.getNombre() + "' asignado al taller '" + tallerSeleccionado.getNombre() + 
+                "' en el evento '" + eventoSeleccionado.getNombre() + "' con rol '" + rolAsignado + "'.", 
+                "Asignación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarTablaDeAsignaciones(); // Refrescar la tabla
+            limpiarFormularioDeAsignacion(); // Limpiar los campos del formulario de asignación
+        } catch (Exception e) {
+            // Podría ser javax.persistence.RollbackException si viola la UNIQUE KEY
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Error al guardar la asignación: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnGuardarAsignacionActionPerformed
+
+    private void btnEliminarAsignacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAsignacionActionPerformed
+        int filaSeleccionada = tblListaAsignaciones.getSelectedRow(); // Usa el nombre correcto de tu JTable
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Seleccione una asignación de la tabla para eliminar.", "Asignación no seleccionada", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (this.listaAsignacionesActuales == null || filaSeleccionada >= this.listaAsignacionesActuales.size()) {
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Error al obtener datos de la asignación.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        EventoParticipantesTalleres asignacionAEliminar = this.listaAsignacionesActuales.get(filaSeleccionada);
+
+        int confirm = JOptionPane.showConfirmDialog(DialogInscripcionEventoTaller,
+            "¿Está seguro de que desea eliminar esta asignación?\n" +
+            "Evento: " + asignacionAEliminar.getIdEvento().getNombre() + "\n" +
+            "Taller: " + asignacionAEliminar.getIdTallerImpartido().getNombre() + "\n" +
+            "Instructor: " + asignacionAEliminar.getIdTallerista().getNombre(),
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                eptController.destroy(asignacionAEliminar.getIdEventoParticipanteTaller());
+                JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Asignación eliminada exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                cargarTablaDeAsignaciones();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Error al eliminar la asignación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarAsignacionActionPerformed
+
+    private void txtRolAsignadoEnDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolAsignadoEnDialogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRolAsignadoEnDialogActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -2540,42 +2941,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionEventos
+    // En VentanaPrincipal.java
     private void cargarEventosEnTabla() {
         DefaultTableModel modelo2 = (DefaultTableModel) ttEventos.getModel();
-        modelo2.setRowCount(0); // Limpiar la tabla
+        modelo2.setRowCount(0); 
 
         try {
             EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
-            List<Eventos> listaEventos = controller.findEventosEntities();
+            // ASIGNAR LA LISTA A LA VARIABLE DE INSTANCIA:
+            this.listaEventosCargados = controller.findEventosEntities(); 
 
-            // Formato para la fecha
             SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-            // Formato para la hora
             SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
 
-            for (Eventos e : listaEventos) {
-                // Formatear la fecha y las horas
-                String fechaFormateada = formatoFecha.format(e.getFechaEvento());
-                String horaInicioFormateada = formatoHora.format(e.getHoraInicioEvento());
-                String horaFinFormateada = formatoHora.format(e.getHoraFinEvento());
+            if (this.listaEventosCargados != null) {
+                for (Eventos e : this.listaEventosCargados) {
+                    String fechaFormateada = e.getFechaEvento() != null ? formatoFecha.format(e.getFechaEvento()) : "N/A";
+                    String horaInicioFormateada = e.getHoraInicioEvento() != null ? formatoHora.format(e.getHoraInicioEvento()) : "N/A";
+                    String horaFinFormateada = e.getHoraFinEvento() != null ? formatoHora.format(e.getHoraFinEvento()) : "N/A";
 
-                // Crear la fila con los datos formateados
-                Object[] fila = new Object[]{
-                    e.getIdEvento(),
-                    e.getNombre(),
-                    e.getDescripcionPublica(),
-                    fechaFormateada, // Fecha formateada
-                    horaInicioFormateada, // Hora de inicio formateada
-                    horaFinFormateada, // Hora de fin formateada
-                    e.getLugarEvento(),
-                    e.getEstadoEvento()
-                };
-
-                // Añadir la fila al modelo de la tabla
-                modelo2.addRow(fila);
+                    Object[] fila = new Object[]{
+                        e.getIdEvento(),
+                        e.getNombre(),
+                        e.getDescripcionPublica(),
+                        fechaFormateada,
+                        horaInicioFormateada,
+                        horaFinFormateada,
+                        e.getLugarEvento(),
+                        e.getEstadoEvento()
+                    };
+                    modelo2.addRow(fila);
+                }
+            } else {
+                // Si el controlador devuelve null, inicializa la lista como vacía.
+                this.listaEventosCargados = new ArrayList<>();
+                System.err.println("La lista de eventos cargados desde la BD es null.");
             }
         } catch (Exception e) {
+            // También inicializa en caso de excepción para evitar NPEs.
+            this.listaEventosCargados = new ArrayList<>();
             System.err.println("Error al cargar los eventos: " + e.getMessage());
+            e.printStackTrace(); // Para ver el error completo en la consola
         }
     }
     private void seleccionarEventos() {    // Muestra en elementos filas de la tabla
@@ -2683,23 +3089,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Método de ejemplo para cargar la tabla (debes crearlo o adaptarlo)
+    // En VentanaPrincipal.java
     private void cargarTalleresEnTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) tblTalleres.getModel(); // Asumiendo que tblTalleres es tu JTable
-        modelo.setRowCount(0); // Limpiar tabla
+        DefaultTableModel modelo = (DefaultTableModel) tblTalleres.getModel();
+        modelo.setRowCount(0); 
 
         TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
-        List<Talleres> lista = controller.findTalleresEntities();
+        // ASIGNAR LA LISTA A LA VARIABLE DE INSTANCIA:
+        this.listaTalleresCargados = controller.findTalleresEntities(); 
 
-        for (Talleres taller : lista) {
-            Object[] row = new Object[]{
-                taller.getIdTaller(),
-                taller.getNombre(),
-                taller.getDescripcionPublica(),
-                taller.getIdUsuarioProponente() != null ? taller.getIdUsuarioProponente().getNombre() : "N/A", // Nombre del ponente
-                taller.getEstado()
-                // Añade más columnas según necesites (ej. Fecha, Cupo, etc., si los implementas)
-            };
-            modelo.addRow(row);
+        if (this.listaTalleresCargados != null) {
+            for (Talleres taller : this.listaTalleresCargados) {
+                Object[] row = new Object[]{
+                    taller.getIdTaller(),
+                    taller.getNombre(),
+                    // Las columnas de tu tabla deben coincidir. El código que tenías:
+                    // taller.getDescripcionPublica(), // Esta columna no está en el DefaultTableModel de tu initComponents
+                    taller.getIdUsuarioProponente() != null ? taller.getIdUsuarioProponente().getNombre() : "N/A",
+                    taller.getEstado()
+                };
+                modelo.addRow(row);
+            }
+        } else {
+            // Si el controlador devuelve null, inicializa la lista como vacía para evitar NPEs futuros.
+            this.listaTalleresCargados = new ArrayList<>();
+            System.err.println("La lista de talleres cargados desde la BD es null.");
         }
     }
 
@@ -2740,7 +3154,274 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         // Limpia cualquier otro campo que hayas añadido para la convocatoria
     }
-    /**
+    
+    //Manipulavion de DialogGestionEvidencias
+    private void abrirDialogoEvidencias(Eventos eventoCtx, Talleres tallerCtx) {
+        if (eventoCtx == null) {
+            JOptionPane.showMessageDialog(this, "Se requiere un Evento de contexto para gestionar evidencias.", "Error de Contexto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.eventoContextoEvidencias = eventoCtx;
+        this.tallerContextoEvidencias = tallerCtx;
+
+        // Actualizar título del diálogo (TITULO2 es el JLabel en DialogGestionEvidencias)
+        String tituloDialogo = "Gestión de Evidencias para: Evento - " + eventoCtx.getNombre();
+        if (tallerCtx != null) {
+            tituloDialogo += " (Taller: " + tallerCtx.getNombre() + ")";
+        }
+        TITULO2.setText(tituloDialogo); // Asumiendo que TITULO2 es tu JLabel para el título
+
+        poblarComboTipoEvidencia(); // Llena el ComboBox con los tipos de evidencia
+        cargarEvidenciasEnTabla();  // Carga las evidencias existentes para el contexto
+        limpiarCamposFormularioEvidencia(); // Limpia el formulario de subida
+
+        DialogGestionEvidencias.pack();
+        DialogGestionEvidencias.setLocationRelativeTo(this); // O el diálogo padre si es modal a otro diálogo
+        DialogGestionEvidencias.setVisible(true);
+    }
+        
+    private void poblarComboTipoEvidencia() {
+        // Los valores ENUM de tu base de datos para Evidencias.tipo_evidencia
+        String[] tipos = {"FOTO", "VIDEO", "DOCUMENTO_GENERAL", "LISTA_ASISTENCIA", "RECONOCIMIENTO_PDF", "OTRO"};
+        // 'cobTipoEvidencia' es el nombre de tu JComboBox en DialogGestionEvidencias
+        cobTipoEvidencia.setModel(new DefaultComboBoxModel<>(tipos));
+    }
+    
+    private void limpiarCamposFormularioEvidencia() {
+        // Limpiar el campo de texto para la descripción/título de la evidencia.
+        // Tu VentanaPrincipal.java declara 'txtDescripción' como JTextField.
+        if (txtDescripción != null) {
+            txtDescripción.setText("");
+        }
+        // El 'else if (taDescripcionEvidencia != null)' no es necesario si 'txtDescripción'
+        // es el único componente que usas para la entrada de texto descriptivo.
+
+        // Resetear el ComboBox del tipo de evidencia al primer ítem (o a un índice por defecto).
+        // Asumimos que el primer ítem es una opción válida o un placeholder como "Seleccione tipo".
+        if (cobTipoEvidencia != null && cobTipoEvidencia.getItemCount() > 0) {
+            cobTipoEvidencia.setSelectedIndex(0);
+        }
+
+        // Resetear la variable que almacena el archivo seleccionado por el JFileChooser.
+        this.archivoEvidenciaSeleccionado = null;
+
+        // Limpiar el JTextField que muestra la ruta del archivo seleccionado.
+        // NOTA: No tienes un JTextField llamado 'txtRutaArchivoEvidenciaDisplay'
+        // declarado en tu VentanaPrincipal.java. Si añades este componente a tu GUI
+        // para mostrar la ruta del archivo, esta línea funcionará. De lo contrario,
+        // puedes eliminarla o mantenerla comentada.
+        /*
+        if (txtRutaArchivoEvidenciaDisplay != null) {
+            txtRutaArchivoEvidenciaDisplay.setText("");
+        }
+        */
+
+        // Quitar cualquier selección en la tabla de evidencias.
+        if (tblEvidencias != null) {
+            tblEvidencias.clearSelection();
+        }
+
+        // Opcional: Si el JFileChooser mantiene el último directorio abierto,
+        // podrías querer resetearlo a un directorio por defecto, aunque usualmente
+        // no es necesario para simplemente limpiar el formulario.
+        // if (fileChooserElegirArchivo != null) {
+        //     fileChooserElegirArchivo.setSelectedFile(null); // Limpia la selección interna del chooser
+        // }
+    }
+    
+    // En VentanaPrincipal.java
+    private void cargarEvidenciasEnTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblEvidencias.getModel();
+        modelo.setRowCount(0);
+
+        if (this.listaEvidenciasCargadasDialogo == null) { // Inicializar si es null
+            this.listaEvidenciasCargadasDialogo = new ArrayList<>();
+        }
+        this.listaEvidenciasCargadasDialogo.clear(); // Limpiar antes de cargar
+
+        if (this.eventoContextoEvidencias == null) {
+            // No hay contexto de evento, la tabla permanece vacía.
+            // Puedes mostrar un mensaje si lo deseas.
+            return;
+        }
+
+        EvidenciasJpaController controller = new EvidenciasJpaController(Conexion.getEMF());
+        List<Evidencias> todasLasEvidenciasDelSistema = controller.findEvidenciasEntities();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        for (Evidencias evidencia : todasLasEvidenciasDelSistema) {
+            boolean perteneceAlEvento = evidencia.getIdEvento() != null && 
+                                      evidencia.getIdEvento().getIdEvento().equals(this.eventoContextoEvidencias.getIdEvento());
+
+            boolean cargarEstaEvidencia = false;
+
+            if (perteneceAlEvento) {
+                if (this.tallerContextoEvidencias != null) { // Contexto específico de un Taller (dentro del Evento)
+                    if (evidencia.getIdTallerAsociado() != null &&
+                        evidencia.getIdTallerAsociado().getIdTaller().equals(this.tallerContextoEvidencias.getIdTaller())) {
+                        cargarEstaEvidencia = true;
+                    }
+                } else { // Contexto solo de un Evento (evidencias generales del evento, no de un taller específico)
+                    if (evidencia.getIdTallerAsociado() == null) { 
+                        cargarEstaEvidencia = true;
+                    }
+                }
+            }
+
+            if (cargarEstaEvidencia) {
+                this.listaEvidenciasCargadasDialogo.add(evidencia); // Añadir a la lista de respaldo
+                Object[] fila = new Object[]{
+                    // Considera añadir una columna para el ID de la evidencia si facilita las cosas, aunque no sea visible.
+                    // Por ahora, basaremos la obtención del objeto en el índice de listaEvidenciasCargadasDialogo.
+                    evidencia.getRutaArchivo() != null ? new java.io.File(evidencia.getRutaArchivo()).getName() : "N/A",
+                    evidencia.getTipoEvidencia(),
+                    evidencia.getDescripcion(),
+                    evidencia.getFechaSubida() != null ? sdf.format(evidencia.getFechaSubida()) : "N/A",
+                    evidencia.getIdUsuarioSubio() != null ? evidencia.getIdUsuarioSubio().getNombre() : "N/A"
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+    
+    //Dialog
+    private void opcionInscripcionActionPerformed() {                                                
+        if (usuarioActual == null) {
+            JOptionPane.showMessageDialog(this, "Error: No hay un usuario activo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Ajustar el título del diálogo si es un JLabel, ej. TITULO6
+        //if (TITULO6 != null) TITULO6.setText("Asignar Instructor a Taller en Evento");
+
+        // Cargar datos para los ComboBoxes de asignación
+        cargarEventosParaAsignacionComboBox();    // Nuevo método
+        cargarTalleresParaAsignacionComboBox();   // Nuevo método
+        cargarInstructoresParaAsignacionComboBox(); // Nuevo método
+
+        txtRolAsignadoEnDialog.setText("INSTRUCTOR"); // Valor por defecto para el rol
+
+        cargarTablaDeAsignaciones(); // Nuevo método para llenar tblListaAsignaciones
+
+        limpiarFormularioDeAsignacion(); // Nuevo método para limpiar selecciones iniciales
+
+        DialogInscripcionEventoTaller.pack();
+        DialogInscripcionEventoTaller.setLocationRelativeTo(this);
+        DialogInscripcionEventoTaller.setVisible(true);
+    }
+    
+    private void cargarEventosParaAsignacionComboBox() {
+    DefaultComboBoxModel<Eventos> modelo = new DefaultComboBoxModel<>();
+    // Asume que tu JComboBox se llama cboEventoParaAsignar
+    cboEventoParaAsignar.setModel(modelo); 
+    modelo.addElement(null); // Opción para "Seleccionar Evento"
+    try {
+        // listaEventosCargados ya se llena en el constructor o al abrir DialogGestionEventos
+        // Si no, necesitas un EventosJpaController aquí.
+        // Asumiremos que listaEventosCargados está actualizada.
+        if (this.listaEventosCargados != null) {
+            for (Eventos evento : this.listaEventosCargados) {
+                // Filtrar por estados relevantes si es necesario
+                if (evento.getEstadoEvento() != null &&
+                    (evento.getEstadoEvento().equalsIgnoreCase("PLANIFICADO") ||
+                     evento.getEstadoEvento().equalsIgnoreCase("CONFIRMADO") ||
+                     evento.getEstadoEvento().equalsIgnoreCase("EN_CURSO"))) {
+                    modelo.addElement(evento);
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+private void cargarTalleresParaAsignacionComboBox() {
+    DefaultComboBoxModel<Talleres> modelo = new DefaultComboBoxModel<>();
+    // Asume que tu JComboBox se llama cboTallerParaAsignar
+    cboTallerParaAsignar.setModel(modelo);
+    modelo.addElement(null); // Opción para "Seleccionar Taller"
+    try {
+        // listaTalleresCargados ya se llena en el constructor o al abrir DialogGestionTalleres
+        // Asumiremos que está actualizada.
+        if (this.listaTalleresCargados != null) {
+            for (Talleres taller : this.listaTalleresCargados) {
+                 // Filtrar por estados relevantes si es necesario, ej. "APROBADO"
+                if (taller.getEstado() != null && taller.getEstado().equalsIgnoreCase("APROBADO")) {
+                    modelo.addElement(taller);
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+    private void cargarInstructoresParaAsignacionComboBox() {
+        DefaultComboBoxModel<Usuarios> modelo = new DefaultComboBoxModel<>();
+        // Asume que tu JComboBox se llama cboInstructorParaAsignar
+        cboInstructorParaAsignar.setModel(modelo);
+        modelo.addElement(null); // Opción para "Seleccionar Instructor"
+        this.listaInstructoresCargados.clear(); // Limpiar lista de respaldo
+        try {
+            UsuariosJpaController usuariosCtrl = new UsuariosJpaController(Conexion.getEMF());
+            List<Usuarios> todosLosUsuarios = usuariosCtrl.findUsuariosEntities();
+            if (todosLosUsuarios != null) {
+                for (Usuarios usr : todosLosUsuarios) {
+                    if (usr.getRol() != null && 
+                        (usr.getRol().equalsIgnoreCase("DOCENTE") || usr.getRol().equalsIgnoreCase("TALLERISTA"))) {
+                        modelo.addElement(usr);
+                        this.listaInstructoresCargados.add(usr); // Guardar para referencia si es necesario
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void cargarTablaDeAsignaciones() {
+        // Asume que tu JTable se llama tblListaAsignaciones (antes tblTalleresDisponibles)
+        String[] encabezados = {"ID Asig.", "Evento", "Taller", "Instructor/Ponente", "Rol Asignado"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(null, encabezados);
+        tblListaAsignaciones.setModel(modeloTabla); // Usa el nombre correcto de tu JTable
+
+        if (this.listaAsignacionesActuales == null) {
+            this.listaAsignacionesActuales = new ArrayList<>();
+        }
+        this.listaAsignacionesActuales.clear();
+
+        try {
+            List<EventoParticipantesTalleres> todasLasAsignaciones = eptController.findEventoParticipantesTalleresEntities();
+            if (todasLasAsignaciones != null) {
+                for (EventoParticipantesTalleres asignacion : todasLasAsignaciones) {
+                    // Mostrar todas las asignaciones o filtrar por roles de instructor/ponente
+                     if (asignacion.getIdEvento() != null && asignacion.getIdTallerImpartido() != null && asignacion.getIdTallerista() != null) {
+                        this.listaAsignacionesActuales.add(asignacion);
+                        Object[] fila = new Object[]{
+                            asignacion.getIdEventoParticipanteTaller(),
+                            asignacion.getIdEvento().getNombre(),
+                            asignacion.getIdTallerImpartido().getNombre(),
+                            asignacion.getIdTallerista().getNombre(),
+                            asignacion.getRolParticipante()
+                        };
+                        modeloTabla.addRow(fila);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogInscripcionEventoTaller, "Error al cargar asignaciones: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    
+    private void limpiarFormularioDeAsignacion() {
+        if (cboEventoParaAsignar.getItemCount() > 0) cboEventoParaAsignar.setSelectedIndex(0); // O setSelectedItem(null)
+        if (cboTallerParaAsignar.getItemCount() > 0) cboTallerParaAsignar.setSelectedIndex(0);
+        if (cboInstructorParaAsignar.getItemCount() > 0) cboInstructorParaAsignar.setSelectedIndex(0);
+        txtRolAsignadoEnDialog.setText("INSTRUCTOR"); // Valor por defecto
+        if (tblListaAsignaciones != null) tblListaAsignaciones.clearSelection();
+    }
+       
+        /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -2782,49 +3463,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog DialogGestionTalleres;
     private javax.swing.JDialog DialogGestionUsuarios;
     private javax.swing.JDialog DialogInscripcionEventoTaller;
+    private javax.swing.JButton SeleccionarArchivoEvidencia;
     private javax.swing.JLabel TITULO;
     private javax.swing.JLabel TITULO1;
     private javax.swing.JLabel TITULO2;
     private javax.swing.JLabel TITULO3;
     private javax.swing.JLabel TITULO4;
     private javax.swing.JLabel TITULO5;
-    private javax.swing.JLabel TITULO6;
     private javax.swing.JLabel TITULO7;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnActualizarTaller;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarTaller;
     private javax.swing.JButton btnDescargarEvidencia;
-    private javax.swing.JToggleButton btnDesinscribirme;
     private javax.swing.JButton btnECrear;
     private javax.swing.JButton btnEEliminar;
     private javax.swing.JButton btnELimpiar;
     private javax.swing.JButton btnEModificar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JToggleButton btnEliminarAsignacion;
     private javax.swing.JButton btnEliminarConvocatoria;
     private javax.swing.JButton btnEliminarEvidencia;
     private javax.swing.JButton btnElliminarTaller;
-    private javax.swing.JButton btnInscribirme;
+    private javax.swing.JButton btnEventoSubirEvidencia;
+    private javax.swing.JButton btnGuardarAsignacion;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnLimpiarConvocatorias;
+    private javax.swing.JButton btnLimpiarFormAsignacion;
     private javax.swing.JButton btnLimpiarTalleres;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPublicar;
-    private javax.swing.JButton btnSeleccionarArchivo;
     private javax.swing.JButton btnSubirEvidencia;
     private com.toedter.calendar.JCalendar calendario;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JLabel cboEstadoTaller;
     private javax.swing.JComboBox<String> cboEstadoTaller2;
+    private javax.swing.JComboBox<Eventos> cboEventoParaAsignar;
+    private javax.swing.JComboBox<Usuarios> cboInstructorParaAsignar;
     private javax.swing.JComboBox<modelo.Usuarios> cboPonente;
+    private javax.swing.JComboBox<Talleres> cboTallerParaAsignar;
     private javax.swing.JComboBox<String> cboURol;
+    private javax.swing.JComboBox<String> cobTipoEvidencia;
     private com.toedter.calendar.JDateChooser dateChooserFechaInscripcion;
     private com.toedter.calendar.JDateChooser dateChooserFechaLimite;
     private javax.swing.JLabel encabezado;
     private javax.swing.JLabel encabezado1;
     private javax.swing.JLabel encabezado2;
     private javax.swing.JLabel encabezado4;
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser fileChooserElegirArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2848,14 +3534,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
@@ -2864,12 +3548,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblEventoAsignar;
+    private javax.swing.JLabel lblInstructorAsignar;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNumControl;
     private javax.swing.JLabel lblRol;
+    private javax.swing.JLabel lblRolAsignar;
+    private javax.swing.JLabel lblTablaAsignaciones;
+    private javax.swing.JLabel lblTallerAsignar;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuBar menuBarraPrincipal;
@@ -2881,7 +3570,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionConvocatorias;
     private javax.swing.JMenuItem opcionEventos;
-    private javax.swing.JMenuItem opcionEvidencias;
     private javax.swing.JMenuItem opcionInscripcion;
     private javax.swing.JMenuItem opcionSalir;
     private javax.swing.JMenuItem opcionTalleres;
@@ -2891,14 +3579,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelGeneral;
     private javax.swing.JPasswordField passContrasena;
     private javax.swing.JTextArea taDescripcionConvocatoria;
-    private javax.swing.JTextArea taDescripcionEvidencia;
     private javax.swing.JTable tblConvocatorias;
     private javax.swing.JTable tblEvidencias;
+    private javax.swing.JTable tblListaAsignaciones;
     private javax.swing.JTable tblTalleres;
-    private javax.swing.JTable tblTalleresDisponibles;
     private javax.swing.JTable ttEventos;
     private javax.swing.JTable ttUsuarios;
     private javax.swing.JTextArea txtDescripcionTaller;
+    private javax.swing.JTextField txtDescripción;
     private javax.swing.JTextArea txtEDescripcion;
     private javax.swing.JTextField txtEFin;
     private javax.swing.JTextField txtEID;
@@ -2908,16 +3596,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtFieldMaterial_Req;
     private javax.swing.JTextField txtFieldNombreTaller;
     private javax.swing.JTextField txtFieldTituloConvocatoria;
-    private javax.swing.JTextField txtFieldTituloEvidencia;
     private javax.swing.JTextField txtLugar;
     private javax.swing.JTextField txtManualRuta;
     private javax.swing.JLabel txtMaterialReq;
     private javax.swing.JLabel txtNombreTaller;
     private javax.swing.JLabel txtNombreTaller1;
     private javax.swing.JLabel txtNombreTaller2;
-    private javax.swing.JLabel txtNombreTaller4;
     private javax.swing.JLabel txtNombreTaller5;
     private javax.swing.JLabel txtNombreTaller6;
+    private javax.swing.JTextField txtRolAsignadoEnDialog;
     private javax.swing.JTextField txtUEmail;
     private javax.swing.JTextField txtUID;
     private javax.swing.JTextField txtUNombre;
