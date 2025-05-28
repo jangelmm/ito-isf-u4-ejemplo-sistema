@@ -269,7 +269,8 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
+        return idUsuario + " | " + nombre;
+        //return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
     
 }

@@ -264,12 +264,13 @@
             <Component class="javax.swing.JTable" name="ttUsuarios">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="4">
+                  <Table columnCount="6" rowCount="4">
                     <Column editable="true" title="ID" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Email" type="java.lang.Object"/>
                     <Column editable="true" title="Rol" type="java.lang.Object"/>
                     <Column editable="true" title="N&#xfa;m. de Control" type="java.lang.Object"/>
+                    <Column editable="true" title="Contrase&#xf1;a" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
@@ -537,6 +538,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEEliminarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnELimpiar">
               <Properties>
@@ -625,47 +629,39 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPane9" alignment="0" max="32767" attributes="0"/>
                       <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="TITULO5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="txtMaterialReq" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                                          <Component id="txtFieldMaterial_Req" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="TITULO5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="txtMaterialReq" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                                      <Component id="txtFieldMaterial_Req" min="-2" pref="158" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtNombreTaller6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCupoMaximo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtFecha_Hora" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtDuracion" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtNombreTaller6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtCupoMaximo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtFecha_Hora" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtDuracion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jSpinner1" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="txtFieldFecha_Hora" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
-                                                  <Component id="txtFieldNombreTaller" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="txtFieldDuracion" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                                          </Group>
+                                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cboCupoMaximo" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                          <Component id="txtFieldNombreTaller" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                          <Component id="txtFieldDuracion" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                          <Component id="dateFieldFechaTaller" min="-2" pref="158" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="80" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace pref="68" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane8" min="-2" pref="287" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane8" pref="390" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -674,27 +670,29 @@
                                       <Component id="cboEstadoTaller" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cboPonente" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="cboEventoAsociado1" max="32767" attributes="0"/>
-                                      <Component id="cboEventoAsociado2" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cboEstadoTaller2" alignment="0" pref="391" max="32767" attributes="0"/>
+                                      <Component id="cboPonente" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="jScrollPane9" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="btnAgregarTaller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                  <EmptySpace pref="158" max="32767" attributes="0"/>
                   <Component id="btnEditarTaller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
                   <Component id="btnElliminarTaller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
                   <Component id="btnVerComentarios" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="343" max="-2" attributes="0"/>
@@ -733,15 +731,17 @@
                                       <Component id="jLabel18" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSpinner1" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <Component id="cboCupoMaximo" min="-2" pref="28" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane8" min="-2" pref="54" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtFieldFecha_Hora" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel19" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="cboPonente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel19" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="cboPonente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="dateFieldFechaTaller" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -755,7 +755,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="cboEstadoTaller" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="cboEventoAsociado2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboEstadoTaller2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Component id="txtFieldMaterial_Req" alignment="0" max="32767" attributes="0"/>
@@ -827,7 +827,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="taDescripcionTaller">
+            <Component class="javax.swing.JTextArea" name="txtDescripcionTaller">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
@@ -838,37 +838,22 @@
         <Component class="javax.swing.JComboBox" name="cboPonente">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;modelo.Usuarios&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboEventoAsociado1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;modelo.Eventos&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtFieldFecha_Hora">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldFecha_HoraActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="txtMaterialReq">
           <Properties>
@@ -883,7 +868,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldMaterial_ReqActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner1">
+        <Component class="javax.swing.JSpinner" name="cboCupoMaximo">
         </Component>
         <Component class="javax.swing.JLabel" name="TITULO4">
           <Properties>
@@ -912,10 +897,10 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                    <Column editable="true" title="ID" type="java.lang.Object"/>
+                    <Column editable="true" title="Nombre" type="java.lang.Object"/>
+                    <Column editable="true" title="Descripci&#xf3;n" type="java.lang.Object"/>
+                    <Column editable="true" title="Usuario" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -933,17 +918,20 @@
             <Property name="text" type="java.lang.String" value="Estado Taller:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cboEventoAsociado2">
+        <Component class="javax.swing.JComboBox" name="cboEstadoTaller2">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+                <StringItem index="0" value="APROBADO"/>
+                <StringItem index="1" value="EN_REVISION_DOCENTE"/>
+                <StringItem index="2" value="REQUIERE_MODIFICACION"/>
+                <StringItem index="3" value="PENDIENTE_PROPUESTA"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboEstadoTaller2ActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -978,6 +966,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Agregar Taller"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarTallerActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnVerComentarios">
           <Properties>
@@ -1000,6 +991,8 @@
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator3">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="dateFieldFechaTaller">
         </Component>
       </SubComponents>
     </Container>
@@ -1798,7 +1791,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelGeneral" alignment="1" pref="337" max="32767" attributes="0"/>
+          <Component id="panelGeneral" alignment="1" pref="800" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">

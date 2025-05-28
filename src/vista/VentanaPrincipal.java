@@ -7,7 +7,11 @@ package vista;
 import control.ComentariosRevisionTallerJpaController;
 import control.Conexion;
 import control.EventosJpaController;
+import control.EvidenciasJpaController;
+import control.TalleresJpaController;
 import control.UsuariosJpaController;
+import control.exceptions.IllegalOrphanException;
+import control.exceptions.NonexistentEntityException;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -16,16 +20,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.BitacorasEventos;
 import modelo.ComentariosRevisionTaller;
+import modelo.EventoParticipantesTalleres;
 import modelo.Eventos;
+import modelo.Evidencias;
+import modelo.Talleres;
 import modelo.Usuarios;
 
 /**
@@ -54,6 +65,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Manipulacion del DialogGestionEventos
         cargarEventosEnTabla();
         seleccionarEventos();
+        
+        //Manipulación de Talleres
+        cargarPonentesEnComboBox();
+        cargarEventosAsociadosEnComboBox();
+        cargarTalleresEnTabla();
     }
 
     /**
@@ -121,19 +137,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        taDescripcionTaller = new javax.swing.JTextArea();
+        txtDescripcionTaller = new javax.swing.JTextArea();
         cboPonente = new javax.swing.JComboBox<>();
         cboEventoAsociado1 = new javax.swing.JComboBox<>();
-        txtFieldFecha_Hora = new javax.swing.JTextField();
         txtMaterialReq = new javax.swing.JLabel();
         txtFieldMaterial_Req = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
+        cboCupoMaximo = new javax.swing.JSpinner();
         TITULO4 = new javax.swing.JLabel();
         TITULO5 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
         tblTalleres = new javax.swing.JTable();
         cboEstadoTaller = new javax.swing.JLabel();
-        cboEventoAsociado2 = new javax.swing.JComboBox<>();
+        cboEstadoTaller2 = new javax.swing.JComboBox<>();
         txtCupoMaximo = new javax.swing.JLabel();
         txtDuracion = new javax.swing.JLabel();
         txtFieldDuracion = new javax.swing.JTextField();
@@ -144,6 +159,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtFecha_Hora = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        dateFieldFechaTaller = new com.toedter.calendar.JDateChooser();
         DialogGestionConvocatorias = new javax.swing.JDialog();
         TITULO = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -377,13 +393,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         ttUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Email", "Rol", "Núm. de Control"
+                "ID", "Nombre", "Email", "Rol", "Núm. de Control", "Contraseña"
             }
         ));
         jScrollPane1.setViewportView(ttUsuarios);
@@ -466,6 +482,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         btnEEliminar.setText("Eliminar");
+        btnEEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEEliminarActionPerformed(evt);
+            }
+        });
 
         btnELimpiar.setText("Limpiar");
         btnELimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -643,19 +664,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel22.setText("Evento asociado:");
 
-        taDescripcionTaller.setColumns(20);
-        taDescripcionTaller.setRows(5);
-        jScrollPane8.setViewportView(taDescripcionTaller);
-
-        cboPonente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboEventoAsociado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtFieldFecha_Hora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldFecha_HoraActionPerformed(evt);
-            }
-        });
+        txtDescripcionTaller.setColumns(20);
+        txtDescripcionTaller.setRows(5);
+        jScrollPane8.setViewportView(txtDescripcionTaller);
 
         txtMaterialReq.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtMaterialReq.setText("Material Requerido:");
@@ -680,7 +691,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Descripción", "Usuario"
             }
         ));
         jScrollPane9.setViewportView(tblTalleres);
@@ -688,7 +699,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         cboEstadoTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         cboEstadoTaller.setText("Estado Taller:");
 
-        cboEventoAsociado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEstadoTaller2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "APROBADO", "EN_REVISION_DOCENTE", "REQUIERE_MODIFICACION", "PENDIENTE_PROPUESTA" }));
+        cboEstadoTaller2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEstadoTaller2ActionPerformed(evt);
+            }
+        });
 
         txtCupoMaximo.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtCupoMaximo.setText("Cupo Maximo:");
@@ -705,6 +721,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEditarTaller.setText("Editar Taller");
 
         btnAgregarTaller.setText("Agregar Taller");
+        btnAgregarTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarTallerActionPerformed(evt);
+            }
+        });
 
         btnVerComentarios.setText("Ver comentarios");
 
@@ -721,59 +742,56 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addComponent(TITULO5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addComponent(txtMaterialReq)
-                                        .addGap(76, 76, 76)
-                                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNombreTaller6)
-                                            .addComponent(txtCupoMaximo)
-                                            .addComponent(txtFecha_Hora)
-                                            .addComponent(txtDuracion))
-                                        .addGap(81, 81, 81)
-                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)))
+                            .addComponent(TITULO5)
+                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                    .addComponent(txtMaterialReq)
+                                    .addGap(76, 76, 76)
+                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtNombreTaller6)
+                                        .addComponent(txtCupoMaximo)
+                                        .addComponent(txtFecha_Hora)
+                                        .addComponent(txtDuracion))
+                                    .addGap(81, 81, 81)
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cboCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dateFieldFechaTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                                 .addComponent(jLabel18)
                                 .addGap(57, 57, 57)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
                             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel22)
                                     .addComponent(jLabel19)
                                     .addComponent(cboEstadoTaller))
                                 .addGap(18, 18, 18)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cboEventoAsociado1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cboEventoAsociado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(cboEstadoTaller2, 0, 391, Short.MAX_VALUE)
+                                    .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(18, 18, 18))
             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(btnAgregarTaller)
-                .addGap(89, 89, 89)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                 .addComponent(btnEditarTaller)
-                .addGap(131, 131, 131)
+                .addGap(138, 138, 138)
                 .addComponent(btnElliminarTaller)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(153, 153, 153)
                 .addComponent(btnVerComentarios)
-                .addGap(36, 36, 36))
+                .addGap(56, 56, 56))
             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                 .addGap(343, 343, 343)
                 .addComponent(TITULO4)
@@ -804,13 +822,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                     .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateFieldFechaTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -820,7 +839,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cboEstadoTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtMaterialReq, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1383,7 +1402,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+            .addComponent(panelGeneral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1506,7 +1525,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 usuarioExistente.setCorreo(txtUEmail.getText());
                 usuarioExistente.setRol(cboURol.getSelectedItem().toString());
                 usuarioExistente.setNumeroControl(txtUNumControl.getText());
-
+                
+                String contrasena = "";
+                for (char e : passContrasena.getPassword()) {
+                    contrasena += e;
+                }
+                
+                usuarioExistente.setContrasenaHash(contrasena);
+                
                 // Guardar los cambios
                 controller.edit(usuarioExistente);
 
@@ -1522,109 +1548,140 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(txtUID.getText()); // ID del usuario a eliminar
-        int idUsuarioGenerico = 1; // ID del usuario genérico (sistema)
+        if (txtUID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionUsuarios, "Por favor, seleccione un usuario de la tabla para eliminar.", "Ningún Usuario Seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        int confirm = JOptionPane.showConfirmDialog(this, 
-            "¿Estás segura de que deseas eliminar este usuario?\nSe reasignarán sus registros al usuario genérico.", 
-            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        int idUsuarioAEliminar;
+        try {
+            idUsuarioAEliminar = Integer.parseInt(txtUID.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionUsuarios, "El ID del usuario no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idUsuarioGenerico = 1; // ID del usuario genérico (sistema)
+        if (idUsuarioAEliminar == idUsuarioGenerico) {
+            JOptionPane.showMessageDialog(DialogGestionUsuarios, "No se puede eliminar el usuario genérico del sistema.", "Operación no permitida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (usuarioActual != null && usuarioActual.getIdUsuario() == idUsuarioAEliminar) {
+            JOptionPane.showMessageDialog(DialogGestionUsuarios, "No puedes eliminar el usuario con el que has iniciado sesión.", "Operación no permitida", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionUsuarios,
+            "¿Está seguro de que desea eliminar este usuario?\nTodas sus referencias serán reasignadas al usuario genérico del sistema.",
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademicPlusPU");
+            EntityManagerFactory emf = Conexion.getEMF();
             EntityManager em = emf.createEntityManager();
 
             try {
                 em.getTransaction().begin();
-                // Reasignar referencias en ComentarioRevisionTaller (idUsuarioComentarista)
-                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+
+                // Obtener la entidad del usuario genérico
+                Usuarios usuarioGenericoEntidad = em.find(Usuarios.class, idUsuarioGenerico);
+                if (usuarioGenericoEntidad == null) {
+                    JOptionPane.showMessageDialog(DialogGestionUsuarios, "No se encontró el usuario genérico con ID: " + idUsuarioGenerico, "Error Crítico", JOptionPane.ERROR_MESSAGE);
+                    if (em.getTransaction().isActive()) {
+                        em.getTransaction().rollback();
+                    }
+                    return;
+                }
+
+                // 1. Reasignar ComentariosRevisionTaller
+                em.createQuery("UPDATE ComentariosRevisionTaller c SET c.idUsuarioComentarista = :nuevoUsuario WHERE c.idUsuarioComentarista.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en Notificaciones (idUsuarioDestinatario)
-                em.createQuery("UPDATE Notificaciones n SET n.idUsuarioDestinatario.idUsuario = :nuevoId WHERE n.idUsuarioDestinatario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 2. Reasignar Notificaciones
+                em.createQuery("UPDATE Notificaciones n SET n.idUsuarioDestinatario = :nuevoUsuario WHERE n.idUsuarioDestinatario.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en Evidencias (idUsuarioSubio)
-                em.createQuery("UPDATE Evidencias e SET e.idUsuarioSubio.idUsuario = :nuevoId WHERE e.idUsuarioSubio.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 3. Reasignar Evidencias
+                em.createQuery("UPDATE Evidencias e SET e.idUsuarioSubio = :nuevoUsuario WHERE e.idUsuarioSubio.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en BitacorasEventos (idUsuarioRegistra)
-                em.createQuery("UPDATE BitacorasEventos b SET b.idUsuarioRegistra.idUsuario = :nuevoId WHERE b.idUsuarioRegistra.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 4. Reasignar Talleres (como proponente)
+                em.createQuery("UPDATE Talleres t SET t.idUsuarioProponente = :nuevoUsuario WHERE t.idUsuarioProponente.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en EventoParticipantesTalleres (idTallerista)
-                em.createQuery("UPDATE EventoParticipantesTalleres ept SET ept.idTallerista.idUsuario = :nuevoId WHERE ept.idTallerista.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 5. Reasignar Eventos (como docente responsable)
+                // Nota: Si idDocenteResponsable es opcional y prefieres ponerlo a null en lugar de reasignar,
+                // la consulta sería: UPDATE Eventos ev SET ev.idDocenteResponsable = NULL WHERE ev.idDocenteResponsable.idUsuario = :actualId
+                // Pero para mantener la consistencia de reasignar:
+                em.createQuery("UPDATE Eventos ev SET ev.idDocenteResponsable = :nuevoUsuario WHERE ev.idDocenteResponsable.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en Convocatorias (idUsuarioPublica)
-                em.createQuery("UPDATE Convocatorias c SET c.idUsuarioPublica.idUsuario = :nuevoId WHERE c.idUsuarioPublica.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 6. Reasignar BitacorasEventos
+                em.createQuery("UPDATE BitacorasEventos be SET be.idUsuarioRegistra = :nuevoUsuario WHERE be.idUsuarioRegistra.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en Eventos (idDocenteResponsable)
-                em.createQuery("UPDATE Eventos e SET e.idDocenteResponsable.idUsuario = :nuevoId WHERE e.idDocenteResponsable.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 7. Reasignar Convocatorias
+                em.createQuery("UPDATE Convocatorias conv SET conv.idUsuarioPublica = :nuevoUsuario WHERE conv.idUsuarioPublica.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                // Reasignar referencias en Talleres (idUsuarioProponente)
-                em.createQuery("UPDATE Talleres t SET t.idUsuarioProponente.idUsuario = :nuevoId WHERE t.idUsuarioProponente.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
-                  .executeUpdate();
-/*
-                // Reasignar relaciones (ejemplo con comentario_revision, notificacion, etc.)
-                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
+                // 8. Reasignar EventoParticipantesTalleres (como tallerista/participante)
+                em.createQuery("UPDATE EventoParticipantesTalleres ept SET ept.idTallerista = :nuevoUsuario WHERE ept.idTallerista.idUsuario = :actualId")
+                  .setParameter("nuevoUsuario", usuarioGenericoEntidad)
+                  .setParameter("actualId", idUsuarioAEliminar)
                   .executeUpdate();
 
-                em.createQuery("UPDATE Notificaciones n SET n.usuario.idUsuario = :nuevoId WHERE n.usuario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
-                  .executeUpdate();
-
-                em.createQuery("UPDATE Evidencias e SET e.usuario.idUsuario = :nuevoId WHERE e.usuario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
-                  .executeUpdate();
-
-                em.createQuery("UPDATE Bitacora b SET b.usuario.idUsuario = :nuevoId WHERE b.usuario.idUsuario = :actualId")
-                  .setParameter("nuevoId", idUsuarioGenerico)
-                  .setParameter("actualId", id)
-                  .executeUpdate();
-*/
-                // Buscar y eliminar el usuario
-                Usuarios usuarioAEliminar = em.find(Usuarios.class, id);
-                if (usuarioAEliminar != null) {
-                    em.remove(usuarioAEliminar);
+                // Finalmente, eliminar el usuario
+                Usuarios usuarioAEliminarObj = em.find(Usuarios.class, idUsuarioAEliminar);
+                if (usuarioAEliminarObj != null) {
+                    em.remove(usuarioAEliminarObj);
+                } else {
+                    JOptionPane.showMessageDialog(DialogGestionUsuarios, "El usuario a eliminar no fue encontrado (ID: " + idUsuarioAEliminar + "). La reasignación de referencias pudo haberse realizado parcialmente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    if (em.getTransaction().isActive()) {
+                        // Considera si quieres hacer commit de las reasignaciones o rollback si el usuario no se encuentra.
+                        // Si el objetivo es limpiar referencias incluso si el usuario ya fue borrado por otro medio, haz commit.
+                        // Si es un error que el usuario no exista, haz rollback.
+                        // Por seguridad, si el usuario no está, pero las FKs podrían apuntar a él, hacer commit de las reasignaciones es más seguro para la integridad.
+                        // Sin embargo, si el usuario *debería* estar y no está, es un estado inconsistente.
+                        // Optaremos por rollback en este caso si el usuario no se encuentra para eliminar.
+                        em.getTransaction().rollback();
+                    }
+                    return;
                 }
 
                 em.getTransaction().commit();
 
                 cargarUsuariosEnTabla(); // Refresca la tabla
-                limpiarCamposUsuario(); // Limpia los campos
-                JOptionPane.showMessageDialog(this, "Usuario eliminado y registros reasignados.");
-            } catch (Exception e) {
-                if (em.getTransaction().isActive()) em.getTransaction().rollback();
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error al eliminar usuario: " + e.getMessage());
+                limpiarCamposUsuario();  // Limpia los campos del formulario
+                JOptionPane.showMessageDialog(DialogGestionUsuarios, "Usuario eliminado exitosamente y sus registros han sido reasignados.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (Exception e) { // Captura más genérica para errores de JPQL o de BD
+                if (em.getTransaction().isActive()) {
+                    em.getTransaction().rollback();
+                }
+                System.err.println("Error detallado al eliminar el usuario: " + e.toString());
+                e.printStackTrace(); 
+                JOptionPane.showMessageDialog(DialogGestionUsuarios, "Error al eliminar el usuario: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
             } finally {
-                em.close();
-                emf.close();
+                if (em != null && em.isOpen()) {
+                    em.close(); 
+                }
             }
         }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -1789,10 +1846,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldNombreTallerActionPerformed
 
-    private void txtFieldFecha_HoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFecha_HoraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldFecha_HoraActionPerformed
-
     private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
@@ -1803,7 +1856,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
         DialogGestionTalleres.setVisible(true);
-        DialogGestionTalleres.setSize(950, 650);
+        DialogGestionTalleres.setSize(1050, 650);
         DialogGestionTalleres.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionTalleresActionPerformed
 
@@ -1818,6 +1871,180 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionEvidencias.setSize(950, 650);
         DialogGestionEvidencias.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionEvidenciasActionPerformed
+
+    private void btnEEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEEliminarActionPerformed
+        if (txtEID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionEventos, "Por favor, seleccione un evento de la tabla para eliminar.", "Ningún Evento Seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int eventoId;
+        try {
+            eventoId = Integer.parseInt(txtEID.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionEventos, "El ID del evento no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionEventos,
+            "¿Está seguro de que desea eliminar este evento?\nTODOS los datos asociados (evidencias, bitácoras, participantes) también serán eliminados permanentemente.",
+            "Confirmar Eliminación Definitiva", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            EntityManagerFactory emf = Conexion.getEMF();
+            EntityManager em = emf.createEntityManager(); // Usaremos este EM para la transacción manual
+            EventosJpaController eventosController = new EventosJpaController(emf);
+
+            try {
+                em.getTransaction().begin();
+
+                Eventos eventoAEliminar = em.find(Eventos.class, eventoId); // Obtener el evento dentro de la transacción
+
+                if (eventoAEliminar == null) {
+                    throw new NonexistentEntityException("El evento con ID " + eventoId + " no existe.");
+                }
+
+                // 1. Eliminar Evidencias asociadas
+                if (eventoAEliminar.getEvidenciasList() != null && !eventoAEliminar.getEvidenciasList().isEmpty()) {
+                    EvidenciasJpaController evidenciasController = new EvidenciasJpaController(emf);
+                    // Crear una copia para evitar ConcurrentModificationException si el controlador modifica la lista original
+                    List<Evidencias> evidenciasCopia = new ArrayList<>(eventoAEliminar.getEvidenciasList());
+                    for (Evidencias evidencia : evidenciasCopia) {
+                        // Se recomienda que el controller.destroy() se llame fuera de la transacción principal
+                        // o que el controller use el mismo EntityManager si se pasa como argumento.
+                        // Para simplicidad, si el controller.destroy abre su propia tx, esto es problemático.
+                        // Es mejor usar em.remove() directamente aquí si es seguro y CascadeType.ALL lo permite.
+                        // O, si EvidenciasJpaController.destroy() es transaccional, llamarlo fuera o manejar tx anidadas (complejo).
+                        // La forma más segura es em.remove() si estamos seguros de las cascadas o dependencias.
+                        // Dado que EvidenciasJpaController.destroy maneja sus propias relaciones:
+                        // Aquí usaremos em.remove(em.merge(evidencia)) para asegurar que la entidad está manejada por el EM actual.
+                        Evidencias evManaged = em.merge(evidencia); // Asegurar que la entidad esté gestionada por 'em'
+                        em.remove(evManaged);
+                    }
+                    // eventoAEliminar.getEvidenciasList().clear(); // Opcional, para reflejar en el objeto Java
+                }
+
+                // 2. Eliminar BitacorasEventos asociadas
+                if (eventoAEliminar.getBitacorasEventosList() != null && !eventoAEliminar.getBitacorasEventosList().isEmpty()) {
+                    List<BitacorasEventos> bitacorasCopia = new ArrayList<>(eventoAEliminar.getBitacorasEventosList());
+                    for (BitacorasEventos bitacora : bitacorasCopia) {
+                        BitacorasEventos bManaged = em.merge(bitacora);
+                        em.remove(bManaged);
+                    }
+                    // eventoAEliminar.getBitacorasEventosList().clear();
+                }
+
+                // 3. Eliminar EventoParticipantesTalleres asociados
+                if (eventoAEliminar.getEventoParticipantesTalleresList() != null && !eventoAEliminar.getEventoParticipantesTalleresList().isEmpty()) {
+                    List<EventoParticipantesTalleres> participantesCopia = new ArrayList<>(eventoAEliminar.getEventoParticipantesTalleresList());
+                    for (EventoParticipantesTalleres participante : participantesCopia) {
+                         EventoParticipantesTalleres eptManaged = em.merge(participante);
+                         em.remove(eptManaged);
+                    }
+                    // eventoAEliminar.getEventoParticipantesTalleresList().clear();
+                }
+
+                // El controlador de eventos también maneja las notificaciones estableciendo FKs a NULL,
+                // y desvincula de ConvocatoriaOrigen y DocenteResponsable.
+                // No es necesario hacerlo manualmente aquí si se va a llamar a eventosController.destroy()
+                // PERO, dado que el controller.destroy() hace su propio chequeo de huérfanos,
+                // y ya estamos gestionando los hijos aquí, podemos eliminar el evento directamente con el EntityManager.
+
+                em.remove(eventoAEliminar); // Eliminar el evento principal
+
+                em.getTransaction().commit(); // Confirmar todos los cambios (eliminación de hijos y del padre)
+
+                cargarEventosEnTabla(); 
+                limpiarCamposEventos();  
+                JOptionPane.showMessageDialog(DialogGestionEventos, "Evento y todos sus datos asociados eliminados exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NonexistentEntityException ex) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                JOptionPane.showMessageDialog(DialogGestionEventos, "El evento que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            } catch (Exception e) { // Captura otras posibles excepciones
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                JOptionPane.showMessageDialog(DialogGestionEventos, "Ocurrió un error al intentar eliminar el evento: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            } finally {
+                if (em != null && em.isOpen()) {
+                    em.close();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnEEliminarActionPerformed
+
+    private void cboEstadoTaller2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoTaller2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoTaller2ActionPerformed
+
+    private void btnAgregarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTallerActionPerformed
+        // 1. Validar campos obligatorios
+        String nombreTaller = txtFieldNombreTaller.getText().trim();
+        if (nombreTaller.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldNombreTaller.requestFocus();
+            return;
+        }
+
+        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (cboEstadoTaller2.getSelectedItem() == null) { // Suponiendo que cboEstadoTaller2 es el JComboBox para el estado del taller
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Crear y poblar el objeto Talleres
+        Talleres nuevoTaller = new Talleres();
+        nuevoTaller.setNombre(nombreTaller);
+
+        // Campos que existen en la entidad Talleres
+        nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim()); // Asumo que txtDescripcionTaller es tu JTextArea
+        nuevoTaller.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
+        nuevoTaller.setEstado((String) cboEstadoTaller2.getSelectedItem());
+
+        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
+        nuevoTaller.setIdUsuarioProponente(ponenteSeleccionado);
+
+        // Establecer fechas de creación y modificación
+        Date fechaActual = new Date();
+        nuevoTaller.setFechaCreacion(fechaActual);
+        nuevoTaller.setUltimaModificacion(fechaActual);
+
+        // Campos que NO existen en la entidad Talleres (según el overview de AcademicPlus):
+        // - Cupo Máximo: (Integer) cboCupoMaximo.getValue(); (Suponiendo que cboCupoMaximo es un JSpinner)
+        //   Si necesitas este campo, debes agregarlo a la entidad Talleres.java y a tu tabla.
+        //
+        // - Fecha del Taller: dateFieldFechaTaller.getDate(); (Suponiendo JDateChooser)
+        //   La entidad Talleres no tiene un campo 'fechaTaller'. Un taller podría estar asociado a un Evento que tiene fecha,
+        //   o necesitaría su propio campo de fecha si puede ser independiente.
+        //
+        // - Duración: txtFieldDuracion.getText().trim();
+        //   No hay campo 'duracion' en la entidad Talleres.
+        //
+        // - Evento Asociado: (Eventos) cboEventoAsociado1.getSelectedItem();
+        //   La entidad Talleres no tiene un campo directo para Eventos. La asociación podría ser a través de
+        //   EventoParticipantesTalleres o si se añade un campo Eventos a la entidad Talleres.
+
+        // 3. Persistir el taller
+        try {
+            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+            controller.create(nuevoTaller);
+
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + nuevoTaller.getNombre() + "' agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Actualizar la tabla de talleres y limpiar campos
+            cargarTalleresEnTabla(); // Debes tener este método para refrescar la tabla de talleres
+            limpiarCamposFormularioTaller(); // Debes tener este método para limpiar los campos del formulario
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al guardar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAgregarTallerActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -1835,7 +2062,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     u.getNombre(),
                     u.getCorreo(),
                     u.getRol(),
-                    u.getNumeroControl()
+                    u.getNumeroControl(),
+                    u.getContrasenaHash()
                 };
                 modelo.addRow(fila);
             }
@@ -1856,6 +2084,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     txtUEmail.setText(model.getValueAt(selectedRow, 2).toString());
                     cboURol.setSelectedItem(model.getValueAt(selectedRow, 3).toString());
                     txtUNumControl.setText(model.getValueAt(selectedRow, 4).toString());
+                    passContrasena.setText(model.getValueAt(selectedRow, 5).toString());
                 }
             }
         });
@@ -1939,7 +2168,102 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
 
+    //--------------------------------------------------------------------------
+    //Manipulación de DialogGestionTalleres
+    private void cargarPonentesEnComboBox() {
+        DefaultComboBoxModel<Usuarios> modeloPonentes = new DefaultComboBoxModel<>();
+        cboPonente.setModel(modeloPonentes); // Asignar el modelo primero para limpiar
+
+        try {
+            UsuariosJpaController controller = new UsuariosJpaController(Conexion.getEMF());
+            List<Usuarios> listaUsuarios = controller.findUsuariosEntities();
+
+            modeloPonentes.addElement(null); // Opción para "Ninguno" o "Seleccionar ponente"
+                                            // Si usas null, asegúrate de manejarlo.
+                                            // Alternativamente, crea un objeto Usuarios placeholder.
+
+            for (Usuarios usuario : listaUsuarios) {
+                // Opcional: Filtrar por rol, por ejemplo, si solo quieres "TALLERISTA" o "DOCENTE"
+                // if (usuario.getRol().equals("TALLERISTA") || usuario.getRol().equals("DOCENTE")) {
+                //     modeloPonentes.addElement(usuario);
+                // }
+                modeloPonentes.addElement(usuario); // Añade el objeto Usuario directamente
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al cargar los ponentes: " + e.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    private void cargarEventosAsociadosEnComboBox() {
+        DefaultComboBoxModel<Eventos> modeloEventos = new DefaultComboBoxModel<>();
+        cboEventoAsociado1.setModel(modeloEventos); // Asignar el modelo primero para limpiar
+
+        try {
+            EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
+            List<Eventos> listaEventos = controller.findEventosEntities();
+
+            modeloEventos.addElement(null); // Opción para "Ninguno" o "Seleccionar evento"
+
+            for (Eventos evento : listaEventos) {
+                // Opcional: Podrías filtrar eventos por estado, por ejemplo, solo eventos "PLANIFICADO" o "CONFIRMADO"
+                // if (evento.getEstadoEvento().equals("PLANIFICADO") || evento.getEstadoEvento().equals("CONFIRMADO")) {
+                //     modeloEventos.addElement(evento);
+                // }
+                modeloEventos.addElement(evento); // Añade el objeto Evento directamente
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al cargar los eventos: " + e.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    // Método de ejemplo para limpiar campos (debes crearlo o adaptarlo)
+    private void limpiarCamposFormularioTaller() {
+        txtFieldNombreTaller.setText("");
+        txtDescripcionTaller.setText(""); // Suponiendo que es tu JTextArea
+        txtFieldMaterial_Req.setText("");
+        //txtFieldFecha_Hora.setText(""); // Si este fuera el campo de fecha y hora
+        if(dateFieldFechaTaller != null) dateFieldFechaTaller.setDate(null); // Si usas JDateChooser
+
+        //cboCupoMaximo.setValue(0); // Para JSpinner, si lo implementas
+        if (cboCupoMaximo != null) cboCupoMaximo.setValue(0); // Asumiendo que jSpinner1 es el nombre del componente en VentanaPrincipal
+
+        txtFieldDuracion.setText(""); // Si implementas duración
+
+        if (cboPonente.getItemCount() > 0) {
+            cboPonente.setSelectedIndex(0); // O -1 si el primer elemento no es un placeholder válido
+        }
+        if (cboEventoAsociado1.getItemCount() > 0) {
+            cboEventoAsociado1.setSelectedIndex(0);
+        }
+        if (cboEstadoTaller2.getItemCount() > 0) { // Suponiendo que cboEstadoTaller2 es el JComboBox de estado
+            cboEstadoTaller2.setSelectedIndex(0);
+        }
+    }
+
+    // Método de ejemplo para cargar la tabla (debes crearlo o adaptarlo)
+    private void cargarTalleresEnTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblTalleres.getModel(); // Asumiendo que tblTalleres es tu JTable
+        modelo.setRowCount(0); // Limpiar tabla
+
+        TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+        List<Talleres> lista = controller.findTalleresEntities();
+
+        for (Talleres taller : lista) {
+            Object[] row = new Object[]{
+                taller.getIdTaller(),
+                taller.getNombre(),
+                taller.getDescripcionPublica(),
+                taller.getIdUsuarioProponente() != null ? taller.getIdUsuarioProponente().getNombre() : "N/A", // Nombre del ponente
+                taller.getEstado()
+                // Añade más columnas según necesites (ej. Fecha, Cupo, etc., si los implementas)
+            };
+            modelo.addRow(row);
+        }
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -2012,14 +2336,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnSubirEvidencia;
     private javax.swing.JButton btnVerComentarios;
     private com.toedter.calendar.JCalendar calendario;
+    private javax.swing.JSpinner cboCupoMaximo;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JLabel cboEstadoTaller;
+    private javax.swing.JComboBox<String> cboEstadoTaller2;
     private javax.swing.JComboBox<String> cboEventoAsociado;
-    private javax.swing.JComboBox<String> cboEventoAsociado1;
-    private javax.swing.JComboBox<String> cboEventoAsociado2;
-    private javax.swing.JComboBox<String> cboPonente;
+    private javax.swing.JComboBox<modelo.Eventos> cboEventoAsociado1;
+    private javax.swing.JComboBox<modelo.Usuarios> cboPonente;
     private javax.swing.JComboBox<String> cboTallerAsociado;
     private javax.swing.JComboBox<String> cboURol;
+    private com.toedter.calendar.JDateChooser dateFieldFechaTaller;
     private javax.swing.JLabel encabezado;
     private javax.swing.JLabel encabezado1;
     private javax.swing.JLabel encabezado2;
@@ -2067,7 +2393,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
@@ -2096,7 +2421,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPasswordField passContrasena;
     private javax.swing.JTextArea taDescripcionConvocatoria;
     private javax.swing.JTextArea taDescripcionEvidencia;
-    private javax.swing.JTextArea taDescripcionTaller;
     private javax.swing.JTable tblConvocatorias;
     private javax.swing.JTable tblEvidencias;
     private javax.swing.JTable tblTalleres;
@@ -2104,6 +2428,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable ttEventos;
     private javax.swing.JTable ttUsuarios;
     private javax.swing.JLabel txtCupoMaximo;
+    private javax.swing.JTextArea txtDescripcionTaller;
     private javax.swing.JLabel txtDuracion;
     private javax.swing.JTextArea txtEDescripcion;
     private javax.swing.JTextField txtEFin;
@@ -2113,7 +2438,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel txtFecha_Hora;
     private javax.swing.JTextField txtFieldDuracion;
     private javax.swing.JTextField txtFieldFechaInscripción;
-    private javax.swing.JTextField txtFieldFecha_Hora;
     private javax.swing.JTextField txtFieldFehcaLímite;
     private javax.swing.JTextField txtFieldMaterial_Req;
     private javax.swing.JTextField txtFieldNombreTaller;

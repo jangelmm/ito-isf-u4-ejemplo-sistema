@@ -2,6 +2,133 @@
 
 ```
 AcademicPlus
+├── build
+│   ├── classes
+│   │   ├── META-INF
+│   │   │   └── persistence.xml
+│   │   ├── control
+│   │   │   ├── exceptions
+│   │   │   │   ├── IllegalOrphanException.class
+│   │   │   │   ├── NonexistentEntityException.class
+│   │   │   │   └── PreexistingEntityException.class
+│   │   │   ├── BitacorasEventosJpaController.class
+│   │   │   ├── ComentariosRevisionTallerJpaController.class
+│   │   │   ├── Conexion.class
+│   │   │   ├── ConvocatoriasJpaController.class
+│   │   │   ├── EventoParticipantesTalleresJpaController.class
+│   │   │   ├── EventosJpaController.class
+│   │   │   ├── EvidenciasJpaController.class
+│   │   │   ├── NotificacionesJpaController.class
+│   │   │   ├── ServicioUsuario.class
+│   │   │   ├── TalleresJpaController.class
+│   │   │   └── UsuariosJpaController.class
+│   │   ├── imagenes
+│   │   │   ├── agregar_usuario.png
+│   │   │   ├── ayuda.png
+│   │   │   ├── candado.png
+│   │   │   ├── cerrar.png
+│   │   │   ├── copiar.png
+│   │   │   ├── girar-flecha.png
+│   │   │   ├── guardar.png
+│   │   │   ├── iniciar_sesion.png
+│   │   │   ├── insertar.png
+│   │   │   ├── ojo_abierto.png
+│   │   │   ├── ojo_cerrado.png
+│   │   │   ├── papelera.png
+│   │   │   ├── usuario.png
+│   │   │   └── usuario_muestra.png
+│   │   ├── modelo
+│   │   │   ├── BitacorasEventos.class
+│   │   │   ├── BitacorasEventos_.class
+│   │   │   ├── ComentariosRevisionTaller.class
+│   │   │   ├── ComentariosRevisionTaller_.class
+│   │   │   ├── Convocatorias.class
+│   │   │   ├── Convocatorias_.class
+│   │   │   ├── EventoParticipantesTalleres.class
+│   │   │   ├── EventoParticipantesTalleres_.class
+│   │   │   ├── Eventos.class
+│   │   │   ├── Eventos_.class
+│   │   │   ├── Evidencias.class
+│   │   │   ├── Evidencias_.class
+│   │   │   ├── Notificaciones.class
+│   │   │   ├── Notificaciones_.class
+│   │   │   ├── Talleres.class
+│   │   │   ├── Talleres_.class
+│   │   │   ├── Usuarios.class
+│   │   │   └── Usuarios_.class
+│   │   └── vista
+│   │       ├── VentanaLogin$1.class
+│   │       ├── VentanaLogin$2.class
+│   │       ├── VentanaLogin$3.class
+│   │       ├── VentanaLogin$4.class
+│   │       ├── VentanaLogin$5.class
+│   │       ├── VentanaLogin.class
+│   │       ├── VentanaPrincipal$1.class
+│   │       ├── VentanaPrincipal$10.class
+│   │       ├── VentanaPrincipal$11.class
+│   │       ├── VentanaPrincipal$12.class
+│   │       ├── VentanaPrincipal$13.class
+│   │       ├── VentanaPrincipal$14.class
+│   │       ├── VentanaPrincipal$15.class
+│   │       ├── VentanaPrincipal$16.class
+│   │       ├── VentanaPrincipal$17.class
+│   │       ├── VentanaPrincipal$18.class
+│   │       ├── VentanaPrincipal$19.class
+│   │       ├── VentanaPrincipal$2.class
+│   │       ├── VentanaPrincipal$20.class
+│   │       ├── VentanaPrincipal$21.class
+│   │       ├── VentanaPrincipal$22.class
+│   │       ├── VentanaPrincipal$23.class
+│   │       ├── VentanaPrincipal$24.class
+│   │       ├── VentanaPrincipal$25.class
+│   │       ├── VentanaPrincipal$26.class
+│   │       ├── VentanaPrincipal$27.class
+│   │       ├── VentanaPrincipal$28.class
+│   │       ├── VentanaPrincipal$29.class
+│   │       ├── VentanaPrincipal$3.class
+│   │       ├── VentanaPrincipal$30.class
+│   │       ├── VentanaPrincipal$31.class
+│   │       ├── VentanaPrincipal$32.class
+│   │       ├── VentanaPrincipal$33.class
+│   │       ├── VentanaPrincipal$34.class
+│   │       ├── VentanaPrincipal$35.class
+│   │       ├── VentanaPrincipal$36.class
+│   │       ├── VentanaPrincipal$37.class
+│   │       ├── VentanaPrincipal$4.class
+│   │       ├── VentanaPrincipal$5.class
+│   │       ├── VentanaPrincipal$6.class
+│   │       ├── VentanaPrincipal$7.class
+│   │       ├── VentanaPrincipal$8.class
+│   │       ├── VentanaPrincipal$9.class
+│   │       └── VentanaPrincipal.class
+│   ├── empty
+│   ├── generated-sources
+│   │   └── ap-source-output
+│   │       └── modelo
+│   │           ├── BitacorasEventos_.java
+│   │           ├── ComentariosRevisionTaller_.java
+│   │           ├── Convocatorias_.java
+│   │           ├── EventoParticipantesTalleres_.java
+│   │           ├── Eventos_.java
+│   │           ├── Evidencias_.java
+│   │           ├── Notificaciones_.java
+│   │           ├── Talleres_.java
+│   │           └── Usuarios_.java
+│   └── built-jar.properties
+├── dist
+│   ├── lib
+│   │   ├── flatlaf-demo-3.6.jar
+│   │   ├── jakarta.persistence-2.2.3.jar
+│   │   ├── jcalendar-1.4.jar
+│   │   ├── mysql-connector-j-8.4.0.jar
+│   │   ├── org.eclipse.persistence.antlr-2.7.12.jar
+│   │   ├── org.eclipse.persistence.asm-9.4.0.jar
+│   │   ├── org.eclipse.persistence.core-2.7.12.jar
+│   │   ├── org.eclipse.persistence.jpa-2.7.12.jar
+│   │   ├── org.eclipse.persistence.jpa.jpql-2.7.12.jar
+│   │   └── org.eclipse.persistence.moxy-2.7.12.jar
+│   ├── AcademicPlus.jar
+│   └── README.TXT
 ├── lib
 │   ├── CopyLibs
 │   │   └── org-netbeans-modules-java-j2seproject-copylibstask.jar
@@ -16,10 +143,14 @@ AcademicPlus
 │   │   └── org.eclipse.persistence.moxy-2.7.12.jar
 │   ├── eclipselinkmodelgen
 │   │   └── org.eclipse.persistence.jpa.modelgen.processor-2.7.12.jar
+│   ├── flatlaf-demo-3.6.jar
+│   ├── jcalendar-1.4.jar
+│   ├── mysql-connector-j-8.4.0.jar
 │   └── nblibraries.properties
 ├── nbproject
 │   ├── private
-│   │   └── private.properties
+│   │   ├── private.properties
+│   │   └── private.xml
 │   ├── build-impl.xml
 │   ├── genfiles.properties
 │   ├── project.properties
@@ -34,13 +165,30 @@ AcademicPlus
 │   │   │   └── PreexistingEntityException.java
 │   │   ├── BitacorasEventosJpaController.java
 │   │   ├── ComentariosRevisionTallerJpaController.java
+│   │   ├── Conexion.java
 │   │   ├── ConvocatoriasJpaController.java
 │   │   ├── EventoParticipantesTalleresJpaController.java
 │   │   ├── EventosJpaController.java
 │   │   ├── EvidenciasJpaController.java
 │   │   ├── NotificacionesJpaController.java
+│   │   ├── ServicioUsuario.java
 │   │   ├── TalleresJpaController.java
 │   │   └── UsuariosJpaController.java
+│   ├── imagenes
+│   │   ├── agregar_usuario.png
+│   │   ├── ayuda.png
+│   │   ├── candado.png
+│   │   ├── cerrar.png
+│   │   ├── copiar.png
+│   │   ├── girar-flecha.png
+│   │   ├── guardar.png
+│   │   ├── iniciar_sesion.png
+│   │   ├── insertar.png
+│   │   ├── ojo_abierto.png
+│   │   ├── ojo_cerrado.png
+│   │   ├── papelera.png
+│   │   ├── usuario.png
+│   │   └── usuario_muestra.png
 │   ├── modelo
 │   │   ├── BitacorasEventos.java
 │   │   ├── ComentariosRevisionTaller.java
@@ -52,10 +200,26 @@ AcademicPlus
 │   │   ├── Talleres.java
 │   │   └── Usuarios.java
 │   └── vista
+│       ├── VentanaLogin.form
+│       ├── VentanaLogin.java
+│       ├── VentanaPrincipal.form
+│       └── VentanaPrincipal.java
+├── test
+├── .gitignore
+├── README.md
 ├── build.xml
 ├── manifest.mf
+├── project_overview.md
 ├── script-mysql-academicplus.sql
 └── script.py
+```
+
+## `.gitignore`
+
+```text
+/build/
+/dist/
+/nbproject/private/
 ```
 
 ## `script.py`
@@ -189,6 +353,288 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+## `build\generated-sources\ap-source-output\modelo\BitacorasEventos_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Eventos;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(BitacorasEventos.class)
+public class BitacorasEventos_ { 
+
+    public static volatile SingularAttribute<BitacorasEventos, Integer> idBitacora;
+    public static volatile SingularAttribute<BitacorasEventos, Usuarios> idUsuarioRegistra;
+    public static volatile SingularAttribute<BitacorasEventos, Eventos> idEvento;
+    public static volatile SingularAttribute<BitacorasEventos, Date> fechaHoraEntrada;
+    public static volatile SingularAttribute<BitacorasEventos, String> observacion;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\ComentariosRevisionTaller_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Talleres;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(ComentariosRevisionTaller.class)
+public class ComentariosRevisionTaller_ { 
+
+    public static volatile SingularAttribute<ComentariosRevisionTaller, Date> fechaComentario;
+    public static volatile SingularAttribute<ComentariosRevisionTaller, Usuarios> idUsuarioComentarista;
+    public static volatile SingularAttribute<ComentariosRevisionTaller, String> comentario;
+    public static volatile SingularAttribute<ComentariosRevisionTaller, Integer> idComentario;
+    public static volatile SingularAttribute<ComentariosRevisionTaller, Talleres> idTaller;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Convocatorias_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Eventos;
+import modelo.Notificaciones;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Convocatorias.class)
+public class Convocatorias_ { 
+
+    public static volatile SingularAttribute<Convocatorias, String> descripcion;
+    public static volatile SingularAttribute<Convocatorias, String> documentoAdjuntoRuta;
+    public static volatile SingularAttribute<Convocatorias, Integer> idConvocatoria;
+    public static volatile SingularAttribute<Convocatorias, Date> fechaLimitePropuestas;
+    public static volatile ListAttribute<Convocatorias, Notificaciones> notificacionesList;
+    public static volatile ListAttribute<Convocatorias, Eventos> eventosList;
+    public static volatile SingularAttribute<Convocatorias, String> titulo;
+    public static volatile SingularAttribute<Convocatorias, Date> fechaCreacion;
+    public static volatile SingularAttribute<Convocatorias, Date> ultimaModificacion;
+    public static volatile SingularAttribute<Convocatorias, Date> fechaPublicacion;
+    public static volatile SingularAttribute<Convocatorias, Usuarios> idUsuarioPublica;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\EventoParticipantesTalleres_.java`
+
+```java
+package modelo;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Eventos;
+import modelo.Talleres;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(EventoParticipantesTalleres.class)
+public class EventoParticipantesTalleres_ { 
+
+    public static volatile SingularAttribute<EventoParticipantesTalleres, String> rolParticipante;
+    public static volatile SingularAttribute<EventoParticipantesTalleres, Eventos> idEvento;
+    public static volatile SingularAttribute<EventoParticipantesTalleres, Usuarios> idTallerista;
+    public static volatile SingularAttribute<EventoParticipantesTalleres, Integer> idEventoParticipanteTaller;
+    public static volatile SingularAttribute<EventoParticipantesTalleres, Talleres> idTallerImpartido;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Eventos_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.BitacorasEventos;
+import modelo.Convocatorias;
+import modelo.EventoParticipantesTalleres;
+import modelo.Evidencias;
+import modelo.Notificaciones;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Eventos.class)
+public class Eventos_ { 
+
+    public static volatile SingularAttribute<Eventos, String> descripcionPublica;
+    public static volatile SingularAttribute<Eventos, Date> fechaEvento;
+    public static volatile SingularAttribute<Eventos, String> estadoEvento;
+    public static volatile SingularAttribute<Eventos, Integer> idEvento;
+    public static volatile SingularAttribute<Eventos, String> nombre;
+    public static volatile SingularAttribute<Eventos, Convocatorias> idConvocatoriaOrigen;
+    public static volatile ListAttribute<Eventos, Evidencias> evidenciasList;
+    public static volatile SingularAttribute<Eventos, Date> horaFinEvento;
+    public static volatile ListAttribute<Eventos, Notificaciones> notificacionesList;
+    public static volatile SingularAttribute<Eventos, Date> fechaCreacion;
+    public static volatile SingularAttribute<Eventos, Date> ultimaModificacion;
+    public static volatile SingularAttribute<Eventos, Date> horaInicioEvento;
+    public static volatile SingularAttribute<Eventos, String> lugarEvento;
+    public static volatile ListAttribute<Eventos, BitacorasEventos> bitacorasEventosList;
+    public static volatile ListAttribute<Eventos, EventoParticipantesTalleres> eventoParticipantesTalleresList;
+    public static volatile SingularAttribute<Eventos, Usuarios> idDocenteResponsable;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Evidencias_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Eventos;
+import modelo.Talleres;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Evidencias.class)
+public class Evidencias_ { 
+
+    public static volatile SingularAttribute<Evidencias, String> descripcion;
+    public static volatile SingularAttribute<Evidencias, Usuarios> idUsuarioSubio;
+    public static volatile SingularAttribute<Evidencias, String> rutaArchivo;
+    public static volatile SingularAttribute<Evidencias, Talleres> idTallerAsociado;
+    public static volatile SingularAttribute<Evidencias, Integer> idEvidencia;
+    public static volatile SingularAttribute<Evidencias, Date> fechaSubida;
+    public static volatile SingularAttribute<Evidencias, String> tipoEvidencia;
+    public static volatile SingularAttribute<Evidencias, Eventos> idEvento;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Notificaciones_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.Convocatorias;
+import modelo.Eventos;
+import modelo.Talleres;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Notificaciones.class)
+public class Notificaciones_ { 
+
+    public static volatile SingularAttribute<Notificaciones, Integer> idNotificacion;
+    public static volatile SingularAttribute<Notificaciones, Eventos> idEventoRelacionado;
+    public static volatile SingularAttribute<Notificaciones, Date> fechaCreacion;
+    public static volatile SingularAttribute<Notificaciones, Usuarios> idUsuarioDestinatario;
+    public static volatile SingularAttribute<Notificaciones, Convocatorias> idConvocatoriaRelacionada;
+    public static volatile SingularAttribute<Notificaciones, Talleres> idTallerRelacionado;
+    public static volatile SingularAttribute<Notificaciones, String> mensaje;
+    public static volatile SingularAttribute<Notificaciones, Boolean> leida;
+    public static volatile SingularAttribute<Notificaciones, String> tipoNotificacion;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Talleres_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.ComentariosRevisionTaller;
+import modelo.EventoParticipantesTalleres;
+import modelo.Evidencias;
+import modelo.Notificaciones;
+import modelo.Usuarios;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Talleres.class)
+public class Talleres_ { 
+
+    public static volatile SingularAttribute<Talleres, String> descripcionPublica;
+    public static volatile SingularAttribute<Talleres, String> estado;
+    public static volatile SingularAttribute<Talleres, Usuarios> idUsuarioProponente;
+    public static volatile SingularAttribute<Talleres, String> nombre;
+    public static volatile ListAttribute<Talleres, Evidencias> evidenciasList;
+    public static volatile SingularAttribute<Talleres, String> requisitosMateriales;
+    public static volatile ListAttribute<Talleres, Notificaciones> notificacionesList;
+    public static volatile SingularAttribute<Talleres, Date> fechaCreacion;
+    public static volatile SingularAttribute<Talleres, String> manualRuta;
+    public static volatile SingularAttribute<Talleres, Date> ultimaModificacion;
+    public static volatile ListAttribute<Talleres, ComentariosRevisionTaller> comentariosRevisionTallerList;
+    public static volatile SingularAttribute<Talleres, String> detallesInternos;
+    public static volatile ListAttribute<Talleres, EventoParticipantesTalleres> eventoParticipantesTalleresList;
+    public static volatile SingularAttribute<Talleres, Integer> idTaller;
+
+}```
+
+## `build\generated-sources\ap-source-output\modelo\Usuarios_.java`
+
+```java
+package modelo;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+import modelo.BitacorasEventos;
+import modelo.ComentariosRevisionTaller;
+import modelo.Convocatorias;
+import modelo.EventoParticipantesTalleres;
+import modelo.Eventos;
+import modelo.Evidencias;
+import modelo.Notificaciones;
+import modelo.Talleres;
+
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-05-27T22:05:28")
+@StaticMetamodel(Usuarios.class)
+public class Usuarios_ { 
+
+    public static volatile SingularAttribute<Usuarios, String> numeroControl;
+    public static volatile SingularAttribute<Usuarios, Date> fechaRegistro;
+    public static volatile SingularAttribute<Usuarios, Integer> idUsuario;
+    public static volatile SingularAttribute<Usuarios, String> contrasenaHash;
+    public static volatile SingularAttribute<Usuarios, String> nombre;
+    public static volatile SingularAttribute<Usuarios, String> rol;
+    public static volatile ListAttribute<Usuarios, Evidencias> evidenciasList;
+    public static volatile ListAttribute<Usuarios, Notificaciones> notificacionesList;
+    public static volatile ListAttribute<Usuarios, Talleres> talleresList;
+    public static volatile SingularAttribute<Usuarios, String> correo;
+    public static volatile ListAttribute<Usuarios, Eventos> eventosList;
+    public static volatile ListAttribute<Usuarios, Convocatorias> convocatoriasList;
+    public static volatile SingularAttribute<Usuarios, Date> ultimaModificacion;
+    public static volatile ListAttribute<Usuarios, ComentariosRevisionTaller> comentariosRevisionTallerList;
+    public static volatile ListAttribute<Usuarios, BitacorasEventos> bitacorasEventosList;
+    public static volatile ListAttribute<Usuarios, EventoParticipantesTalleres> eventoParticipantesTalleresList;
+    public static volatile SingularAttribute<Usuarios, Boolean> activo;
+
+}```
 
 ## `src\control\BitacorasEventosJpaController.java`
 
@@ -589,6 +1035,32 @@ public class ComentariosRevisionTallerJpaController implements Serializable {
         }
     }
     
+}
+```
+
+## `src\control\Conexion.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package control;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+/**
+ *
+ * @author Diego Garcia
+ */
+public class Conexion {
+    private static final EntityManagerFactory emf = 
+        Persistence.createEntityManagerFactory("AcademicPlusPU");
+
+    public static EntityManagerFactory getEMF() {
+        return emf;
+    }
 }
 ```
 
@@ -2004,6 +2476,50 @@ public class NotificacionesJpaController implements Serializable {
         }
     }
     
+}
+```
+
+## `src\control\ServicioUsuario.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package control;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import modelo.Usuarios;
+
+/**
+ *
+ * @author Diego Garcia
+ */
+public class ServicioUsuario {
+    private final EntityManagerFactory emf;
+
+    public ServicioUsuario() {
+        this.emf = Conexion.getEMF();
+    }
+
+    public Usuarios validarUsuario(String username, String password) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE (u.nombre = :username OR u.correo = :username) AND u.contrasenaHash = :password", 
+                Usuarios.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }
 ```
 
@@ -4819,6 +5335,2395 @@ public class Usuarios implements Serializable {
         return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
     
+}
+```
+
+## `src\vista\VentanaLogin.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package vista;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import control.ServicioUsuario;
+import control.UsuariosJpaController;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import modelo.Usuarios;
+
+/**
+ *
+ * @author Diego Garcia
+ */
+public class VentanaLogin extends javax.swing.JFrame {
+    public static final String URL = "jdbc:mysql://localhost:3306/academicplus?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false"; // Ajustes para la URL
+    public static final String usuario = "root";
+    public static final String contrasena = "password";
+    PreparedStatement ps;
+    ResultSet rs;
+    
+    public VentanaLogin() {
+        initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        lblContrasena = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JPasswordField();
+        btnIngresar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ventana de Login");
+        setResizable(false);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Inicio de Sesión");
+
+        lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblUsuario.setText("Usuario/Email:");
+
+        lblContrasena.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblContrasena.setText("Contraseña:");
+
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+
+        btnIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iniciar_sesion.png"))); // NOI18N
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario_muestra.png"))); // NOI18N
+
+        jLabel3.setText("AcademicPlus");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(45, 45, 45)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                                            .addComponent(txtContrasena))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(137, 137, 137)
+                                .addComponent(jLabel3)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(15, 15, 15)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUsuario)
+                            .addComponent(btnIngresar))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblContrasena)
+                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnCancelar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel2)))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        String username = txtUsuario.getText();
+        String password = new String(txtContrasena.getPassword());
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademicPlusPU");
+        UsuariosJpaController controller = new UsuariosJpaController(emf);
+        
+        // Usar la clase de servicio en lugar del JpaController directamente
+        ServicioUsuario service = new ServicioUsuario();
+        Usuarios u = service.validarUsuario(username, password);
+        
+        if (u != null) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            VentanaPrincipal vp = new VentanaPrincipal(u);
+            vp.setSize(750, 850);
+            vp.setVisible(true); // Mostrar ventana principal
+            this.dispose(); // Cerrar la ventana de login
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        UIManager.setLookAndFeel(new FlatDarkLaf());
+        
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaLogin().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblContrasena;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JTextField txtUsuario;
+    // End of variables declaration//GEN-END:variables
+}
+```
+
+## `src\vista\VentanaPrincipal.java`
+
+```java
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package vista;
+
+import control.ComentariosRevisionTallerJpaController;
+import control.Conexion;
+import control.EventosJpaController;
+import control.UsuariosJpaController;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.ComentariosRevisionTaller;
+import modelo.Eventos;
+import modelo.Usuarios;
+
+/**
+ *
+ * @author Diego Garcia
+ */
+public class VentanaPrincipal extends javax.swing.JFrame {
+    
+    private Usuarios usuarioActual;
+    
+    public VentanaPrincipal(Usuarios u) {
+        initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        this.usuarioActual = u;
+        lblBienvenida.setText("!Bienvenido, " + u.getNombre() + "!");
+        lblNombre.setText("Nombre: " + u.getNombre());
+        lblCorreo.setText("Correo: " + u.getCorreo());
+        lblRol.setText("Rol : " + u.getRol());
+        lblNumControl.setText("Número de control: " + u.getNumeroControl());
+        
+        // Manipulacion del DialogGestionUusarios
+        cargarUsuariosEnTabla();
+        seleccionarUsuarios();
+        // Manipulacion del DialogGestionEventos
+        cargarEventosEnTabla();
+        seleccionarEventos();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        DialogGestionUsuarios = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        encabezado = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cboURol = new javax.swing.JComboBox<>();
+        txtUID = new javax.swing.JTextField();
+        txtUEmail = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        txtUNumControl = new javax.swing.JTextField();
+        txtUNombre = new javax.swing.JTextField();
+        passContrasena = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        encabezado1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ttUsuarios = new javax.swing.JTable();
+        DialogGestionEventos = new javax.swing.JDialog();
+        encabezado2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ttEventos = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        encabezado4 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtENombre = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        txtLugar = new javax.swing.JTextField();
+        btnECrear = new javax.swing.JButton();
+        btnEModificar = new javax.swing.JButton();
+        btnEEliminar = new javax.swing.JButton();
+        btnELimpiar = new javax.swing.JButton();
+        cboEstado = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        calendario = new com.toedter.calendar.JCalendar();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtEDescripcion = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtEInicio = new javax.swing.JTextField();
+        txtEFin = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtEID = new javax.swing.JTextField();
+        DialogGestionTalleres = new javax.swing.JDialog();
+        txtNombreTaller6 = new javax.swing.JLabel();
+        txtFieldNombreTaller = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        taDescripcionTaller = new javax.swing.JTextArea();
+        cboPonente = new javax.swing.JComboBox<>();
+        cboEventoAsociado1 = new javax.swing.JComboBox<>();
+        txtFieldFecha_Hora = new javax.swing.JTextField();
+        txtMaterialReq = new javax.swing.JLabel();
+        txtFieldMaterial_Req = new javax.swing.JTextField();
+        jSpinner1 = new javax.swing.JSpinner();
+        TITULO4 = new javax.swing.JLabel();
+        TITULO5 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tblTalleres = new javax.swing.JTable();
+        cboEstadoTaller = new javax.swing.JLabel();
+        cboEventoAsociado2 = new javax.swing.JComboBox<>();
+        txtCupoMaximo = new javax.swing.JLabel();
+        txtDuracion = new javax.swing.JLabel();
+        txtFieldDuracion = new javax.swing.JTextField();
+        btnEditarTaller = new javax.swing.JButton();
+        btnAgregarTaller = new javax.swing.JButton();
+        btnVerComentarios = new javax.swing.JButton();
+        btnElliminarTaller = new javax.swing.JButton();
+        txtFecha_Hora = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        DialogGestionConvocatorias = new javax.swing.JDialog();
+        TITULO = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblConvocatorias = new javax.swing.JTable();
+        txtNombreTaller = new javax.swing.JLabel();
+        txtFieldTituloConvocatoria = new javax.swing.JTextField();
+        txtNombreTaller2 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        taDescripcionConvocatoria = new javax.swing.JTextArea();
+        txtFieldPublicoObjetivo = new javax.swing.JTextField();
+        txtNombreTaller3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        btnPublicar = new javax.swing.JButton();
+        txtNombreTaller1 = new javax.swing.JLabel();
+        btnEliminarConvocatoria = new javax.swing.JButton();
+        txtFieldFehcaLímite = new javax.swing.JTextField();
+        btnModificar = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        TITULO1 = new javax.swing.JLabel();
+        cboTallerAsociado = new javax.swing.JComboBox<>();
+        cboEventoAsociado = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        txtFieldFechaInscripción = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        DialogInscripcionEventoTaller = new javax.swing.JDialog();
+        btnInscribirme = new javax.swing.JButton();
+        TITULO6 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        tblTalleresDisponibles = new javax.swing.JTable();
+        TITULO7 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnDesinscribirme = new javax.swing.JToggleButton();
+        DialogGestionEvidencias = new javax.swing.JDialog();
+        jLabel14 = new javax.swing.JLabel();
+        TITULO2 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblEvidencias = new javax.swing.JTable();
+        txtNombreTaller4 = new javax.swing.JLabel();
+        txtNombreTaller5 = new javax.swing.JLabel();
+        TITULO3 = new javax.swing.JLabel();
+        txtFieldTituloEvidencia = new javax.swing.JTextField();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        taDescripcionEvidencia = new javax.swing.JTextArea();
+        btnSeleccionarArchivo = new javax.swing.JButton();
+        btnSubirEvidencia = new javax.swing.JButton();
+        btnDescargarEvidencia = new javax.swing.JButton();
+        btnEliminarEvidencia = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        panelGeneral = new javax.swing.JPanel();
+        panelEncabezado = new javax.swing.JPanel();
+        lblBienvenida = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel24 = new javax.swing.JLabel();
+        panelEstatus = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCorreo = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
+        lblNumControl = new javax.swing.JLabel();
+        menuBarraPrincipal = new javax.swing.JMenuBar();
+        menuArchivo = new javax.swing.JMenu();
+        menuGestion = new javax.swing.JMenu();
+        opcionUsuarios = new javax.swing.JMenuItem();
+        opcionEventos = new javax.swing.JMenuItem();
+        opcionTalleres = new javax.swing.JMenuItem();
+        opcionConvocatorias = new javax.swing.JMenuItem();
+        opcionEvidencias = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        menuInscripcion = new javax.swing.JMenu();
+        opcionInscripcion = new javax.swing.JMenuItem();
+        menuAyuda = new javax.swing.JMenu();
+        opcionAyuda = new javax.swing.JMenuItem();
+        menuSalir = new javax.swing.JMenu();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
+        opcionSalir = new javax.swing.JMenuItem();
+
+        DialogGestionUsuarios.setTitle("Gestión de usuarios");
+
+        jPanel1.setToolTipText("");
+
+        encabezado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        encabezado.setText("Datos del usuario");
+
+        jLabel2.setText("ID:");
+
+        jLabel4.setText("Nombre:");
+
+        jLabel6.setText("Contraseña:");
+
+        jLabel7.setText("Núm. de Control:");
+
+        jLabel8.setText("Rol:");
+
+        cboURol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DOCENTE", "TALLERISTA", "ADMINISTRADOR" }));
+        cboURol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboURolActionPerformed(evt);
+            }
+        });
+
+        txtUID.setEditable(false);
+
+        txtUEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUEmailActionPerformed(evt);
+            }
+        });
+
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        txtUNumControl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUNumControlActionPerformed(evt);
+            }
+        });
+
+        txtUNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUNombreActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Email:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(encabezado)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtUEmail)
+                        .addComponent(cboURol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUID, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(txtUNumControl)
+                        .addComponent(txtUNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(btnAgregar)
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar)
+                .addGap(21, 21, 21)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnLimpiar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(encabezado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboURol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44))
+        );
+
+        encabezado1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        encabezado1.setText("Lista de usuarios");
+
+        ttUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Email", "Rol", "Núm. de Control"
+            }
+        ));
+        jScrollPane1.setViewportView(ttUsuarios);
+
+        javax.swing.GroupLayout DialogGestionUsuariosLayout = new javax.swing.GroupLayout(DialogGestionUsuarios.getContentPane());
+        DialogGestionUsuarios.getContentPane().setLayout(DialogGestionUsuariosLayout);
+        DialogGestionUsuariosLayout.setHorizontalGroup(
+            DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
+                        .addComponent(encabezado1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+        );
+        DialogGestionUsuariosLayout.setVerticalGroup(
+            DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(encabezado1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jPanel1.getAccessibleContext().setAccessibleName("");
+
+        encabezado2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        encabezado2.setText("Lista de eventos");
+
+        ttEventos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Descripción", "Fecha", "Hora de inicio", "Hora de fin", "Lugar", "Estado"
+            }
+        ));
+        jScrollPane2.setViewportView(ttEventos);
+
+        jPanel3.setToolTipText("");
+
+        encabezado4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        encabezado4.setText("Datos del evento");
+
+        jLabel15.setText("Nombre:");
+
+        jLabel16.setText("Descripción:");
+
+        jLabel17.setText("Fecha:");
+
+        txtENombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtENombreActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Lugar:");
+
+        btnECrear.setText("Crear");
+        btnECrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnECrearActionPerformed(evt);
+            }
+        });
+
+        btnEModificar.setText("Modificar");
+        btnEModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEModificarActionPerformed(evt);
+            }
+        });
+
+        btnEEliminar.setText("Eliminar");
+
+        btnELimpiar.setText("Limpiar");
+        btnELimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnELimpiarActionPerformed(evt);
+            }
+        });
+
+        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PLANIFICADO", "CONFIRMADO", "EN_CURSO", "FINALIZADO", "CANCELADO", "POSPUESTO" }));
+        cboEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEstadoActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Estado:");
+
+        txtEDescripcion.setColumns(20);
+        txtEDescripcion.setRows(5);
+        jScrollPane3.setViewportView(txtEDescripcion);
+
+        jLabel3.setText("Hora de fin:");
+
+        jLabel5.setText("Hora de inicio:");
+
+        jLabel10.setText("ID:");
+
+        txtEID.setEditable(false);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addComponent(btnECrear, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnEModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnEEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(12, 12, 12)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtLugar, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                    .addComponent(txtEID)
+                                    .addComponent(txtENombre)
+                                    .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEInicio)
+                                    .addComponent(txtEFin)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(encabezado4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(encabezado4)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(txtEID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtENombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28))
+                            .addComponent(txtLugar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnECrear)
+                    .addComponent(btnEModificar)
+                    .addComponent(btnEEliminar)
+                    .addComponent(btnELimpiar))
+                .addGap(16, 16, 16))
+        );
+
+        javax.swing.GroupLayout DialogGestionEventosLayout = new javax.swing.GroupLayout(DialogGestionEventos.getContentPane());
+        DialogGestionEventos.getContentPane().setLayout(DialogGestionEventosLayout);
+        DialogGestionEventosLayout.setHorizontalGroup(
+            DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEventosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(DialogGestionEventosLayout.createSequentialGroup()
+                        .addComponent(encabezado2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        DialogGestionEventosLayout.setVerticalGroup(
+            DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEventosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(encabezado2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        txtNombreTaller6.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller6.setText("Nombre del taller: ");
+
+        txtFieldNombreTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldNombreTallerActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel18.setText("Descripción:");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel19.setText("Ponente/Instructor:");
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel22.setText("Evento asociado:");
+
+        taDescripcionTaller.setColumns(20);
+        taDescripcionTaller.setRows(5);
+        jScrollPane8.setViewportView(taDescripcionTaller);
+
+        cboPonente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboEventoAsociado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtFieldFecha_Hora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFecha_HoraActionPerformed(evt);
+            }
+        });
+
+        txtMaterialReq.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtMaterialReq.setText("Material Requerido:");
+
+        txtFieldMaterial_Req.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldMaterial_ReqActionPerformed(evt);
+            }
+        });
+
+        TITULO4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO4.setText("Talleres Registrados");
+
+        TITULO5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO5.setText("Gestión de Talleres");
+
+        tblTalleres.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(tblTalleres);
+
+        cboEstadoTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        cboEstadoTaller.setText("Estado Taller:");
+
+        cboEventoAsociado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtCupoMaximo.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtCupoMaximo.setText("Cupo Maximo:");
+
+        txtDuracion.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtDuracion.setText("Duración:");
+
+        txtFieldDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldDuracionActionPerformed(evt);
+            }
+        });
+
+        btnEditarTaller.setText("Editar Taller");
+
+        btnAgregarTaller.setText("Agregar Taller");
+
+        btnVerComentarios.setText("Ver comentarios");
+
+        btnElliminarTaller.setText("Eliminar Taller");
+
+        txtFecha_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtFecha_Hora.setText("Fecha/Hora:");
+
+        javax.swing.GroupLayout DialogGestionTalleresLayout = new javax.swing.GroupLayout(DialogGestionTalleres.getContentPane());
+        DialogGestionTalleres.getContentPane().setLayout(DialogGestionTalleresLayout);
+        DialogGestionTalleresLayout.setHorizontalGroup(
+            DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(TITULO5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(txtMaterialReq)
+                                        .addGap(76, 76, 76)
+                                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombreTaller6)
+                                            .addComponent(txtCupoMaximo)
+                                            .addComponent(txtFecha_Hora)
+                                            .addComponent(txtDuracion))
+                                        .addGap(81, 81, 81)
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)))
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(57, 57, 57)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel19)
+                                    .addComponent(cboEstadoTaller))
+                                .addGap(18, 18, 18)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboEventoAsociado1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboEventoAsociado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(18, 18, 18))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(btnAgregarTaller)
+                .addGap(89, 89, 89)
+                .addComponent(btnEditarTaller)
+                .addGap(131, 131, 131)
+                .addComponent(btnElliminarTaller)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVerComentarios)
+                .addGap(36, 36, 36))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGap(343, 343, 343)
+                .addComponent(TITULO4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        DialogGestionTalleresLayout.setVerticalGroup(
+            DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TITULO5)
+                .addGap(25, 25, 25)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboEventoAsociado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtMaterialReq, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarTaller)
+                    .addComponent(btnEditarTaller)
+                    .addComponent(btnElliminarTaller)
+                    .addComponent(btnVerComentarios))
+                .addGap(21, 21, 21)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(TITULO4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+        );
+
+        TITULO.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO.setText("Gestión de Convocatorias");
+
+        tblConvocatorias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblConvocatorias);
+
+        txtNombreTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller.setText("Título convocatoria:");
+
+        txtFieldTituloConvocatoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldTituloConvocatoriaActionPerformed(evt);
+            }
+        });
+
+        txtNombreTaller2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller2.setText("Fecha de inscripción/publicación:");
+
+        taDescripcionConvocatoria.setColumns(20);
+        taDescripcionConvocatoria.setRows(5);
+        jScrollPane5.setViewportView(taDescripcionConvocatoria);
+
+        txtFieldPublicoObjetivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldPublicoObjetivoActionPerformed(evt);
+            }
+        });
+
+        txtNombreTaller3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller3.setText("Público objetivo:");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel11.setText("Descripción convocatoria:");
+
+        btnPublicar.setText("Publicar/Guardar");
+
+        txtNombreTaller1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller1.setText("Fecha límite:");
+
+        btnEliminarConvocatoria.setText("Eliminar Convocatoria");
+
+        txtFieldFehcaLímite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFehcaLímiteActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel12.setText("Para taller:");
+
+        TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO1.setText("Lista de Convocatorias Existentes");
+
+        cboTallerAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboEventoAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel13.setText("Para evento:");
+
+        txtFieldFechaInscripción.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldFechaInscripciónActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout DialogGestionConvocatoriasLayout = new javax.swing.GroupLayout(DialogGestionConvocatorias.getContentPane());
+        DialogGestionConvocatorias.getContentPane().setLayout(DialogGestionConvocatoriasLayout);
+        DialogGestionConvocatoriasLayout.setHorizontalGroup(
+            DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TITULO)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                            .addGap(29, 29, 29)
+                                            .addComponent(btnPublicar)
+                                            .addGap(211, 211, 211)
+                                            .addComponent(btnModificar)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnEliminarConvocatoria))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel11)
+                                                .addComponent(txtNombreTaller1)
+                                                .addComponent(txtNombreTaller))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(txtNombreTaller2))
+                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(txtFieldFehcaLímite)
+                                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                                                    .addGap(18, 18, 18)
+                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel13)
+                                                        .addComponent(jLabel12)
+                                                        .addComponent(txtNombreTaller3))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtFieldFechaInscripción)
+                                                .addComponent(cboEventoAsociado, 0, 216, Short.MAX_VALUE)
+                                                .addComponent(cboTallerAsociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtFieldPublicoObjetivo))))))
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addGap(282, 282, 282)
+                                .addComponent(TITULO1)))
+                        .addGap(0, 60, Short.MAX_VALUE))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator5))
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        DialogGestionConvocatoriasLayout.setVerticalGroup(
+            DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TITULO)
+                .addGap(28, 28, 28)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldFechaInscripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboEventoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFieldFehcaLímite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldPublicoObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPublicar)
+                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnModificar)
+                        .addComponent(btnEliminarConvocatoria)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TITULO1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+
+        btnInscribirme.setText("Inscribirse al Evento/Taller");
+
+        TITULO6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO6.setText("Inscripción a Eventos/Talleres");
+
+        tblTalleresDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane11.setViewportView(tblTalleresDisponibles);
+
+        TITULO7.setText("Eventos/Talleres Disponibles:");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(jTable1);
+
+        btnDesinscribirme.setText("Anular Inscripción");
+
+        javax.swing.GroupLayout DialogInscripcionEventoTallerLayout = new javax.swing.GroupLayout(DialogInscripcionEventoTaller.getContentPane());
+        DialogInscripcionEventoTaller.getContentPane().setLayout(DialogInscripcionEventoTallerLayout);
+        DialogInscripcionEventoTallerLayout.setHorizontalGroup(
+            DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO6)
+                            .addComponent(TITULO7))
+                        .addGap(0, 647, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addComponent(btnInscribirme)
+                        .addGap(311, 311, 311))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addComponent(btnDesinscribirme)
+                        .addGap(328, 328, 328))))
+        );
+        DialogInscripcionEventoTallerLayout.setVerticalGroup(
+            DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(TITULO6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TITULO7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnInscribirme)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnDesinscribirme)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel14.setText("Descripción Evidencia:");
+
+        TITULO2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO2.setText("Gestión de Evidencias para: [Nombre Taller/Evento]");
+
+        tblEvidencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(tblEvidencias);
+
+        txtNombreTaller4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller4.setText("Archivo:");
+
+        txtNombreTaller5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller5.setText("Título Evidencia:");
+
+        TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TITULO3.setText("Evidencias Subidas");
+
+        txtFieldTituloEvidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldTituloEvidenciaActionPerformed(evt);
+            }
+        });
+
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
+
+        taDescripcionEvidencia.setColumns(20);
+        taDescripcionEvidencia.setRows(5);
+        jScrollPane7.setViewportView(taDescripcionEvidencia);
+
+        btnSeleccionarArchivo.setText("Seleccionar Archivo");
+
+        btnSubirEvidencia.setText("Subir Evidencia");
+
+        btnDescargarEvidencia.setText("Descargar Evidencia");
+
+        btnEliminarEvidencia.setText("Eliminar Evidencia");
+
+        javax.swing.GroupLayout DialogGestionEvidenciasLayout = new javax.swing.GroupLayout(DialogGestionEvidencias.getContentPane());
+        DialogGestionEvidencias.getContentPane().setLayout(DialogGestionEvidenciasLayout);
+        DialogGestionEvidenciasLayout.setHorizontalGroup(
+            DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addComponent(TITULO2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(txtNombreTaller5))
+                                .addGap(14, 14, 14)
+                                .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7))
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(txtNombreTaller4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20))))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator6)
+                            .addComponent(TITULO3)
+                            .addComponent(jScrollPane6)
+                            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                                .addComponent(btnSeleccionarArchivo)
+                                .addGap(97, 97, 97)
+                                .addComponent(btnSubirEvidencia)
+                                .addGap(88, 88, 88)
+                                .addComponent(btnDescargarEvidencia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                                .addComponent(btnEliminarEvidencia)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        DialogGestionEvidenciasLayout.setVerticalGroup(
+            DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(txtNombreTaller4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TITULO2)
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFieldTituloEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel14)
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TITULO3)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSeleccionarArchivo)
+                    .addComponent(btnSubirEvidencia)
+                    .addComponent(btnDescargarEvidencia)
+                    .addComponent(btnEliminarEvidencia))
+                .addGap(496, 496, 496))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AcademicPlus - Ventana Principal");
+        setPreferredSize(new java.awt.Dimension(800, 800));
+
+        panelGeneral.setLayout(new java.awt.GridLayout(2, 0));
+
+        panelEncabezado.setMinimumSize(new java.awt.Dimension(20, 40));
+        panelEncabezado.setLayout(new java.awt.GridLayout(3, 0));
+
+        lblBienvenida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBienvenida.setText("Bienvenido al Sistema");
+        lblBienvenida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelEncabezado.add(lblBienvenida);
+        panelEncabezado.add(jSeparator1);
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario_muestra.png"))); // NOI18N
+        jLabel24.setText("AcademicPlus");
+        panelEncabezado.add(jLabel24);
+
+        panelGeneral.add(panelEncabezado);
+
+        panelEstatus.setLayout(new java.awt.GridLayout(5, 1));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Estatus del usuario");
+        panelEstatus.add(jLabel1);
+
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNombre.setText("Nombre: ");
+        panelEstatus.add(lblNombre);
+
+        lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblCorreo.setText("Correo: ");
+        lblCorreo.setPreferredSize(new java.awt.Dimension(50, 16));
+        panelEstatus.add(lblCorreo);
+
+        lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblRol.setText("Rol: ");
+        panelEstatus.add(lblRol);
+
+        lblNumControl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumControl.setText("Número de control: ");
+        panelEstatus.add(lblNumControl);
+
+        panelGeneral.add(panelEstatus);
+
+        menuArchivo.setText("Archivo");
+        menuBarraPrincipal.add(menuArchivo);
+
+        menuGestion.setText("Gestión");
+
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionUsuarios);
+
+        opcionEventos.setText("Eventos");
+        opcionEventos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionEventosActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionEventos);
+
+        opcionTalleres.setText("Talleres");
+        opcionTalleres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionTalleresActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionTalleres);
+
+        opcionConvocatorias.setText("Convocatorias");
+        opcionConvocatorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionConvocatoriasActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionConvocatorias);
+
+        opcionEvidencias.setText("Evidencias");
+        opcionEvidencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionEvidenciasActionPerformed(evt);
+            }
+        });
+        menuGestion.add(opcionEvidencias);
+
+        menuBarraPrincipal.add(menuGestion);
+
+        menuReportes.setText("Reportes");
+        menuBarraPrincipal.add(menuReportes);
+
+        menuInscripcion.setText("Inscripción");
+
+        opcionInscripcion.setText("Realizar una inscripción");
+        opcionInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionInscripcionActionPerformed(evt);
+            }
+        });
+        menuInscripcion.add(opcionInscripcion);
+
+        menuBarraPrincipal.add(menuInscripcion);
+
+        menuAyuda.setText("Ayuda");
+
+        opcionAyuda.setText("Manual y documentación");
+        opcionAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionAyudaActionPerformed(evt);
+            }
+        });
+        menuAyuda.add(opcionAyuda);
+
+        menuBarraPrincipal.add(menuAyuda);
+
+        menuSalir.setText("Salir");
+
+        opcionCerrarSesion.setText("Cerrar sesión");
+        opcionCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionCerrarSesionActionPerformed(evt);
+            }
+        });
+        menuSalir.add(opcionCerrarSesion);
+
+        opcionSalir.setText("Salir");
+        opcionSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionSalirActionPerformed(evt);
+            }
+        });
+        menuSalir.add(opcionSalir);
+
+        menuBarraPrincipal.add(menuSalir);
+
+        setJMenuBar(menuBarraPrincipal);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelGeneral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInscripcionActionPerformed
+        DialogInscripcionEventoTaller.setVisible(true);
+        DialogInscripcionEventoTaller.setSize(900, 600);
+        DialogInscripcionEventoTaller.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionInscripcionActionPerformed
+
+    private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
+        // TODO add your handling code here:
+        DialogGestionUsuarios.setVisible(true);
+        DialogGestionUsuarios.setSize(850,550);
+        DialogGestionUsuarios.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionUsuariosActionPerformed
+
+    private void opcionCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        VentanaLogin login = new VentanaLogin();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_opcionCerrarSesionActionPerformed
+
+    private void opcionSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_opcionSalirActionPerformed
+
+    private void opcionAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionAyudaActionPerformed
+        // TODO add your handling code here:
+        try {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/jangelmm/AcademicPlus.git"));
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_opcionAyudaActionPerformed
+
+    private void cboURolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboURolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboURolActionPerformed
+
+    private void txtUNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUNombreActionPerformed
+
+    private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
+        // TODO add your handling code here:
+        DialogGestionEventos.setVisible(true);
+        DialogGestionEventos.setSize(1050, 650);
+        DialogGestionEventos.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionEventosActionPerformed
+
+    private void cboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoActionPerformed
+
+    private void txtENombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtENombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtENombreActionPerformed
+
+    private void txtUEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUEmailActionPerformed
+
+    private void txtUNumControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUNumControlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUNumControlActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        // Crear una instancia de la entidad
+        Usuarios nuevo = new Usuarios();
+        nuevo.setNombre(txtUNombre.getText());
+        nuevo.setCorreo(txtUEmail.getText());
+        nuevo.setContrasenaHash(new String(passContrasena.getPassword()));
+        nuevo.setRol(cboURol.getSelectedItem().toString());
+        nuevo.setNumeroControl(txtUNumControl.getText());
+
+        try {
+            UsuariosJpaController controller = new UsuariosJpaController(Conexion.getEMF());
+            controller.create(nuevo); // Método de instancia, no static
+            cargarUsuariosEnTabla(); // Refresca la tabla
+            limpiarCamposUsuario();  // Limpia los campos del formulario
+            JOptionPane.showMessageDialog(this, "Usuario insertado exitosamente");
+        } catch (Exception e) {
+            System.err.println("Error al insertar el usuario: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        if (txtUID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un usuario para modificar.");
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(txtUID.getText());
+
+            // Crear controlador JPA
+            UsuariosJpaController controller = new UsuariosJpaController(Conexion.getEMF());
+            
+            // Obtener el usuario desde la base de datos
+            Usuarios usuarioExistente = controller.findUsuarios(id);
+
+            if (usuarioExistente != null) {
+                // Actualizar los valores
+                usuarioExistente.setNombre(txtUNombre.getText());
+                usuarioExistente.setCorreo(txtUEmail.getText());
+                usuarioExistente.setRol(cboURol.getSelectedItem().toString());
+                usuarioExistente.setNumeroControl(txtUNumControl.getText());
+
+                // Guardar los cambios
+                controller.edit(usuarioExistente);
+
+                cargarUsuariosEnTabla();
+                limpiarCamposUsuario();
+                JOptionPane.showMessageDialog(this, "Usuario modificado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario no fue encontrado.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al actualizar usuario: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int id = Integer.parseInt(txtUID.getText()); // ID del usuario a eliminar
+        int idUsuarioGenerico = 1; // ID del usuario genérico (sistema)
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "¿Estás segura de que deseas eliminar este usuario?\nSe reasignarán sus registros al usuario genérico.", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademicPlusPU");
+            EntityManager em = emf.createEntityManager();
+
+            try {
+                em.getTransaction().begin();
+                // Reasignar referencias en ComentarioRevisionTaller (idUsuarioComentarista)
+                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Notificaciones (idUsuarioDestinatario)
+                em.createQuery("UPDATE Notificaciones n SET n.idUsuarioDestinatario.idUsuario = :nuevoId WHERE n.idUsuarioDestinatario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Evidencias (idUsuarioSubio)
+                em.createQuery("UPDATE Evidencias e SET e.idUsuarioSubio.idUsuario = :nuevoId WHERE e.idUsuarioSubio.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en BitacorasEventos (idUsuarioRegistra)
+                em.createQuery("UPDATE BitacorasEventos b SET b.idUsuarioRegistra.idUsuario = :nuevoId WHERE b.idUsuarioRegistra.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en EventoParticipantesTalleres (idTallerista)
+                em.createQuery("UPDATE EventoParticipantesTalleres ept SET ept.idTallerista.idUsuario = :nuevoId WHERE ept.idTallerista.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Convocatorias (idUsuarioPublica)
+                em.createQuery("UPDATE Convocatorias c SET c.idUsuarioPublica.idUsuario = :nuevoId WHERE c.idUsuarioPublica.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Eventos (idDocenteResponsable)
+                em.createQuery("UPDATE Eventos e SET e.idDocenteResponsable.idUsuario = :nuevoId WHERE e.idDocenteResponsable.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                // Reasignar referencias en Talleres (idUsuarioProponente)
+                em.createQuery("UPDATE Talleres t SET t.idUsuarioProponente.idUsuario = :nuevoId WHERE t.idUsuarioProponente.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+/*
+                // Reasignar relaciones (ejemplo con comentario_revision, notificacion, etc.)
+                em.createQuery("UPDATE ComentarioRevisionTaller c SET c.usuario.idUsuario = :nuevoId WHERE c.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Notificaciones n SET n.usuario.idUsuario = :nuevoId WHERE n.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Evidencias e SET e.usuario.idUsuario = :nuevoId WHERE e.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+
+                em.createQuery("UPDATE Bitacora b SET b.usuario.idUsuario = :nuevoId WHERE b.usuario.idUsuario = :actualId")
+                  .setParameter("nuevoId", idUsuarioGenerico)
+                  .setParameter("actualId", id)
+                  .executeUpdate();
+*/
+                // Buscar y eliminar el usuario
+                Usuarios usuarioAEliminar = em.find(Usuarios.class, id);
+                if (usuarioAEliminar != null) {
+                    em.remove(usuarioAEliminar);
+                }
+
+                em.getTransaction().commit();
+
+                cargarUsuariosEnTabla(); // Refresca la tabla
+                limpiarCamposUsuario(); // Limpia los campos
+                JOptionPane.showMessageDialog(this, "Usuario eliminado y registros reasignados.");
+            } catch (Exception e) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al eliminar usuario: " + e.getMessage());
+            } finally {
+                em.close();
+                emf.close();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCamposUsuario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void limpiarCamposUsuario() {
+        txtUID.setText("");
+        txtUNombre.setText("");
+        txtUEmail.setText("");
+        cboURol.setSelectedIndex(0);
+        txtUNumControl.setText("");
+    }
+    
+    private void btnELimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnELimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCamposEventos();
+    }//GEN-LAST:event_btnELimpiarActionPerformed
+    private void limpiarCamposEventos() {
+        txtEID.setText("");
+        txtENombre.setText("");
+        txtEDescripcion.setText("");
+        txtLugar.setText("");
+        cboEstado.setSelectedIndex(0);
+        calendario.setDate(new java.util.Date()); // Establece la fecha actual
+        txtEInicio.setText("");
+        txtEFin.setText("");
+    }
+    
+    private void btnECrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnECrearActionPerformed
+        // TODO add your handling code here:
+        // Crear una instancia de la entidad
+        Eventos nuevo = new Eventos();
+        nuevo.setNombre(txtENombre.getText());
+        nuevo.setDescripcionPublica(txtEDescripcion.getText());
+        nuevo.setLugarEvento(txtLugar.getText());
+        nuevo.setEstadoEvento(cboEstado.getSelectedItem().toString());
+        nuevo.setFechaEvento(calendario.getDate());
+
+        // Convertir las horas de tipo String (HH:mm) a Time
+        try {
+            // Obtener las horas como String desde los JTextField
+            String horaInicioStr = txtEInicio.getText();  // Formato: "HH:mm" (ejemplo "10:00")
+            String horaFinStr = txtEFin.getText();        // Formato: "HH:mm" (ejemplo "12:00")
+
+            // Añadir ":00" para hacer que el formato sea "HH:mm:ss" (ejemplo "10:00:00")
+            //horaInicioStr += ":00";
+            //horaFinStr += ":00";
+
+            // Convertir el String a Time
+            Time horaInicio = Time.valueOf(horaInicioStr);  // Convierte a Time
+            Time horaFin = Time.valueOf(horaFinStr);        // Convierte a Time
+
+            // Asignar las horas al objeto evento
+            nuevo.setHoraInicioEvento(horaInicio);
+            nuevo.setHoraFinEvento(horaFin);
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Error al formatear la hora. Asegúrese de que la hora esté en formato HH:mm.");
+            return; // Si hay un error, salir del método
+        }
+        
+        try {
+            EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
+            controller.create(nuevo); // Método de instancia, no static
+            cargarEventosEnTabla(); // Refresca la tabla
+            limpiarCamposEventos();  // Limpia los campos del formulario
+            JOptionPane.showMessageDialog(this, "Evento insertado exitosamente");
+        } catch (Exception e) {
+            System.err.println("Error al insertar el evento: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnECrearActionPerformed
+
+    private void btnEModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEModificarActionPerformed
+        // TODO add your handling code here:
+        // Verificar si se ha seleccionado un evento
+        if (txtEID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un evento para modificar.");
+            return;
+        }
+
+        try {
+            // Obtener el ID del evento desde el campo de texto
+            int id = Integer.parseInt(txtEID.getText());
+
+            // Crear el controlador JPA para eventos
+            EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
+
+            // Obtener el evento desde la base de datos
+            Eventos eventoExistente = controller.findEventos(id);
+
+            if (eventoExistente != null) {
+                // Actualizar los valores con los nuevos datos ingresados en el formulario
+                eventoExistente.setNombre(txtENombre.getText());
+                eventoExistente.setDescripcionPublica(txtEDescripcion.getText());
+                eventoExistente.setLugarEvento(txtLugar.getText());
+                eventoExistente.setEstadoEvento(cboEstado.getSelectedItem().toString());
+
+                // Obtener la fecha del JCalendar y actualizar
+                eventoExistente.setFechaEvento(calendario.getDate());
+
+                // Convertir las horas de tipo String (HH:mm) a Time
+                try {
+                    String horaInicioStr = txtEInicio.getText(); // Formato: "HH:mm"
+                    String horaFinStr = txtEFin.getText();       // Formato: "HH:mm"
+
+                    // Añadir ":00" para convertir a "HH:mm:ss"
+                    horaInicioStr += ":00";
+                    horaFinStr += ":00";
+
+                    // Convertir a tipo Time
+                    Time horaInicio = Time.valueOf(horaInicioStr);
+                    Time horaFin = Time.valueOf(horaFinStr);
+
+                    // Actualizar las horas del evento
+                    eventoExistente.setHoraInicioEvento(horaInicio);
+                    eventoExistente.setHoraFinEvento(horaFin);
+
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, "Error al formatear las horas. Asegúrese de que las horas estén en formato HH:mm.");
+                    return; // Si hay error en el formato de horas, salir del método
+                }
+                controller.edit(eventoExistente);
+                cargarEventosEnTabla();
+                limpiarCamposEventos();
+                // Mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Evento modificado exitosamente");
+            } else {
+                // Si no se encuentra el evento en la base de datos
+                JOptionPane.showMessageDialog(this, "El evento no fue encontrado.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al actualizar evento: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnEModificarActionPerformed
+
+    private void txtFieldTituloConvocatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloConvocatoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldTituloConvocatoriaActionPerformed
+
+    private void txtFieldPublicoObjetivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldPublicoObjetivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldPublicoObjetivoActionPerformed
+
+    private void txtFieldFehcaLímiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFehcaLímiteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFehcaLímiteActionPerformed
+
+    private void txtFieldFechaInscripciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFechaInscripciónActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFechaInscripciónActionPerformed
+
+    private void txtFieldTituloEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloEvidenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldTituloEvidenciaActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
+
+    private void txtFieldNombreTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreTallerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldNombreTallerActionPerformed
+
+    private void txtFieldFecha_HoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFecha_HoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldFecha_HoraActionPerformed
+
+    private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
+
+    private void txtFieldDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldDuracionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldDuracionActionPerformed
+
+    private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
+        DialogGestionTalleres.setVisible(true);
+        DialogGestionTalleres.setSize(950, 650);
+        DialogGestionTalleres.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionTalleresActionPerformed
+
+    private void opcionConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionConvocatoriasActionPerformed
+        DialogGestionConvocatorias.setVisible(true);
+        DialogGestionConvocatorias.setSize(950,550);
+        DialogGestionConvocatorias.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionConvocatoriasActionPerformed
+
+    private void opcionEvidenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEvidenciasActionPerformed
+        DialogGestionEvidencias.setVisible(true);
+        DialogGestionEvidencias.setSize(950, 650);
+        DialogGestionEvidencias.setLocationRelativeTo(this);
+    }//GEN-LAST:event_opcionEvidenciasActionPerformed
+    
+    // -------------------------------------------------------------------------
+    // Manipulacion de DialogGestionUsuarios
+    private void cargarUsuariosEnTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) ttUsuarios.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla
+
+        try {
+            UsuariosJpaController controller = new UsuariosJpaController(Conexion.getEMF());
+            List<Usuarios> listaUsuarios = controller.findUsuariosEntities();
+
+            for (Usuarios u : listaUsuarios) {
+                Object[] fila = new Object[]{
+                    u.getIdUsuario(),
+                    u.getNombre(),
+                    u.getCorreo(),
+                    u.getRol(),
+                    u.getNumeroControl()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar los usuarios: " + e.getMessage());
+        }
+    }
+    private void seleccionarUsuarios() {    // Muestra en elementos filas de la tabla
+        ttUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                limpiarCamposUsuario();
+                int selectedRow = ttUsuarios.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) ttUsuarios.getModel();
+                    
+                    txtUID.setText(String.valueOf((int) model.getValueAt(selectedRow, 0)));
+                    txtUNombre.setText(model.getValueAt(selectedRow, 1).toString());
+                    txtUEmail.setText(model.getValueAt(selectedRow, 2).toString());
+                    cboURol.setSelectedItem(model.getValueAt(selectedRow, 3).toString());
+                    txtUNumControl.setText(model.getValueAt(selectedRow, 4).toString());
+                }
+            }
+        });
+    }
+    
+    // -------------------------------------------------------------------------
+    // Manipulacion de DialogGestionEventos
+    private void cargarEventosEnTabla() {
+        DefaultTableModel modelo2 = (DefaultTableModel) ttEventos.getModel();
+        modelo2.setRowCount(0); // Limpiar la tabla
+
+        try {
+            EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
+            List<Eventos> listaEventos = controller.findEventosEntities();
+
+            // Formato para la fecha
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            // Formato para la hora
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+
+            for (Eventos e : listaEventos) {
+                // Formatear la fecha y las horas
+                String fechaFormateada = formatoFecha.format(e.getFechaEvento());
+                String horaInicioFormateada = formatoHora.format(e.getHoraInicioEvento());
+                String horaFinFormateada = formatoHora.format(e.getHoraFinEvento());
+
+                // Crear la fila con los datos formateados
+                Object[] fila = new Object[]{
+                    e.getIdEvento(),
+                    e.getNombre(),
+                    e.getDescripcionPublica(),
+                    fechaFormateada, // Fecha formateada
+                    horaInicioFormateada, // Hora de inicio formateada
+                    horaFinFormateada, // Hora de fin formateada
+                    e.getLugarEvento(),
+                    e.getEstadoEvento()
+                };
+
+                // Añadir la fila al modelo de la tabla
+                modelo2.addRow(fila);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar los eventos: " + e.getMessage());
+        }
+    }
+    private void seleccionarEventos() {    // Muestra en elementos filas de la tabla
+        ttEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                limpiarCamposEventos();
+                int selectedRow = ttEventos.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) ttEventos.getModel();
+                    
+                    txtEID.setText(String.valueOf(model.getValueAt(selectedRow, 0)));
+                    txtENombre.setText(model.getValueAt(selectedRow, 1).toString());
+                    txtEDescripcion.setText(model.getValueAt(selectedRow, 2).toString());
+                    // **Fecha**: Convertir la fecha en el formato 'yyyy-MM-dd'
+                    String fechaStr = model.getValueAt(selectedRow, 3).toString(); // Columna 3 = fecha
+                    // **Fecha en JCalendar**: Convertir la fecha al tipo java.util.Date
+                    try {
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date fecha = formatoFecha.parse(fechaStr); // Convertir fecha en String a Date
+                        calendario.setDate(fecha); // Establecer fecha en el JCalendar
+                    } catch (Exception ex) {
+                        System.err.println("Error al convertir la fecha: " + ex.getMessage());
+                    }
+                    
+                    // **Hora Inicio**: Convertir hora en formato 'HH:mm:ss'
+                    String horaInicioStr = model.getValueAt(selectedRow, 4).toString(); // Columna 4 = hora inicio
+                    if (horaInicioStr != null && !horaInicioStr.isEmpty()) {
+                        txtEInicio.setText(horaInicioStr); // Mostrar en el campo txtEInicio
+                    }
+                    // **Hora Fin**: Convertir hora en formato 'HH:mm:ss'
+                    String horaFinStr = model.getValueAt(selectedRow, 5).toString(); // Columna 5 = hora fin
+                    if (horaFinStr != null && !horaFinStr.isEmpty()) {
+                        txtEFin.setText(horaFinStr); // Mostrar en el campo txtEFin
+                    }
+                    txtLugar.setText(model.getValueAt(selectedRow, 6).toString());
+                    cboEstado.setSelectedItem(model.getValueAt(selectedRow, 7).toString());                    
+                }
+            }
+        });
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaPrincipal(null).setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogGestionConvocatorias;
+    private javax.swing.JDialog DialogGestionEventos;
+    private javax.swing.JDialog DialogGestionEvidencias;
+    private javax.swing.JDialog DialogGestionTalleres;
+    private javax.swing.JDialog DialogGestionUsuarios;
+    private javax.swing.JDialog DialogInscripcionEventoTaller;
+    private javax.swing.JLabel TITULO;
+    private javax.swing.JLabel TITULO1;
+    private javax.swing.JLabel TITULO2;
+    private javax.swing.JLabel TITULO3;
+    private javax.swing.JLabel TITULO4;
+    private javax.swing.JLabel TITULO5;
+    private javax.swing.JLabel TITULO6;
+    private javax.swing.JLabel TITULO7;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregarTaller;
+    private javax.swing.JButton btnDescargarEvidencia;
+    private javax.swing.JToggleButton btnDesinscribirme;
+    private javax.swing.JButton btnECrear;
+    private javax.swing.JButton btnEEliminar;
+    private javax.swing.JButton btnELimpiar;
+    private javax.swing.JButton btnEModificar;
+    private javax.swing.JButton btnEditarTaller;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarConvocatoria;
+    private javax.swing.JButton btnEliminarEvidencia;
+    private javax.swing.JButton btnElliminarTaller;
+    private javax.swing.JButton btnInscribirme;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnPublicar;
+    private javax.swing.JButton btnSeleccionarArchivo;
+    private javax.swing.JButton btnSubirEvidencia;
+    private javax.swing.JButton btnVerComentarios;
+    private com.toedter.calendar.JCalendar calendario;
+    private javax.swing.JComboBox<String> cboEstado;
+    private javax.swing.JLabel cboEstadoTaller;
+    private javax.swing.JComboBox<String> cboEventoAsociado;
+    private javax.swing.JComboBox<String> cboEventoAsociado1;
+    private javax.swing.JComboBox<String> cboEventoAsociado2;
+    private javax.swing.JComboBox<String> cboPonente;
+    private javax.swing.JComboBox<String> cboTallerAsociado;
+    private javax.swing.JComboBox<String> cboURol;
+    private javax.swing.JLabel encabezado;
+    private javax.swing.JLabel encabezado1;
+    private javax.swing.JLabel encabezado2;
+    private javax.swing.JLabel encabezado4;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNumControl;
+    private javax.swing.JLabel lblRol;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuAyuda;
+    private javax.swing.JMenuBar menuBarraPrincipal;
+    private javax.swing.JMenu menuGestion;
+    private javax.swing.JMenu menuInscripcion;
+    private javax.swing.JMenu menuReportes;
+    private javax.swing.JMenu menuSalir;
+    private javax.swing.JMenuItem opcionAyuda;
+    private javax.swing.JMenuItem opcionCerrarSesion;
+    private javax.swing.JMenuItem opcionConvocatorias;
+    private javax.swing.JMenuItem opcionEventos;
+    private javax.swing.JMenuItem opcionEvidencias;
+    private javax.swing.JMenuItem opcionInscripcion;
+    private javax.swing.JMenuItem opcionSalir;
+    private javax.swing.JMenuItem opcionTalleres;
+    private javax.swing.JMenuItem opcionUsuarios;
+    private javax.swing.JPanel panelEncabezado;
+    private javax.swing.JPanel panelEstatus;
+    private javax.swing.JPanel panelGeneral;
+    private javax.swing.JPasswordField passContrasena;
+    private javax.swing.JTextArea taDescripcionConvocatoria;
+    private javax.swing.JTextArea taDescripcionEvidencia;
+    private javax.swing.JTextArea taDescripcionTaller;
+    private javax.swing.JTable tblConvocatorias;
+    private javax.swing.JTable tblEvidencias;
+    private javax.swing.JTable tblTalleres;
+    private javax.swing.JTable tblTalleresDisponibles;
+    private javax.swing.JTable ttEventos;
+    private javax.swing.JTable ttUsuarios;
+    private javax.swing.JLabel txtCupoMaximo;
+    private javax.swing.JLabel txtDuracion;
+    private javax.swing.JTextArea txtEDescripcion;
+    private javax.swing.JTextField txtEFin;
+    private javax.swing.JTextField txtEID;
+    private javax.swing.JTextField txtEInicio;
+    private javax.swing.JTextField txtENombre;
+    private javax.swing.JLabel txtFecha_Hora;
+    private javax.swing.JTextField txtFieldDuracion;
+    private javax.swing.JTextField txtFieldFechaInscripción;
+    private javax.swing.JTextField txtFieldFecha_Hora;
+    private javax.swing.JTextField txtFieldFehcaLímite;
+    private javax.swing.JTextField txtFieldMaterial_Req;
+    private javax.swing.JTextField txtFieldNombreTaller;
+    private javax.swing.JTextField txtFieldPublicoObjetivo;
+    private javax.swing.JTextField txtFieldTituloConvocatoria;
+    private javax.swing.JTextField txtFieldTituloEvidencia;
+    private javax.swing.JTextField txtLugar;
+    private javax.swing.JLabel txtMaterialReq;
+    private javax.swing.JLabel txtNombreTaller;
+    private javax.swing.JLabel txtNombreTaller1;
+    private javax.swing.JLabel txtNombreTaller2;
+    private javax.swing.JLabel txtNombreTaller3;
+    private javax.swing.JLabel txtNombreTaller4;
+    private javax.swing.JLabel txtNombreTaller5;
+    private javax.swing.JLabel txtNombreTaller6;
+    private javax.swing.JTextField txtUEmail;
+    private javax.swing.JTextField txtUID;
+    private javax.swing.JTextField txtUNombre;
+    private javax.swing.JTextField txtUNumControl;
+    // End of variables declaration//GEN-END:variables
 }
 ```
 

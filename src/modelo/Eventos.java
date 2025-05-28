@@ -262,7 +262,8 @@ public class Eventos implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Eventos[ idEvento=" + idEvento + " ]";
+        return idEvento + " | " + nombre + " | " + fechaEvento;
+        //return "modelo.Eventos[ idEvento=" + idEvento + " ]";
     }
     
 }
