@@ -6,6 +6,7 @@ package vista;
 
 import control.ComentariosRevisionTallerJpaController;
 import control.Conexion;
+import control.ConvocatoriasJpaController;
 import control.EventosJpaController;
 import control.EvidenciasJpaController;
 import control.TalleresJpaController;
@@ -33,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.BitacorasEventos;
 import modelo.ComentariosRevisionTaller;
+import modelo.Convocatorias;
 import modelo.EventoParticipantesTalleres;
 import modelo.Eventos;
 import modelo.Evidencias;
@@ -46,6 +48,7 @@ import modelo.Usuarios;
 public class VentanaPrincipal extends javax.swing.JFrame {
     
     private Usuarios usuarioActual;
+    private List<Convocatorias> listaConvocatoriasCargadas;
     
     public VentanaPrincipal(Usuarios u) {
         initComponents();
@@ -70,6 +73,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         cargarPonentesEnComboBox();
         cargarEventosAsociadosEnComboBox();
         cargarTalleresEnTabla();
+        
+        //Manipulación de Eventos
+        cargarConvocatoriasEnTabla();
     }
 
     /**
@@ -135,31 +141,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtFieldNombreTaller = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         txtDescripcionTaller = new javax.swing.JTextArea();
         cboPonente = new javax.swing.JComboBox<>();
-        cboEventoAsociado1 = new javax.swing.JComboBox<>();
         txtMaterialReq = new javax.swing.JLabel();
         txtFieldMaterial_Req = new javax.swing.JTextField();
-        cboCupoMaximo = new javax.swing.JSpinner();
         TITULO4 = new javax.swing.JLabel();
         TITULO5 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
         tblTalleres = new javax.swing.JTable();
         cboEstadoTaller = new javax.swing.JLabel();
         cboEstadoTaller2 = new javax.swing.JComboBox<>();
-        txtCupoMaximo = new javax.swing.JLabel();
-        txtDuracion = new javax.swing.JLabel();
-        txtFieldDuracion = new javax.swing.JTextField();
-        btnEditarTaller = new javax.swing.JButton();
+        txtManualRuta = new javax.swing.JTextField();
+        btnActualizarTaller = new javax.swing.JButton();
         btnAgregarTaller = new javax.swing.JButton();
-        btnVerComentarios = new javax.swing.JButton();
         btnElliminarTaller = new javax.swing.JButton();
         txtFecha_Hora = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        dateFieldFechaTaller = new com.toedter.calendar.JDateChooser();
+        btnLimpiarTalleres = new javax.swing.JButton();
         DialogGestionConvocatorias = new javax.swing.JDialog();
         TITULO = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -169,22 +169,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtNombreTaller2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         taDescripcionConvocatoria = new javax.swing.JTextArea();
-        txtFieldPublicoObjetivo = new javax.swing.JTextField();
-        txtNombreTaller3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         btnPublicar = new javax.swing.JButton();
         txtNombreTaller1 = new javax.swing.JLabel();
         btnEliminarConvocatoria = new javax.swing.JButton();
-        txtFieldFehcaLímite = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         TITULO1 = new javax.swing.JLabel();
-        cboTallerAsociado = new javax.swing.JComboBox<>();
-        cboEventoAsociado = new javax.swing.JComboBox<>();
-        jLabel13 = new javax.swing.JLabel();
-        txtFieldFechaInscripción = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        dateChooserFechaLimite = new com.toedter.calendar.JDateChooser();
+        dateChooserFechaInscripcion = new com.toedter.calendar.JDateChooser();
+        btnLimpiarConvocatorias = new javax.swing.JButton();
         DialogInscripcionEventoTaller = new javax.swing.JDialog();
         btnInscribirme = new javax.swing.JButton();
         TITULO6 = new javax.swing.JLabel();
@@ -661,9 +656,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel19.setText("Ponente/Instructor:");
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        jLabel22.setText("Evento asociado:");
-
         txtDescripcionTaller.setColumns(20);
         txtDescripcionTaller.setRows(5);
         jScrollPane8.setViewportView(txtDescripcionTaller);
@@ -694,6 +686,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 "ID", "Nombre", "Descripción", "Usuario"
             }
         ));
+        tblTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTalleresMouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(tblTalleres);
 
         cboEstadoTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
@@ -706,19 +703,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        txtCupoMaximo.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtCupoMaximo.setText("Cupo Maximo:");
-
-        txtDuracion.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtDuracion.setText("Duración:");
-
-        txtFieldDuracion.addActionListener(new java.awt.event.ActionListener() {
+        txtManualRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldDuracionActionPerformed(evt);
+                txtManualRutaActionPerformed(evt);
             }
         });
 
-        btnEditarTaller.setText("Editar Taller");
+        btnActualizarTaller.setText("Actualizar Taller");
+        btnActualizarTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTallerActionPerformed(evt);
+            }
+        });
 
         btnAgregarTaller.setText("Agregar Taller");
         btnAgregarTaller.addActionListener(new java.awt.event.ActionListener() {
@@ -727,75 +723,83 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnVerComentarios.setText("Ver comentarios");
-
         btnElliminarTaller.setText("Eliminar Taller");
+        btnElliminarTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElliminarTallerActionPerformed(evt);
+            }
+        });
 
         txtFecha_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtFecha_Hora.setText("Fecha/Hora:");
+        txtFecha_Hora.setText("Ruta de Anexos:");
+
+        btnLimpiarTalleres.setText("Limpiar");
+        btnLimpiarTalleres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarTalleresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DialogGestionTalleresLayout = new javax.swing.GroupLayout(DialogGestionTalleres.getContentPane());
         DialogGestionTalleres.getContentPane().setLayout(DialogGestionTalleresLayout);
         DialogGestionTalleresLayout.setHorizontalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TITULO5)
-                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                    .addComponent(txtMaterialReq)
-                                    .addGap(76, 76, 76)
-                                    .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtNombreTaller6)
-                                        .addComponent(txtCupoMaximo)
-                                        .addComponent(txtFecha_Hora)
-                                        .addComponent(txtDuracion))
-                                    .addGap(81, 81, 81)
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cboCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dateFieldFechaTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(57, 57, 57)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel19)
-                                    .addComponent(cboEstadoTaller))
-                                .addGap(18, 18, 18)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cboEventoAsociado1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cboEstadoTaller2, 0, 391, Short.MAX_VALUE)
-                                    .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18))
-            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(btnAgregarTaller)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-                .addComponent(btnEditarTaller)
-                .addGap(138, 138, 138)
-                .addComponent(btnElliminarTaller)
-                .addGap(153, 153, 153)
-                .addComponent(btnVerComentarios)
-                .addGap(56, 56, 56))
             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                 .addGap(343, 343, 343)
                 .addComponent(TITULO4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnAgregarTaller)
+                        .addGap(162, 162, 162)
+                        .addComponent(btnActualizarTaller)
+                        .addGap(157, 157, 157)
+                        .addComponent(btnLimpiarTalleres)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                        .addComponent(btnElliminarTaller))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TITULO5)
+                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                            .addComponent(txtMaterialReq)
+                                            .addGap(76, 76, 76)
+                                            .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtNombreTaller6)
+                                                .addComponent(txtFecha_Hora))
+                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                                    .addGap(81, 81, 81)
+                                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel19)
+                                            .addComponent(cboEstadoTaller))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cboEstadoTaller2, 0, 391, Short.MAX_VALUE)
+                                            .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addGap(18, 18, 18))
         );
         DialogGestionTalleresLayout.setVerticalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -804,38 +808,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(TITULO5)
                 .addGap(25, 25, 25)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                            .addGap(65, 65, 65)
+                            .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cboCupoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(dateFieldFechaTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboEventoAsociado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(34, 34, 34)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -848,12 +837,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarTaller)
-                    .addComponent(btnEditarTaller)
+                    .addComponent(btnActualizarTaller)
                     .addComponent(btnElliminarTaller)
-                    .addComponent(btnVerComentarios))
+                    .addComponent(btnLimpiarTalleres))
                 .addGap(21, 21, 21)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(TITULO4)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -871,9 +860,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Titulo", "Descripción", "Fecha de Publicación", "Fecha Límite"
             }
         ));
+        tblConvocatorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblConvocatoriasMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblConvocatorias);
 
         txtNombreTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
@@ -892,49 +886,40 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         taDescripcionConvocatoria.setRows(5);
         jScrollPane5.setViewportView(taDescripcionConvocatoria);
 
-        txtFieldPublicoObjetivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldPublicoObjetivoActionPerformed(evt);
-            }
-        });
-
-        txtNombreTaller3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller3.setText("Público objetivo:");
-
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel11.setText("Descripción convocatoria:");
 
         btnPublicar.setText("Publicar/Guardar");
+        btnPublicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublicarActionPerformed(evt);
+            }
+        });
 
         txtNombreTaller1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtNombreTaller1.setText("Fecha límite:");
 
         btnEliminarConvocatoria.setText("Eliminar Convocatoria");
-
-        txtFieldFehcaLímite.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarConvocatoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldFehcaLímiteActionPerformed(evt);
+                btnEliminarConvocatoriaActionPerformed(evt);
             }
         });
 
         btnModificar.setText("Modificar");
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        jLabel12.setText("Para taller:");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO1.setText("Lista de Convocatorias Existentes");
 
-        cboTallerAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboEventoAsociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        jLabel13.setText("Para evento:");
-
-        txtFieldFechaInscripción.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarConvocatorias.setText("Limpiar");
+        btnLimpiarConvocatorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldFechaInscripciónActionPerformed(evt);
+                btnLimpiarConvocatoriasActionPerformed(evt);
             }
         });
 
@@ -955,36 +940,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
                                             .addGap(29, 29, 29)
                                             .addComponent(btnPublicar)
-                                            .addGap(211, 211, 211)
+                                            .addGap(131, 131, 131)
                                             .addComponent(btnModificar)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                                            .addComponent(btnLimpiarConvocatorias)
+                                            .addGap(83, 83, 83)
                                             .addComponent(btnEliminarConvocatoria))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
                                             .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel11)
-                                                .addComponent(txtNombreTaller1)
                                                 .addComponent(txtNombreTaller))
                                             .addGap(18, 18, 18)
                                             .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(txtNombreTaller2))
-                                                .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(txtFieldFehcaLímite)
-                                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-                                                    .addGap(18, 18, 18)
-                                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel13)
-                                                        .addComponent(jLabel12)
-                                                        .addComponent(txtNombreTaller3))))
+                                                .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtNombreTaller1)
+                                                .addComponent(txtNombreTaller2))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtFieldFechaInscripción)
-                                                .addComponent(cboEventoAsociado, 0, 216, Short.MAX_VALUE)
-                                                .addComponent(cboTallerAsociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtFieldPublicoObjetivo))))))
+                                                .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                                                .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                                 .addGap(282, 282, 282)
                                 .addComponent(TITULO1)))
@@ -1000,46 +977,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(TITULO)
-                .addGap(28, 28, 28)
-                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFieldFechaInscripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(44, 44, 44)
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboEventoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboTallerAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFieldFehcaLímite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFieldPublicoObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                            .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(59, 59, 59)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPublicar)
                     .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnModificar)
-                        .addComponent(btnEliminarConvocatoria)))
+                        .addComponent(btnEliminarConvocatoria)
+                        .addComponent(btnLimpiarConvocatorias)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(TITULO1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnInscribirme.setText("Inscribirse al Evento/Taller");
@@ -1822,18 +1794,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldTituloConvocatoriaActionPerformed
 
-    private void txtFieldPublicoObjetivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldPublicoObjetivoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldPublicoObjetivoActionPerformed
-
-    private void txtFieldFehcaLímiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFehcaLímiteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldFehcaLímiteActionPerformed
-
-    private void txtFieldFechaInscripciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldFechaInscripciónActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldFechaInscripciónActionPerformed
-
     private void txtFieldTituloEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldTituloEvidenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldTituloEvidenciaActionPerformed
@@ -1849,10 +1809,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
-
-    private void txtFieldDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldDuracionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldDuracionActionPerformed
 
     private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
         DialogGestionTalleres.setVisible(true);
@@ -1987,12 +1943,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             return;
         }
 
+        // Validación para el ponente
         if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
+            // Podrías tener un item placeholder como "Seleccione un ponente..." que sea un String o un Usuario nulo.
+            // Si el item es null o no es una instancia de Usuario, entonces no es válido.
+            Object itemPonente = cboPonente.getSelectedItem();
+            if (itemPonente == null || itemPonente.toString().equals("-- Seleccione Ponente --")) { // Ejemplo de placeholder
+                 JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
+                 return;
+            }
+            // Si el primer item es un Usuario válido y está seleccionado, esta condición no se cumple.
+            // Si es un String placeholder y se selecciona, !(itemPonente instanceof Usuarios) será true.
         }
 
-        if (cboEstadoTaller2.getSelectedItem() == null) { // Suponiendo que cboEstadoTaller2 es el JComboBox para el estado del taller
+        // Validación para el estado del taller
+        // Asumiendo que cboEstadoTaller2 es tu JComboBox para el estado
+        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || cboEstadoTaller2.getSelectedItem().toString().equals("-- Seleccione Estado --")) { // Ejemplo de placeholder
             JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -2002,9 +1968,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         nuevoTaller.setNombre(nombreTaller);
 
         // Campos que existen en la entidad Talleres
-        nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim()); // Asumo que txtDescripcionTaller es tu JTextArea
+        // Asumiendo que txtDescripcionTaller es tu JTextArea. Si es taDescripcionTaller, usa ese nombre.
+        if (txtDescripcionTaller != null) {
+            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim()); 
+        } else if (txtDescripcionTaller != null) { // Nombre del componente en tu diseño de VentanaPrincipal
+            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        }
+
         nuevoTaller.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
-        nuevoTaller.setEstado((String) cboEstadoTaller2.getSelectedItem());
+
+        // Nuevo campo para la ruta del manual
+        if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
+            nuevoTaller.setManualRuta(txtManualRuta.getText().trim());
+        }
+
+        nuevoTaller.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usar el nombre correcto del JComboBox de estado
 
         Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
         nuevoTaller.setIdUsuarioProponente(ponenteSeleccionado);
@@ -2014,20 +1992,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         nuevoTaller.setFechaCreacion(fechaActual);
         nuevoTaller.setUltimaModificacion(fechaActual);
 
-        // Campos que NO existen en la entidad Talleres (según el overview de AcademicPlus):
-        // - Cupo Máximo: (Integer) cboCupoMaximo.getValue(); (Suponiendo que cboCupoMaximo es un JSpinner)
-        //   Si necesitas este campo, debes agregarlo a la entidad Talleres.java y a tu tabla.
-        //
-        // - Fecha del Taller: dateFieldFechaTaller.getDate(); (Suponiendo JDateChooser)
-        //   La entidad Talleres no tiene un campo 'fechaTaller'. Un taller podría estar asociado a un Evento que tiene fecha,
-        //   o necesitaría su propio campo de fecha si puede ser independiente.
-        //
-        // - Duración: txtFieldDuracion.getText().trim();
-        //   No hay campo 'duracion' en la entidad Talleres.
-        //
-        // - Evento Asociado: (Eventos) cboEventoAsociado1.getSelectedItem();
-        //   La entidad Talleres no tiene un campo directo para Eventos. La asociación podría ser a través de
-        //   EventoParticipantesTalleres o si se añade un campo Eventos a la entidad Talleres.
+        // Los campos como Cupo, Fecha del Taller, Duración, Evento Asociado directo
+        // han sido omitidos ya que indicaste que eliminaste los que no servían
+        // y estos no tenían correspondencia directa en la entidad Talleres.
 
         // 3. Persistir el taller
         try {
@@ -2036,15 +2003,496 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + nuevoTaller.getNombre() + "' agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            // Actualizar la tabla de talleres y limpiar campos
-            cargarTalleresEnTabla(); // Debes tener este método para refrescar la tabla de talleres
-            limpiarCamposFormularioTaller(); // Debes tener este método para limpiar los campos del formulario
+            cargarTalleresEnTabla(); // Refresca la tabla de talleres
+            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al guardar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnAgregarTallerActionPerformed
+
+    private void tblTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTalleresMouseClicked
+
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            try {
+                // Asumimos que la columna 0 de tblTalleres contiene el ID del Taller
+                Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+                if (idObjeto == null) {
+                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int idTaller = Integer.parseInt(idObjeto.toString());
+
+                // Opcional: Si tienes un JTextField para el ID del taller en el formulario:
+                // if (txtIdTallerDialog != null) { 
+                //    txtIdTallerDialog.setText(String.valueOf(idTaller));
+                // }
+
+                TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+                Talleres tallerSeleccionado = controller.findTalleres(idTaller);
+
+                if (tallerSeleccionado != null) {
+                    // --- Poblar campos que SÍ existen en la entidad Talleres ---
+                    txtFieldNombreTaller.setText(tallerSeleccionado.getNombre());
+
+                    // JTextArea descripción
+                    if (txtDescripcionTaller != null) { 
+                        txtDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
+                    }
+                    // else if (taDescripcionTaller != null) { // Si el nombre del componente es diferente
+                    //    taDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
+                    // }
+
+                    txtFieldMaterial_Req.setText(tallerSeleccionado.getRequisitosMateriales());
+
+                    // Nuevo campo: Ruta del Manual
+                    if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
+                        txtManualRuta.setText(tallerSeleccionado.getManualRuta());
+                    }
+
+                    // ComboBox Ponente (Usuarios)
+                    if (cboPonente != null && tallerSeleccionado.getIdUsuarioProponente() != null) {
+                        Usuarios ponenteDelTaller = tallerSeleccionado.getIdUsuarioProponente();
+                        DefaultComboBoxModel<Usuarios> modeloPonente = (DefaultComboBoxModel<Usuarios>) cboPonente.getModel();
+                        boolean ponenteEncontrado = false;
+                        for (int i = 0; i < modeloPonente.getSize(); i++) {
+                            Usuarios usuarioEnCombo = modeloPonente.getElementAt(i);
+                            if (usuarioEnCombo != null && usuarioEnCombo.getIdUsuario().equals(ponenteDelTaller.getIdUsuario())) {
+                                cboPonente.setSelectedIndex(i);
+                                ponenteEncontrado = true;
+                                break;
+                            }
+                        }
+                        if (!ponenteEncontrado) { 
+                            cboPonente.setSelectedItem(null); // O el índice de un item placeholder
+                        }
+                    } else if (cboPonente != null) {
+                        cboPonente.setSelectedItem(null); // O el índice de un item placeholder
+                    }
+
+                    // ComboBox Estado Taller (Strings)
+                    if (cboEstadoTaller2 != null) { 
+                        cboEstadoTaller2.setSelectedItem(tallerSeleccionado.getEstado());
+                    }
+                    // else if (cboEventoAsociado2 != null) { // Si el nombre del componente es diferente
+                    //    cboEventoAsociado2.setSelectedItem(tallerSeleccionado.getEstado());
+                    // }
+
+                } else {
+                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller, "Taller No Encontrado", JOptionPane.WARNING_MESSAGE);
+                    limpiarCamposFormularioTaller(); // Limpiar campos si no se encuentra
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller en la tabla no es un número válido.", "Error de ID en Tabla", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+                limpiarCamposFormularioTaller();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al cargar datos del taller: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                limpiarCamposFormularioTaller();
+            }
+        } else {
+            // Opcional: Limpiar los campos si no se selecciona ninguna fila válida
+            // limpiarCamposFormularioTaller();
+        }
+    }//GEN-LAST:event_tblTalleresMouseClicked
+
+    private void txtManualRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManualRutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtManualRutaActionPerformed
+
+    private void btnActualizarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTallerActionPerformed
+        // 0. Verificar si se ha seleccionado un taller (y por lo tanto, hay un ID)
+        // Asumiré que tienes un JTextField no editable llamado txtIdTallerDialogo para el ID.
+        // Si no tienes un campo para el ID, deberás obtener el ID del taller seleccionado de alguna otra manera.
+        String idTallerStr = ""; // Ejemplo: txtIdTallerDialogo.getText();
+
+        // --- Obtener el ID del taller seleccionado ---
+        // Opción A: Desde un JTextField no editable (recomendado)
+        // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
+        //     idTallerStr = txtIdTallerDialogo.getText();
+        // } else {
+        //     JOptionPane.showMessageDialog(DialogGestionTalleres, "No hay un taller seleccionado para actualizar. Por favor, seleccione un taller de la tabla.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+        //     return;
+        // }
+
+        // Opción B: Si no tienes un campo ID y dependes de la selección de la tabla directamente (menos robusto si el usuario edita campos sin reseleccionar)
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para actualizar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Asumiendo que la columna 0 de tblTalleres contiene el ID
+        Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+        if (idObjeto == null) {
+             JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        idTallerStr = idObjeto.toString();
+        // --- Fin de la obtención del ID ---
+
+        int idTaller;
+        try {
+            idTaller = Integer.parseInt(idTallerStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 1. Validar campos obligatorios del formulario
+        String nombreTaller = txtFieldNombreTaller.getText().trim();
+        if (nombreTaller.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldNombreTaller.requestFocus();
+            return;
+        }
+
+        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
+            Object itemPonente = cboPonente.getSelectedItem();
+            if (itemPonente == null || (itemPonente instanceof String && itemPonente.toString().startsWith("--"))) { // Asumiendo placeholder
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || (cboEstadoTaller2.getSelectedItem() instanceof String && cboEstadoTaller2.getSelectedItem().toString().startsWith("--"))) { // Asumiendo placeholder
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Obtener la entidad Talleres existente y actualizarla
+        TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+        Talleres tallerExistente = controller.findTalleres(idTaller);
+
+        if (tallerExistente == null) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller + " en la base de datos.", "Taller No Encontrado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Actualizar los campos del objeto tallerExistente
+        tallerExistente.setNombre(nombreTaller);
+
+        // Usar el nombre correcto de tu JTextArea
+        if (txtDescripcionTaller != null) { 
+            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        } else if (txtDescripcionTaller != null) { 
+            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        }
+
+        tallerExistente.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
+
+        if (txtManualRuta != null) {
+            tallerExistente.setManualRuta(txtManualRuta.getText().trim());
+        }
+
+        tallerExistente.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usa el nombre correcto de tu JComboBox de estado
+
+        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
+        tallerExistente.setIdUsuarioProponente(ponenteSeleccionado);
+
+        tallerExistente.setUltimaModificacion(new Date()); // Actualizar fecha de modificación
+
+        // 3. Persistir los cambios
+        try {
+            controller.edit(tallerExistente);
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + tallerExistente.getNombre() + "' actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarTalleresEnTabla(); // Refresca la tabla
+            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al actualizar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnActualizarTallerActionPerformed
+
+    private void btnElliminarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElliminarTallerActionPerformed
+        // --- Obtener el ID del taller seleccionado ---
+        // Usaremos la misma lógica que en btnActualizarTallerActionPerformed para obtener el ID.
+        // Opción B: Obtener el ID directamente de la tabla (menos robusto si hay ediciones sin reseleccionar)
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+        String idTallerStr;
+
+        if (filaSeleccionada != -1) {
+            // Asumiendo que la columna 0 de tblTalleres contiene el ID
+            Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+            if (idObjeto == null) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "ID No Encontrado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            idTallerStr = idObjeto.toString();
+        } else {
+            // Opción A: Si usas un JTextField no editable como txtIdTallerDialogo que se llena con tblTalleresMouseClicked
+            // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
+            //     idTallerStr = txtIdTallerDialogo.getText();
+            // } else {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para eliminar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+            // }
+        }
+        // --- Fin de la obtención del ID ---
+
+        int idTaller;
+        try {
+            idTaller = Integer.parseInt(idTallerStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionTalleres,
+            "¿Está seguro de que desea eliminar el taller con ID: " + idTaller + "?\nEsta acción podría eliminar también comentarios y participaciones asociadas.",
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+            try {
+                controller.destroy(idTaller); // El método destroy del JpaController maneja las relaciones
+
+                cargarTalleresEnTabla();       // Actualiza la tabla de talleres
+                limpiarCamposFormularioTaller(); // Limpia los campos del formulario
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller eliminado exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IllegalOrphanException ex) {
+                // Esta excepción es lanzada por el JpaController si encuentra "huérfanos ilegales".
+                // Por ejemplo, si un ComentarioRevisionTaller tiene su campo idTaller como non-nullable
+                // y CascadeType.ALL no está funcionando como se espera o la comprobación del controller es muy estricta.
+                System.err.println("Detalles de IllegalOrphanException: " + ex.getMessages());
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(DialogGestionTalleres, 
+                    "No se puede eliminar el taller porque tiene registros asociados que no pueden ser eliminados o desvinculados automáticamente.\nDetalle: " + ex.getMessage(), 
+                    "Error de Eliminación (Dependencias)", 
+                    JOptionPane.ERROR_MESSAGE);
+            } catch (NonexistentEntityException ex) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "El taller que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            } catch (Exception e) { // Captura otras posibles excepciones
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Ocurrió un error al intentar eliminar el taller: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnElliminarTallerActionPerformed
+
+    private void tblConvocatoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConvocatoriasMouseClicked
+        int filaSeleccionada = tblConvocatorias.getSelectedRow();
+
+        if (filaSeleccionada != -1 && listaConvocatoriasCargadas != null && filaSeleccionada < listaConvocatoriasCargadas.size()) {
+            Convocatorias convocatoriaSeleccionada = listaConvocatoriasCargadas.get(filaSeleccionada);
+
+            // Suponiendo que tienes txtIdConvocatoriaDialogo para el ID
+            // if(txtIdConvocatoriaDialogo != null) {
+            //     txtIdConvocatoriaDialogo.setText(String.valueOf(convocatoriaSeleccionada.getIdConvocatoria()));
+            // }
+
+            txtFieldTituloConvocatoria.setText(convocatoriaSeleccionada.getTitulo());
+            taDescripcionConvocatoria.setText(convocatoriaSeleccionada.getDescripcion());
+
+            if (dateChooserFechaInscripcion != null) { // Nombre de tu JDateChooser
+                dateChooserFechaInscripcion.setDate(convocatoriaSeleccionada.getFechaPublicacion());
+            }
+            if (dateChooserFechaLimite != null) { // Nombre de tu JDateChooser
+                dateChooserFechaLimite.setDate(convocatoriaSeleccionada.getFechaLimitePropuestas());
+            }
+
+            // El campo documentoAdjuntoRuta no está en tu UI, así que no se carga.
+            // Los campos idUsuarioPublica, fechaCreacion, ultimaModificacion son de sistema.
+        }
+    }//GEN-LAST:event_tblConvocatoriasMouseClicked
+
+    private void btnPublicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublicarActionPerformed
+        String titulo = txtFieldTituloConvocatoria.getText().trim();
+        String descripcion = taDescripcionConvocatoria.getText().trim();
+        java.util.Date fechaPublicacion = null;
+        if (dateChooserFechaInscripcion != null) {
+            fechaPublicacion = dateChooserFechaInscripcion.getDate();
+        }
+        java.util.Date fechaLimite = null;
+        if (dateChooserFechaLimite != null) {
+            fechaLimite = dateChooserFechaLimite.getDate();
+        }
+
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "El título de la convocatoria es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldTituloConvocatoria.requestFocus();
+            return;
+        }
+        if (fechaPublicacion == null) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "La fecha de publicación/inscripción es obligatoria.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Puedes añadir más validaciones (ej. fecha límite > fecha publicación)
+
+        Convocatorias nuevaConvocatoria = new Convocatorias();
+        nuevaConvocatoria.setTitulo(titulo);
+        nuevaConvocatoria.setDescripcion(descripcion);
+        nuevaConvocatoria.setFechaPublicacion(fechaPublicacion);
+        nuevaConvocatoria.setFechaLimitePropuestas(fechaLimite); // Puede ser null si es opcional
+
+        if (usuarioActual == null) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Error: No se ha identificado al usuario actual para publicar la convocatoria.", "Error de Usuario", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        nuevaConvocatoria.setIdUsuarioPublica(usuarioActual);
+
+        java.util.Date ahora = new java.util.Date();
+        nuevaConvocatoria.setFechaCreacion(ahora);
+        nuevaConvocatoria.setUltimaModificacion(ahora);
+        // El campo documentoAdjuntoRuta no se está manejando desde esta UI.
+
+        try {
+            ConvocatoriasJpaController controller = new ConvocatoriasJpaController(Conexion.getEMF());
+            controller.create(nuevaConvocatoria);
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Convocatoria '" + nuevaConvocatoria.getTitulo() + "' publicada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarConvocatoriasEnTabla();
+            limpiarCamposFormularioConvocatoria();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Error al publicar la convocatoria: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnPublicarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // --- Obtener el ID de la convocatoria seleccionada ---
+        int filaSeleccionada = tblConvocatorias.getSelectedRow();
+        String idConvocatoriaStr;
+
+        if (filaSeleccionada != -1) {
+            Object idObjeto = tblConvocatorias.getValueAt(filaSeleccionada, 0); // Asumiendo ID en columna 0
+            if (idObjeto == null) {
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "No se pudo obtener el ID de la convocatoria seleccionada de la tabla.", "Error de ID", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            idConvocatoriaStr = idObjeto.toString();
+        } else {
+            // Alternativa: si tienes un txtIdConvocatoriaDialogo no editable
+            // if (txtIdConvocatoriaDialogo != null && !txtIdConvocatoriaDialogo.getText().isEmpty()) {
+            //     idConvocatoriaStr = txtIdConvocatoriaDialogo.getText();
+            // } else {
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Por favor, seleccione una convocatoria de la tabla para modificar.", "Convocatoria no seleccionada", JOptionPane.WARNING_MESSAGE);
+                return;
+            // }
+        }
+        // --- Fin de la obtención del ID ---
+
+        int idConvocatoria;
+        try {
+            idConvocatoria = Integer.parseInt(idConvocatoriaStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "El ID de la convocatoria no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String titulo = txtFieldTituloConvocatoria.getText().trim();
+        String descripcion = taDescripcionConvocatoria.getText().trim();
+        java.util.Date fechaPublicacion = (dateChooserFechaInscripcion != null) ? dateChooserFechaInscripcion.getDate() : null;
+        java.util.Date fechaLimite = (dateChooserFechaLimite != null) ? dateChooserFechaLimite.getDate() : null;
+
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "El título de la convocatoria es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldTituloConvocatoria.requestFocus();
+            return;
+        }
+        if (fechaPublicacion == null) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "La fecha de publicación/inscripción es obligatoria.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        ConvocatoriasJpaController controller = new ConvocatoriasJpaController(Conexion.getEMF());
+        Convocatorias convocatoriaExistente = controller.findConvocatorias(idConvocatoria);
+
+        if (convocatoriaExistente == null) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "No se encontró la convocatoria con ID: " + idConvocatoria, "Convocatoria No Encontrada", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        convocatoriaExistente.setTitulo(titulo);
+        convocatoriaExistente.setDescripcion(descripcion);
+        convocatoriaExistente.setFechaPublicacion(fechaPublicacion);
+        convocatoriaExistente.setFechaLimitePropuestas(fechaLimite);
+        convocatoriaExistente.setUltimaModificacion(new java.util.Date());
+        // idUsuarioPublica no se debería cambiar en una modificación, usualmente.
+        // documentoAdjuntoRuta no se maneja aquí.
+
+        try {
+            controller.edit(convocatoriaExistente);
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Convocatoria '" + convocatoriaExistente.getTitulo() + "' actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarConvocatoriasEnTabla();
+            limpiarCamposFormularioConvocatoria();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Error al actualizar la convocatoria: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarConvocatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarConvocatoriaActionPerformed
+        // --- Obtener el ID de la convocatoria seleccionada ---
+        int filaSeleccionada = tblConvocatorias.getSelectedRow();
+        String idConvocatoriaStr;
+
+        if (filaSeleccionada != -1) {
+            Object idObjeto = tblConvocatorias.getValueAt(filaSeleccionada, 0); // Asumiendo ID en columna 0
+            if (idObjeto == null) {
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "No se pudo obtener el ID de la convocatoria seleccionada de la tabla.", "Error de ID", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            idConvocatoriaStr = idObjeto.toString();
+        } else {
+            // Alternativa: si tienes un txtIdConvocatoriaDialogo no editable
+            // if (txtIdConvocatoriaDialogo != null && !txtIdConvocatoriaDialogo.getText().isEmpty()) {
+            //     idConvocatoriaStr = txtIdConvocatoriaDialogo.getText();
+            // } else {
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Por favor, seleccione una convocatoria de la tabla para eliminar.", "Convocatoria no seleccionada", JOptionPane.WARNING_MESSAGE);
+                return;
+            // }
+        }
+        // --- Fin de la obtención del ID ---
+
+        int idConvocatoria;
+        try {
+            idConvocatoria = Integer.parseInt(idConvocatoriaStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionConvocatorias, "El ID de la convocatoria no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionConvocatorias,
+            "¿Está seguro de que desea eliminar la convocatoria con ID: " + idConvocatoria + "?\nLas notificaciones y eventos asociados podrían desvincularse.",
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            ConvocatoriasJpaController controller = new ConvocatoriasJpaController(Conexion.getEMF());
+            try {
+                // El ConvocatoriasJpaController.destroy() ya maneja la desvinculación de Notificaciones y Eventos
+                // poniendo sus claves foráneas a NULL.
+                controller.destroy(idConvocatoria); 
+
+                cargarConvocatoriasEnTabla();
+                limpiarCamposFormularioConvocatoria();
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Convocatoria eliminada exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NonexistentEntityException ex) {
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "La convocatoria que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            } catch (Exception e) { 
+                JOptionPane.showMessageDialog(DialogGestionConvocatorias, "Ocurrió un error al intentar eliminar la convocatoria: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarConvocatoriaActionPerformed
+
+    private void btnLimpiarConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarConvocatoriasActionPerformed
+        limpiarCamposFormularioConvocatoria();
+    }//GEN-LAST:event_btnLimpiarConvocatoriasActionPerformed
+
+    private void btnLimpiarTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTalleresActionPerformed
+        limpiarCamposFormularioTaller();
+    }//GEN-LAST:event_btnLimpiarTalleresActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -2198,7 +2646,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     private void cargarEventosAsociadosEnComboBox() {
         DefaultComboBoxModel<Eventos> modeloEventos = new DefaultComboBoxModel<>();
-        cboEventoAsociado1.setModel(modeloEventos); // Asignar el modelo primero para limpiar
 
         try {
             EventosJpaController controller = new EventosJpaController(Conexion.getEMF());
@@ -2223,20 +2670,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtFieldNombreTaller.setText("");
         txtDescripcionTaller.setText(""); // Suponiendo que es tu JTextArea
         txtFieldMaterial_Req.setText("");
-        //txtFieldFecha_Hora.setText(""); // Si este fuera el campo de fecha y hora
-        if(dateFieldFechaTaller != null) dateFieldFechaTaller.setDate(null); // Si usas JDateChooser
-
-        //cboCupoMaximo.setValue(0); // Para JSpinner, si lo implementas
-        if (cboCupoMaximo != null) cboCupoMaximo.setValue(0); // Asumiendo que jSpinner1 es el nombre del componente en VentanaPrincipal
-
-        txtFieldDuracion.setText(""); // Si implementas duración
+        txtManualRuta.setText("");
+        
 
         if (cboPonente.getItemCount() > 0) {
             cboPonente.setSelectedIndex(0); // O -1 si el primer elemento no es un placeholder válido
         }
-        if (cboEventoAsociado1.getItemCount() > 0) {
-            cboEventoAsociado1.setSelectedIndex(0);
-        }
+        
         if (cboEstadoTaller2.getItemCount() > 0) { // Suponiendo que cboEstadoTaller2 es el JComboBox de estado
             cboEstadoTaller2.setSelectedIndex(0);
         }
@@ -2263,7 +2703,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
 
-    
+    //Manipilación de DialogGestionEventos
+    private void cargarConvocatoriasEnTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblConvocatorias.getModel();
+        modelo.setRowCount(0); // Limpiar tabla existente
+
+        ConvocatoriasJpaController controller = new ConvocatoriasJpaController(Conexion.getEMF());
+        this.listaConvocatoriasCargadas = controller.findConvocatoriasEntities();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato para mostrar fechas
+
+        if (this.listaConvocatoriasCargadas != null) {
+            for (Convocatorias conv : this.listaConvocatoriasCargadas) {
+                Object[] fila = new Object[]{
+                    conv.getIdConvocatoria(),
+                    conv.getTitulo(),
+                    conv.getFechaPublicacion() != null ? sdf.format(conv.getFechaPublicacion()) : "N/A",
+                    conv.getFechaLimitePropuestas() != null ? sdf.format(conv.getFechaLimitePropuestas()) : "N/A",
+                    conv.getIdUsuarioPublica() != null ? conv.getIdUsuarioPublica().getNombre() : "N/A"
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+        private void limpiarCamposFormularioConvocatoria() {
+        // if (txtIdConvocatoriaDialogo != null) {
+        //     txtIdConvocatoriaDialogo.setText("");
+        // }
+        txtFieldTituloConvocatoria.setText("");
+        taDescripcionConvocatoria.setText("");
+        if (dateChooserFechaInscripcion != null) {
+            dateChooserFechaInscripcion.setDate(null);
+        }
+        if (dateChooserFechaLimite != null) {
+            dateChooserFechaLimite.setDate(null);
+        }
+        // Limpia cualquier otro campo que hayas añadido para la convocatoria
+    }
     /**
      * @param args the command line arguments
      */
@@ -2315,6 +2791,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel TITULO6;
     private javax.swing.JLabel TITULO7;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnActualizarTaller;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarTaller;
     private javax.swing.JButton btnDescargarEvidencia;
@@ -2323,29 +2800,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnEEliminar;
     private javax.swing.JButton btnELimpiar;
     private javax.swing.JButton btnEModificar;
-    private javax.swing.JButton btnEditarTaller;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarConvocatoria;
     private javax.swing.JButton btnEliminarEvidencia;
     private javax.swing.JButton btnElliminarTaller;
     private javax.swing.JButton btnInscribirme;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimpiarConvocatorias;
+    private javax.swing.JButton btnLimpiarTalleres;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPublicar;
     private javax.swing.JButton btnSeleccionarArchivo;
     private javax.swing.JButton btnSubirEvidencia;
-    private javax.swing.JButton btnVerComentarios;
     private com.toedter.calendar.JCalendar calendario;
-    private javax.swing.JSpinner cboCupoMaximo;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JLabel cboEstadoTaller;
     private javax.swing.JComboBox<String> cboEstadoTaller2;
-    private javax.swing.JComboBox<String> cboEventoAsociado;
-    private javax.swing.JComboBox<modelo.Eventos> cboEventoAsociado1;
     private javax.swing.JComboBox<modelo.Usuarios> cboPonente;
-    private javax.swing.JComboBox<String> cboTallerAsociado;
     private javax.swing.JComboBox<String> cboURol;
-    private com.toedter.calendar.JDateChooser dateFieldFechaTaller;
+    private com.toedter.calendar.JDateChooser dateChooserFechaInscripcion;
+    private com.toedter.calendar.JDateChooser dateChooserFechaLimite;
     private javax.swing.JLabel encabezado;
     private javax.swing.JLabel encabezado1;
     private javax.swing.JLabel encabezado2;
@@ -2354,8 +2828,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -2365,7 +2837,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2427,29 +2898,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tblTalleresDisponibles;
     private javax.swing.JTable ttEventos;
     private javax.swing.JTable ttUsuarios;
-    private javax.swing.JLabel txtCupoMaximo;
     private javax.swing.JTextArea txtDescripcionTaller;
-    private javax.swing.JLabel txtDuracion;
     private javax.swing.JTextArea txtEDescripcion;
     private javax.swing.JTextField txtEFin;
     private javax.swing.JTextField txtEID;
     private javax.swing.JTextField txtEInicio;
     private javax.swing.JTextField txtENombre;
     private javax.swing.JLabel txtFecha_Hora;
-    private javax.swing.JTextField txtFieldDuracion;
-    private javax.swing.JTextField txtFieldFechaInscripción;
-    private javax.swing.JTextField txtFieldFehcaLímite;
     private javax.swing.JTextField txtFieldMaterial_Req;
     private javax.swing.JTextField txtFieldNombreTaller;
-    private javax.swing.JTextField txtFieldPublicoObjetivo;
     private javax.swing.JTextField txtFieldTituloConvocatoria;
     private javax.swing.JTextField txtFieldTituloEvidencia;
     private javax.swing.JTextField txtLugar;
+    private javax.swing.JTextField txtManualRuta;
     private javax.swing.JLabel txtMaterialReq;
     private javax.swing.JLabel txtNombreTaller;
     private javax.swing.JLabel txtNombreTaller1;
     private javax.swing.JLabel txtNombreTaller2;
-    private javax.swing.JLabel txtNombreTaller3;
     private javax.swing.JLabel txtNombreTaller4;
     private javax.swing.JLabel txtNombreTaller5;
     private javax.swing.JLabel txtNombreTaller6;
