@@ -1,7 +1,4 @@
-from pathlib import Path
 
-# Contenido del README en formato Markdown
-markdown_content = """
 # 📚 AcademicPlus
 
 Sistema web centralizado para la gestión, documentación y seguimiento de eventos académicos y actividades complementarias en instituciones educativas.
