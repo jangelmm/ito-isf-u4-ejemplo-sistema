@@ -294,13 +294,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblRol = new javax.swing.JLabel();
         lblNumControl = new javax.swing.JLabel();
         menuBarraPrincipal = new javax.swing.JMenuBar();
-        menuArchivo = new javax.swing.JMenu();
         menuGestion = new javax.swing.JMenu();
         opcionUsuarios = new javax.swing.JMenuItem();
         opcionEventos = new javax.swing.JMenuItem();
         opcionTalleres = new javax.swing.JMenuItem();
         opcionConvocatorias = new javax.swing.JMenuItem();
-        menuReportes = new javax.swing.JMenu();
         menuInscripcion = new javax.swing.JMenu();
         opcionInscripcion = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
@@ -1521,9 +1519,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelGeneral.add(panelEstatus);
 
-        menuArchivo.setText("Archivo");
-        menuBarraPrincipal.add(menuArchivo);
-
         menuGestion.setText("Gestión");
 
         opcionUsuarios.setText("Usuarios");
@@ -1559,9 +1554,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuGestion.add(opcionConvocatorias);
 
         menuBarraPrincipal.add(menuGestion);
-
-        menuReportes.setText("Reportes");
-        menuBarraPrincipal.add(menuReportes);
 
         menuInscripcion.setText("Inscripción");
 
@@ -1632,7 +1624,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
         // TODO add your handling code here:
         DialogGestionUsuarios.setVisible(true);
-        DialogGestionUsuarios.setSize(1000,500);
+        DialogGestionUsuarios.setSize(1000,600);
         DialogGestionUsuarios.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionUsuariosActionPerformed
 
@@ -1673,7 +1665,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
         // TODO add your handling code here:
         DialogGestionEventos.setVisible(true);
-        DialogGestionEventos.setSize(1000, 500);
+        DialogGestionEventos.setSize(1000, 600);
         DialogGestionEventos.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionEventosActionPerformed
 
@@ -2040,14 +2032,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
         DialogGestionTalleres.pack();
         DialogGestionTalleres.setVisible(true);
-        DialogGestionTalleres.setSize(1000, 500);
+        DialogGestionTalleres.setSize(1000, 600);
         DialogGestionTalleres.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionTalleresActionPerformed
 
     private void opcionConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionConvocatoriasActionPerformed
         
         DialogGestionConvocatorias.setVisible(true);
-        DialogGestionConvocatorias.setSize(1000,500);
+        DialogGestionConvocatorias.setSize(1000,600);
         DialogGestionConvocatorias.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionConvocatoriasActionPerformed
 
@@ -3915,12 +3907,10 @@ private void cargarTalleresParaAsignacionComboBox() {
     private javax.swing.JLabel lblRolAsignar;
     private javax.swing.JLabel lblTablaAsignaciones;
     private javax.swing.JLabel lblTallerAsignar;
-    private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuBar menuBarraPrincipal;
     private javax.swing.JMenu menuGestion;
     private javax.swing.JMenu menuInscripcion;
-    private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuSalir;
     private javax.swing.JMenuItem opcionAyuda;
     private javax.swing.JMenuItem opcionCerrarSesion;

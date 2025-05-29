@@ -1873,11 +1873,6 @@
     </Container>
     <Menu class="javax.swing.JMenuBar" name="menuBarraPrincipal">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuArchivo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Archivo"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="menuGestion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gesti&#xf3;n"/>
@@ -1916,11 +1911,6 @@
               </Events>
             </MenuItem>
           </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="menuReportes">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Reportes"/>
-          </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuInscripcion">
           <Properties>
