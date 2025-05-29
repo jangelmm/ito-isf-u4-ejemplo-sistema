@@ -71,7 +71,6 @@ Sistema web centralizado para la gestión, documentación y seguimiento de event
 
 # Agregar la continuación del contenido del README en Markdown desde la sección interrumpida
 
-additional_content = """
 ---
 
 ## 🧬 Diseño de la Interacción del Sistema
