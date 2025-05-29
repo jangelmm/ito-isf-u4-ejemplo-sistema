@@ -1,3 +1,136 @@
+from pathlib import Path
+
+# Contenido del README en formato Markdown
+markdown_content = """
+# 📚 AcademicPlus
+
+Sistema web centralizado para la gestión, documentación y seguimiento de eventos académicos y actividades complementarias en instituciones educativas.
+
+---
+
+## 🎯 Descripción del Proyecto
+
+**AcademicPlus** es una plataforma web dirigida a instituciones educativas, enfocada en la organización, inscripción y documentación de talleres y eventos académicos. Resuelve la dispersión de la información y los procesos manuales mediante digitalización y automatización.
+
+---
+
+## 💡 Propósito del Proyecto
+
+- Centralizar la información de talleres y eventos académicos.
+- Optimizar el proceso de inscripción y documentación.
+- Facilitar la consulta y generación de reportes.
+
+---
+
+## 🌟 Características Clave
+
+- Registro y gestión de usuarios con roles.
+- Creación, revisión y aprobación de talleres.
+- Registro de evidencias (fotos, videos, reconocimientos).
+- Registro y consulta de bitácoras de eventos.
+- Generación automática de reportes.
+- Visualización de calendario de eventos.
+- Notificaciones automatizadas.
+- Exportación de datos a Google Drive.
+
+---
+
+## 🧱 Arquitectura del Proyecto
+
+### Modelo
+- Clases JPA: `Usuario`, `Taller`, `Evento`, `Evidencia`, `Bitácora`, `Reporte`, `Convocatoria`, `Notificación`.
+- Métodos: persistencia de datos, vinculación con otras entidades, validaciones.
+
+### Vista
+- Interfaces diseñadas en [Visily](https://app.visily.ai/projects/b7f8607b-8d75-4ca5-a622-8b8ff90dc57c/boards/1767835).
+- Interfaz gráfica interactiva con formularios, calendarios y visores de documentos.
+
+### Controlador
+- Clases de control por funcionalidad: alta/baja de usuarios, carga de evidencias, reportes, aprobación de talleres.
+- Control de sesiones y validación de permisos por rol.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Lenguaje Backend:** Java
+- **Frameworks:** Spring Boot / JPA
+- **Base de Datos:** MySQL
+- **Frontend:** HTML, CSS, JavaScript
+- **ORM:** Hibernate / JPA
+- **Repositorio de UI:** [Enlace a Visily](https://app.visily.ai/projects/b7f8607b-8d75-4ca5-a622-8b8ff90dc57c)
+- **APIs:** Google Drive API para respaldo de datos
+
+---
+
+## ⚙️ Instrucciones para Compilar y Ejecutar
+
+### Prerrequisitos
+
+- JDK 17 o superior
+- MySQL Server
+- IDE como IntelliJ IDEA o NetBeans
+- Maven
+
+# Agregar la continuación del contenido del README en Markdown desde la sección interrumpida
+
+additional_content = """
+---
+
+## 🧬 Diseño de la Interacción del Sistema
+
+- La interacción está basada en historias de usuario organizadas por épicas.
+- Se utiliza el patrón MVC (Modelo-Vista-Controlador).
+- Cada historia cuenta con su propio flujo de uso modelado en diagramas de secuencia.
+
+## 🧾 Historias de Usuario
+
+Cada historia de usuario está documentada con:
+- **Identificador**, **Nombre**, **Iteración**, **Peso**
+- **Descripción**, **Valor/Aportación**, **Tareas**, **Pruebas de Aceptación**
+
+Puedes consultar todas las historias detalladas en la carpeta `/docs/historias_de_usuario/` o en la sección correspondiente de la documentación del proyecto.
+
+## 🧱 Diseño Detallado de Clases
+
+Las clases del sistema están agrupadas por épicas funcionales y diseñadas con base en fichas CRC. Cada clase incluye:
+
+- Atributos (tipo y visibilidad)
+- Métodos (parámetros, retorno y visibilidad)
+- Relaciones UML y multiplicidad
+
+Diagramas disponibles en `/design/diagrams/clases.pdf`.
+
+## 🔁 Diagramas de Secuencia
+
+Los diagramas de secuencia ilustran la interacción de objetos para cada funcionalidad clave:
+
+- Autenticar Usuario
+- Gestionar Taller
+- Aprobar Taller
+- Gestionar Evento
+- Subir Evidencia
+- Generar Reporte
+- Notificar Usuario
+- Actualizar Perfil
+- Publicar Convocatoria
+- Asignar Talleristas
+
+Disponibles en `/design/diagrams/`.
+
+## 🧪 Pruebas de Aceptación
+
+Cada historia incluye pruebas que validan la funcionalidad desarrollada. Las pruebas abarcan:
+
+- Creación y validación de usuarios
+- Carga y consulta de evidencias
+- Flujo de eventos y calendario
+- Exportación y seguridad de datos
+
+
+
+ 
+
 ## Diseño de la Base de Datos
 
 ```mermaid
