@@ -167,9 +167,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtUNombre = new javax.swing.JTextField();
         passContrasena = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
         encabezado1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ttUsuarios = new javax.swing.JTable();
+        jSeparator8 = new javax.swing.JSeparator();
         DialogGestionEventos = new javax.swing.JDialog();
         encabezado2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -199,6 +202,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEID = new javax.swing.JTextField();
         btnEventoSubirEvidencia = new javax.swing.JButton();
         btnGenerarReporte = new javax.swing.JButton();
+        jSeparator11 = new javax.swing.JSeparator();
+        jSeparator13 = new javax.swing.JSeparator();
+        jSeparator10 = new javax.swing.JSeparator();
         DialogGestionTalleres = new javax.swing.JDialog();
         txtNombreTaller6 = new javax.swing.JLabel();
         txtFieldNombreTaller = new javax.swing.JTextField();
@@ -238,11 +244,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarConvocatoria = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         TITULO1 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         dateChooserFechaLimite = new com.toedter.calendar.JDateChooser();
         dateChooserFechaInscripcion = new com.toedter.calendar.JDateChooser();
         btnLimpiarConvocatorias = new javax.swing.JButton();
+        jSeparator12 = new javax.swing.JSeparator();
         DialogInscripcionEventoTaller = new javax.swing.JDialog();
         btnGuardarAsignacion = new javax.swing.JButton();
         lblEventoAsignar = new javax.swing.JLabel();
@@ -260,6 +266,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnLimpiarFormAsignacion = new javax.swing.JButton();
         lblTablaAsignaciones = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
         DialogGestionEvidencias = new javax.swing.JDialog();
         jLabel14 = new javax.swing.JLabel();
         TITULO2 = new javax.swing.JLabel();
@@ -303,6 +310,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         opcionSalir = new javax.swing.JMenuItem();
 
         DialogGestionUsuarios.setTitle("Gestión de usuarios");
+        DialogGestionUsuarios.setResizable(false);
+        DialogGestionUsuarios.setSize(new java.awt.Dimension(1000, 500));
 
         jPanel1.setToolTipText("");
 
@@ -334,6 +343,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar_usuario.png"))); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,6 +351,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar-flecha.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +359,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,6 +367,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clean.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,79 +389,100 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel9.setText("Email:");
 
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario_muestra.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(encabezado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtUEmail)
-                        .addComponent(cboURol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUID, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(txtUNumControl)
-                        .addComponent(txtUNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(encabezado))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel12)
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passContrasena)
+                            .addComponent(txtUNombre)
+                            .addComponent(txtUNumControl)
+                            .addComponent(cboURol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtUEmail)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtUID, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnAgregar)
-                .addGap(18, 18, 18)
-                .addComponent(btnActualizar)
-                .addGap(21, 21, 21)
-                .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(encabezado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboURol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUNombre))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtUEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cboURol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(43, 43, 43)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLimpiar)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnAgregar)
+                            .addComponent(btnEliminar))
+                        .addGap(15, 15, 15))))
         );
 
         encabezado1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -472,28 +506,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionUsuariosLayout.setHorizontalGroup(
             DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
                         .addComponent(encabezado1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                        .addGap(15, 15, 15))
+                    .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
+                        .addGroup(DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+                            .addComponent(jSeparator8))
+                        .addContainerGap(26, Short.MAX_VALUE))))
         );
         DialogGestionUsuariosLayout.setVerticalGroup(
             DialogGestionUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(encabezado1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
+
+        DialogGestionEventos.setTitle("Gestión de eventos");
+        DialogGestionEventos.setResizable(false);
 
         encabezado2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         encabezado2.setText("Lista de eventos");
@@ -530,6 +574,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel20.setText("Lugar:");
 
+        btnECrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         btnECrear.setText("Crear");
         btnECrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -537,6 +582,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar-flecha.png"))); // NOI18N
         btnEModificar.setText("Modificar");
         btnEModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -544,6 +590,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnEEliminar.setText("Eliminar");
         btnEEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -551,6 +598,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnELimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clean.png"))); // NOI18N
         btnELimpiar.setText("Limpiar");
         btnELimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -579,6 +627,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         txtEID.setEditable(false);
 
+        btnEventoSubirEvidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/up.png"))); // NOI18N
         btnEventoSubirEvidencia.setText("Subir Evidencia");
         btnEventoSubirEvidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -586,152 +635,176 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnGenerarReporte.setText("GenerarReporte");
+        btnGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/exportar_pdf.png"))); // NOI18N
+        btnGenerarReporte.setText("Generar Reporte");
         btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarReporteActionPerformed(evt);
             }
         });
 
+        jSeparator13.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addGap(131, 131, 131)
+                        .addComponent(btnECrear, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnEventoSubirEvidencia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator11, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(120, 120, 120)
-                                .addComponent(btnECrear, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(btnEModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(btnEEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtEID, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtLugar)
+                                            .addComponent(txtENombre, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(12, 12, 12)))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtLugar, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                                    .addComponent(txtEID)
-                                    .addComponent(txtENombre)
-                                    .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEInicio)
-                                    .addComponent(txtEFin)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnELimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(btnEventoSubirEvidencia)
-                                .addGap(52, 52, 52)
-                                .addComponent(btnGenerarReporte))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(encabezado4)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(48, 48, 48)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtEInicio)
+                                            .addComponent(txtEFin)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(79, 79, 79)))))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(encabezado4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(encabezado4)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtEID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtENombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtENombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))
-                            .addComponent(txtLugar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtEInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
+                                .addGap(39, 39, 39)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnECrear)
-                    .addComponent(btnEModificar)
-                    .addComponent(btnEEliminar)
-                    .addComponent(btnELimpiar)
-                    .addComponent(btnEventoSubirEvidencia)
-                    .addComponent(btnGenerarReporte))
-                .addGap(16, 16, 16))
+                                .addComponent(txtEFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEEliminar)
+                            .addComponent(btnELimpiar)
+                            .addComponent(btnEventoSubirEvidencia)
+                            .addComponent(btnGenerarReporte)
+                            .addComponent(btnEModificar)
+                            .addComponent(btnECrear))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout DialogGestionEventosLayout = new javax.swing.GroupLayout(DialogGestionEventos.getContentPane());
         DialogGestionEventos.getContentPane().setLayout(DialogGestionEventosLayout);
         DialogGestionEventosLayout.setHorizontalGroup(
             DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogGestionEventosLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEventosLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(DialogGestionEventosLayout.createSequentialGroup()
-                        .addComponent(encabezado2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(DialogGestionEventosLayout.createSequentialGroup()
+                        .addGroup(DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator10)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionEventosLayout.createSequentialGroup()
+                                .addComponent(encabezado2)
+                                .addGap(374, 374, 374))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE))
+                        .addGap(14, 14, 14))))
         );
         DialogGestionEventosLayout.setVerticalGroup(
             DialogGestionEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionEventosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(3, 3, 3)
+                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addComponent(encabezado2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
+        DialogGestionTalleres.setTitle("Gestión de talleres");
+        DialogGestionTalleres.setResizable(false);
+
         txtNombreTaller6.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller6.setText("Nombre del taller: ");
+        txtNombreTaller6.setText("Nombre del Taller: ");
 
         txtFieldNombreTaller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -783,7 +856,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane9.setViewportView(tblTalleres);
 
         cboEstadoTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        cboEstadoTaller.setText("Estado Taller:");
+        cboEstadoTaller.setText("Estado del Taller:");
 
         cboEstadoTaller2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "APROBADO", "EN_REVISION_DOCENTE", "REQUIERE_MODIFICACION", "PENDIENTE_PROPUESTA" }));
         cboEstadoTaller2.addActionListener(new java.awt.event.ActionListener() {
@@ -798,6 +871,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnActualizarTaller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar-flecha.png"))); // NOI18N
         btnActualizarTaller.setText("Actualizar Taller");
         btnActualizarTaller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -805,6 +879,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarTaller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         btnAgregarTaller.setText("Agregar Taller");
         btnAgregarTaller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -812,6 +887,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnElliminarTaller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnElliminarTaller.setText("Eliminar Taller");
         btnElliminarTaller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -822,6 +898,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtFecha_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         txtFecha_Hora.setText("Ruta de Anexos:");
 
+        btnLimpiarTalleres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clean.png"))); // NOI18N
         btnLimpiarTalleres.setText("Limpiar");
         btnLimpiarTalleres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -833,63 +910,60 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionTalleres.getContentPane().setLayout(DialogGestionTalleresLayout);
         DialogGestionTalleresLayout.setHorizontalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                .addGap(343, 343, 343)
-                .addComponent(TITULO4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btnAgregarTaller)
-                        .addGap(119, 119, 119)
-                        .addComponent(btnActualizarTaller)
-                        .addGap(114, 114, 114)
-                        .addComponent(btnLimpiarTalleres)
-                        .addGap(112, 112, 112)
-                        .addComponent(btnElliminarTaller)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TITULO4)
+                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO5)
                             .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
                                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TITULO5)
-                                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                            .addComponent(txtMaterialReq)
-                                            .addGap(76, 76, 76)
-                                            .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtNombreTaller6)
-                                                .addComponent(txtFecha_Hora))
-                                            .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                                    .addGap(81, 81, 81)
-                                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createSequentialGroup()
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                                        .addComponent(jLabel18)
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
                                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
                                         .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel19)
-                                            .addComponent(cboEstadoTaller))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cboEstadoTaller2, 0, 391, Short.MAX_VALUE)
-                                            .addComponent(cboPonente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(0, 1, Short.MAX_VALUE))
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))))
+                                            .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                        .addComponent(txtMaterialReq, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                .addComponent(cboEstadoTaller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboEstadoTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)))
                 .addGap(18, 18, 18))
+            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator2)
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addComponent(btnAgregarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnActualizarTaller)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnLimpiarTalleres, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnElliminarTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         DialogGestionTalleresLayout.setVerticalGroup(
             DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -898,46 +972,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(TITULO5)
                 .addGap(25, 25, 25)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                            .addGap(65, 65, 65)
-                            .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                                .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)))
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cboEstadoTaller, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboEstadoTaller2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)))
+                    .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboPonente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(34, 34, 34)
-                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboEstadoTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cboEstadoTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtMaterialReq, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                                .addComponent(txtFecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtManualRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(DialogGestionTalleresLayout.createSequentialGroup()
+                                .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtFieldNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreTaller6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(76, 76, 76)))
+                        .addGap(23, 23, 23)
+                        .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFieldMaterial_Req, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaterialReq, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DialogGestionTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarTaller)
-                    .addComponent(btnActualizarTaller)
                     .addComponent(btnElliminarTaller)
-                    .addComponent(btnLimpiarTalleres))
-                .addGap(21, 21, 21)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addComponent(TITULO4)
+                    .addComponent(btnLimpiarTalleres)
+                    .addComponent(btnActualizarTaller))
                 .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TITULO4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(27, 27, 27))
         );
+
+        DialogGestionConvocatorias.setTitle("Gestión de convocatorias");
+        DialogGestionConvocatorias.setResizable(false);
 
         TITULO.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO.setText("Gestión de Convocatorias");
@@ -961,7 +1043,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane4.setViewportView(tblConvocatorias);
 
         txtNombreTaller.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller.setText("Título convocatoria:");
+        txtNombreTaller.setText("Título de la convocatoria:");
 
         txtFieldTituloConvocatoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -977,8 +1059,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane5.setViewportView(taDescripcionConvocatoria);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        jLabel11.setText("Descripción convocatoria:");
+        jLabel11.setText("Descripción de la convocatoria:");
 
+        btnPublicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btnPublicar.setText("Publicar/Guardar");
         btnPublicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -987,8 +1070,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         txtNombreTaller1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        txtNombreTaller1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtNombreTaller1.setText("Fecha límite:");
 
+        btnEliminarConvocatoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnEliminarConvocatoria.setText("Eliminar Convocatoria");
         btnEliminarConvocatoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -996,6 +1081,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar-flecha.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1006,6 +1092,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         TITULO1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO1.setText("Lista de Convocatorias Existentes");
 
+        btnLimpiarConvocatorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clean.png"))); // NOI18N
         btnLimpiarConvocatorias.setText("Limpiar");
         btnLimpiarConvocatorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1018,92 +1105,90 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DialogGestionConvocatoriasLayout.setHorizontalGroup(
             DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiarConvocatorias, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator12, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtFieldTituloConvocatoria)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreTaller2))
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(71, 71, 71))
+            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                 .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TITULO)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                            .addGap(29, 29, 29)
-                                            .addComponent(btnPublicar)
-                                            .addGap(131, 131, 131)
-                                            .addComponent(btnModificar)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                                            .addComponent(btnLimpiarConvocatorias)
-                                            .addGap(83, 83, 83)
-                                            .addComponent(btnEliminarConvocatoria))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel11)
-                                                .addComponent(txtNombreTaller))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtNombreTaller1)
-                                                .addComponent(txtNombreTaller2))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                                                .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                .addGap(282, 282, 282)
-                                .addComponent(TITULO1)))
-                        .addGap(0, 60, Short.MAX_VALUE))
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator5))
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addComponent(TITULO))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TITULO1)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         DialogGestionConvocatoriasLayout.setVerticalGroup(
             DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(TITULO)
-                .addGap(44, 44, 44)
-                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
-                        .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(59, 59, 59)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPublicar)
-                    .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnModificar)
-                        .addComponent(btnEliminarConvocatoria)
-                        .addComponent(btnLimpiarConvocatorias)))
+                .addComponent(txtNombreTaller)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(dateChooserFechaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombreTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(93, 93, 93)
+                        .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateChooserFechaLimite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombreTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(DialogGestionConvocatoriasLayout.createSequentialGroup()
+                        .addComponent(txtFieldTituloConvocatoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(TITULO1)
+                .addGroup(DialogGestionConvocatoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPublicar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnLimpiarConvocatorias)
+                    .addComponent(btnEliminarConvocatoria))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TITULO1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
+        DialogInscripcionEventoTaller.setResizable(false);
+
+        btnGuardarAsignacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btnGuardarAsignacion.setText("Guardar Asignación");
         btnGuardarAsignacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1112,7 +1197,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         lblEventoAsignar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblEventoAsignar.setText("Seleccionar Evento:");
+        lblEventoAsignar.setText("Seleccionar Evento");
 
         tblListaAsignaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1129,6 +1214,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         TITULO7.setText("Eventos Disponibles:");
 
+        btnEliminarAsignacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnEliminarAsignacion.setText("Eliminar Asignación Seleccionada");
         btnEliminarAsignacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1149,89 +1235,101 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiarFormAsignacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clean.png"))); // NOI18N
         btnLimpiarFormAsignacion.setText("Limpiar Asignación");
 
+        lblTablaAsignaciones.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTablaAsignaciones.setText("Asignaciones Existentes de Instructores a Talleres/Eventos");
 
         javax.swing.GroupLayout DialogInscripcionEventoTallerLayout = new javax.swing.GroupLayout(DialogInscripcionEventoTaller.getContentPane());
         DialogInscripcionEventoTaller.getContentPane().setLayout(DialogInscripcionEventoTallerLayout);
         DialogInscripcionEventoTallerLayout.setHorizontalGroup(
             DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminarAsignacion))
-                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane11)
-                            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTablaAsignaciones)
-                                    .addComponent(lblEventoAsignar)
-                                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblInstructorAsignar)
-                                            .addComponent(TITULO7))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cboInstructorParaAsignar, 0, 209, Short.MAX_VALUE)
-                                            .addComponent(cboEventoParaAsignar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(34, 34, 34)
-                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblTallerAsignar)
-                                            .addComponent(lblRolAsignar))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cboTallerParaAsignar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtRolAsignadoEnDialog, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnGuardarAsignacion)
-                                            .addComponent(btnLimpiarFormAsignacion))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(17, 17, 17))
             .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 1090, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TITULO7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblInstructorAsignar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboEventoParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboInstructorParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblRolAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTallerAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtRolAsignadoEnDialog)
+                            .addComponent(cboTallerParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator4))
+                .addGap(57, 57, 57))
+            .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblEventoAsignar))
+                    .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblTablaAsignaciones)
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                                .addComponent(jSeparator7)))
+                        .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btnEliminarAsignacion)))
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addGap(332, 332, 332)
+                        .addComponent(btnGuardarAsignacion)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiarFormAsignacion)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DialogInscripcionEventoTallerLayout.setVerticalGroup(
             DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
                 .addComponent(lblEventoAsignar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TITULO7)
-                            .addComponent(cboEventoParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTallerAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTallerParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblInstructorAsignar)
-                            .addComponent(cboInstructorParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtRolAsignadoEnDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRolAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTallerAsignar)
-                            .addComponent(cboTallerParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGuardarAsignacion))
-                        .addGap(27, 27, 27)
-                        .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblRolAsignar)
-                            .addComponent(txtRolAsignadoEnDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiarFormAsignacion))))
-                .addGap(30, 30, 30)
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(lblTablaAsignaciones)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TITULO7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(lblInstructorAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DialogInscripcionEventoTallerLayout.createSequentialGroup()
+                        .addComponent(cboEventoParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(cboInstructorParaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(DialogInscripcionEventoTallerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarAsignacion)
+                    .addComponent(btnLimpiarFormAsignacion))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTablaAsignaciones)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnEliminarAsignacion)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
+
+        DialogGestionEvidencias.setTitle("Gestión de evidencias");
+        DialogGestionEvidencias.setResizable(false);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         jLabel14.setText("Tipo de Evidencia:");
@@ -1247,13 +1345,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre del archivo", "Tipo de evidencia", "Decripción", "Fecha de subida"
             }
         ));
         jScrollPane6.setViewportView(tblEvidencias);
 
         txtNombreTaller5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
-        txtNombreTaller5.setText("Descripción");
+        txtNombreTaller5.setText("Descripción:");
 
         TITULO3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TITULO3.setText("Evidencias Subidas");
@@ -1270,6 +1368,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSubirEvidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/up.png"))); // NOI18N
         btnSubirEvidencia.setText("Subir Evidencia");
         btnSubirEvidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1277,6 +1376,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnDescargarEvidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/download.png"))); // NOI18N
         btnDescargarEvidencia.setText("Descargar Evidencia");
         btnDescargarEvidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1284,6 +1384,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarEvidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/papelera.png"))); // NOI18N
         btnEliminarEvidencia.setText("Eliminar Evidencia");
         btnEliminarEvidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1293,6 +1394,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         cobTipoEvidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FOTO", "VIDEO", "DOCUMENTO_GENERAL", "LISTA_ASISTENCIA", "RECONOCIMIENTO_PDF", "OTRO" }));
 
+        SeleccionarArchivoEvidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         SeleccionarArchivoEvidencia.setText("Seleccionar Archivo");
         SeleccionarArchivoEvidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1308,36 +1410,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TITULO3)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogGestionEvidenciasLayout.createSequentialGroup()
-                                .addGap(417, 417, 417)
-                                .addComponent(btnEliminarEvidencia)))
-                        .addGap(0, 35, Short.MAX_VALUE))
-                    .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
                         .addComponent(TITULO2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(766, Short.MAX_VALUE))
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addComponent(txtNombreTaller5)
-                        .addGap(47, 47, 47)
-                        .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
-                        .addComponent(jLabel14)
+                        .addGap(43, 43, 43)
+                        .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))))
+                        .addComponent(jLabel14)
+                        .addGap(12, 12, 12)
+                        .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(SeleccionarArchivoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnSubirEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(btnDescargarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnEliminarEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(SeleccionarArchivoEvidencia)
-                        .addGap(92, 92, 92)
-                        .addComponent(btnSubirEvidencia)
-                        .addGap(91, 91, 91)
-                        .addComponent(btnDescargarEvidencia)))
+                        .addGap(18, 18, 18)
+                        .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TITULO3)
+                            .addComponent(jSeparator6)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)))
+                    .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         DialogGestionEvidenciasLayout.setVerticalGroup(
@@ -1345,27 +1450,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(DialogGestionEvidenciasLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(TITULO2)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(26, 26, 26)
+                    .addComponent(txtNombreTaller5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cobTipoEvidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(TITULO3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addGroup(DialogGestionEvidenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SeleccionarArchivoEvidencia)
-                    .addComponent(btnSubirEvidencia)
                     .addComponent(btnDescargarEvidencia)
-                    .addComponent(btnEliminarEvidencia))
-                .addGap(223, 223, 223)
-                .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(btnSubirEvidencia)
+                    .addComponent(btnEliminarEvidencia)
+                    .addComponent(SeleccionarArchivoEvidencia))
+                .addGap(18, 18, 18)
+                .addComponent(fileChooserElegirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1520,14 +1625,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void opcionInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionInscripcionActionPerformed
         DialogInscripcionEventoTaller.setVisible(true);
-        DialogInscripcionEventoTaller.setSize(1500, 650);
+        DialogInscripcionEventoTaller.setSize(1000, 500);
         DialogInscripcionEventoTaller.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionInscripcionActionPerformed
 
     private void opcionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionUsuariosActionPerformed
         // TODO add your handling code here:
         DialogGestionUsuarios.setVisible(true);
-        DialogGestionUsuarios.setSize(850,550);
+        DialogGestionUsuarios.setSize(1000,500);
         DialogGestionUsuarios.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionUsuariosActionPerformed
 
@@ -1568,7 +1673,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void opcionEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEventosActionPerformed
         // TODO add your handling code here:
         DialogGestionEventos.setVisible(true);
-        DialogGestionEventos.setSize(1050, 550);
+        DialogGestionEventos.setSize(1000, 500);
         DialogGestionEventos.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionEventosActionPerformed
 
@@ -1932,23 +2037,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripciónActionPerformed
 
-    private void txtFieldNombreTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreTallerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldNombreTallerActionPerformed
-
-    private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
-
     private void opcionTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionTalleresActionPerformed
+        DialogGestionTalleres.pack();
         DialogGestionTalleres.setVisible(true);
-        DialogGestionTalleres.setSize(1050, 650);
+        DialogGestionTalleres.setSize(1000, 500);
         DialogGestionTalleres.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionTalleresActionPerformed
 
     private void opcionConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionConvocatoriasActionPerformed
+        
         DialogGestionConvocatorias.setVisible(true);
-        DialogGestionConvocatorias.setSize(950,550);
+        DialogGestionConvocatorias.setSize(1000,500);
         DialogGestionConvocatorias.setLocationRelativeTo(this);
     }//GEN-LAST:event_opcionConvocatoriasActionPerformed
 
@@ -2053,353 +2152,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEEliminarActionPerformed
-
-    private void cboEstadoTaller2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoTaller2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboEstadoTaller2ActionPerformed
-
-    private void btnAgregarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTallerActionPerformed
-        // 1. Validar campos obligatorios
-        String nombreTaller = txtFieldNombreTaller.getText().trim();
-        if (nombreTaller.isEmpty()) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
-            txtFieldNombreTaller.requestFocus();
-            return;
-        }
-
-        // Validación para el ponente
-        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
-            // Podrías tener un item placeholder como "Seleccione un ponente..." que sea un String o un Usuario nulo.
-            // Si el item es null o no es una instancia de Usuario, entonces no es válido.
-            Object itemPonente = cboPonente.getSelectedItem();
-            if (itemPonente == null || itemPonente.toString().equals("-- Seleccione Ponente --")) { // Ejemplo de placeholder
-                 JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
-                 return;
-            }
-            // Si el primer item es un Usuario válido y está seleccionado, esta condición no se cumple.
-            // Si es un String placeholder y se selecciona, !(itemPonente instanceof Usuarios) será true.
-        }
-
-        // Validación para el estado del taller
-        // Asumiendo que cboEstadoTaller2 es tu JComboBox para el estado
-        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || cboEstadoTaller2.getSelectedItem().toString().equals("-- Seleccione Estado --")) { // Ejemplo de placeholder
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // 2. Crear y poblar el objeto Talleres
-        Talleres nuevoTaller = new Talleres();
-        nuevoTaller.setNombre(nombreTaller);
-
-        // Campos que existen en la entidad Talleres
-        // Asumiendo que txtDescripcionTaller es tu JTextArea. Si es taDescripcionTaller, usa ese nombre.
-        if (txtDescripcionTaller != null) {
-            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim()); 
-        } else if (txtDescripcionTaller != null) { // Nombre del componente en tu diseño de VentanaPrincipal
-            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim());
-        }
-
-        nuevoTaller.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
-
-        // Nuevo campo para la ruta del manual
-        if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
-            nuevoTaller.setManualRuta(txtManualRuta.getText().trim());
-        }
-
-        nuevoTaller.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usar el nombre correcto del JComboBox de estado
-
-        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
-        nuevoTaller.setIdUsuarioProponente(ponenteSeleccionado);
-
-        // Establecer fechas de creación y modificación
-        Date fechaActual = new Date();
-        nuevoTaller.setFechaCreacion(fechaActual);
-        nuevoTaller.setUltimaModificacion(fechaActual);
-
-        // Los campos como Cupo, Fecha del Taller, Duración, Evento Asociado directo
-        // han sido omitidos ya que indicaste que eliminaste los que no servían
-        // y estos no tenían correspondencia directa en la entidad Talleres.
-
-        // 3. Persistir el taller
-        try {
-            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
-            controller.create(nuevoTaller);
-
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + nuevoTaller.getNombre() + "' agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            cargarTalleresEnTabla(); // Refresca la tabla de talleres
-            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al guardar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnAgregarTallerActionPerformed
-
-    private void tblTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTalleresMouseClicked
-
-        int filaSeleccionada = tblTalleres.getSelectedRow();
-
-        if (filaSeleccionada != -1) {
-            try {
-                // Asumimos que la columna 0 de tblTalleres contiene el ID del Taller
-                Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
-                if (idObjeto == null) {
-                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                int idTaller = Integer.parseInt(idObjeto.toString());
-
-                // Opcional: Si tienes un JTextField para el ID del taller en el formulario:
-                // if (txtIdTallerDialog != null) { 
-                //    txtIdTallerDialog.setText(String.valueOf(idTaller));
-                // }
-
-                TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
-                Talleres tallerSeleccionado = controller.findTalleres(idTaller);
-
-                if (tallerSeleccionado != null) {
-                    // --- Poblar campos que SÍ existen en la entidad Talleres ---
-                    txtFieldNombreTaller.setText(tallerSeleccionado.getNombre());
-
-                    // JTextArea descripción
-                    if (txtDescripcionTaller != null) { 
-                        txtDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
-                    }
-                    // else if (taDescripcionTaller != null) { // Si el nombre del componente es diferente
-                    //    taDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
-                    // }
-
-                    txtFieldMaterial_Req.setText(tallerSeleccionado.getRequisitosMateriales());
-
-                    // Nuevo campo: Ruta del Manual
-                    if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
-                        txtManualRuta.setText(tallerSeleccionado.getManualRuta());
-                    }
-
-                    // ComboBox Ponente (Usuarios)
-                    if (cboPonente != null && tallerSeleccionado.getIdUsuarioProponente() != null) {
-                        Usuarios ponenteDelTaller = tallerSeleccionado.getIdUsuarioProponente();
-                        DefaultComboBoxModel<Usuarios> modeloPonente = (DefaultComboBoxModel<Usuarios>) cboPonente.getModel();
-                        boolean ponenteEncontrado = false;
-                        for (int i = 0; i < modeloPonente.getSize(); i++) {
-                            Usuarios usuarioEnCombo = modeloPonente.getElementAt(i);
-                            if (usuarioEnCombo != null && usuarioEnCombo.getIdUsuario().equals(ponenteDelTaller.getIdUsuario())) {
-                                cboPonente.setSelectedIndex(i);
-                                ponenteEncontrado = true;
-                                break;
-                            }
-                        }
-                        if (!ponenteEncontrado) { 
-                            cboPonente.setSelectedItem(null); // O el índice de un item placeholder
-                        }
-                    } else if (cboPonente != null) {
-                        cboPonente.setSelectedItem(null); // O el índice de un item placeholder
-                    }
-
-                    // ComboBox Estado Taller (Strings)
-                    if (cboEstadoTaller2 != null) { 
-                        cboEstadoTaller2.setSelectedItem(tallerSeleccionado.getEstado());
-                    }
-                    // else if (cboEventoAsociado2 != null) { // Si el nombre del componente es diferente
-                    //    cboEventoAsociado2.setSelectedItem(tallerSeleccionado.getEstado());
-                    // }
-
-                } else {
-                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller, "Taller No Encontrado", JOptionPane.WARNING_MESSAGE);
-                    limpiarCamposFormularioTaller(); // Limpiar campos si no se encuentra
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller en la tabla no es un número válido.", "Error de ID en Tabla", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
-                limpiarCamposFormularioTaller();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al cargar datos del taller: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-                limpiarCamposFormularioTaller();
-            }
-        } else {
-            // Opcional: Limpiar los campos si no se selecciona ninguna fila válida
-            // limpiarCamposFormularioTaller();
-        }
-    }//GEN-LAST:event_tblTalleresMouseClicked
-
-    private void txtManualRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManualRutaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtManualRutaActionPerformed
-
-    private void btnActualizarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTallerActionPerformed
-        // 0. Verificar si se ha seleccionado un taller (y por lo tanto, hay un ID)
-        // Asumiré que tienes un JTextField no editable llamado txtIdTallerDialogo para el ID.
-        // Si no tienes un campo para el ID, deberás obtener el ID del taller seleccionado de alguna otra manera.
-        String idTallerStr = ""; // Ejemplo: txtIdTallerDialogo.getText();
-
-        // --- Obtener el ID del taller seleccionado ---
-        // Opción A: Desde un JTextField no editable (recomendado)
-        // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
-        //     idTallerStr = txtIdTallerDialogo.getText();
-        // } else {
-        //     JOptionPane.showMessageDialog(DialogGestionTalleres, "No hay un taller seleccionado para actualizar. Por favor, seleccione un taller de la tabla.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
-        //     return;
-        // }
-
-        // Opción B: Si no tienes un campo ID y dependes de la selección de la tabla directamente (menos robusto si el usuario edita campos sin reseleccionar)
-        int filaSeleccionada = tblTalleres.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para actualizar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        // Asumiendo que la columna 0 de tblTalleres contiene el ID
-        Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
-        if (idObjeto == null) {
-             JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        idTallerStr = idObjeto.toString();
-        // --- Fin de la obtención del ID ---
-
-        int idTaller;
-        try {
-            idTaller = Integer.parseInt(idTallerStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // 1. Validar campos obligatorios del formulario
-        String nombreTaller = txtFieldNombreTaller.getText().trim();
-        if (nombreTaller.isEmpty()) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
-            txtFieldNombreTaller.requestFocus();
-            return;
-        }
-
-        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
-            Object itemPonente = cboPonente.getSelectedItem();
-            if (itemPonente == null || (itemPonente instanceof String && itemPonente.toString().startsWith("--"))) { // Asumiendo placeholder
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        }
-
-        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || (cboEstadoTaller2.getSelectedItem() instanceof String && cboEstadoTaller2.getSelectedItem().toString().startsWith("--"))) { // Asumiendo placeholder
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // 2. Obtener la entidad Talleres existente y actualizarla
-        TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
-        Talleres tallerExistente = controller.findTalleres(idTaller);
-
-        if (tallerExistente == null) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller + " en la base de datos.", "Taller No Encontrado", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Actualizar los campos del objeto tallerExistente
-        tallerExistente.setNombre(nombreTaller);
-
-        // Usar el nombre correcto de tu JTextArea
-        if (txtDescripcionTaller != null) { 
-            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
-        } else if (txtDescripcionTaller != null) { 
-            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
-        }
-
-        tallerExistente.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
-
-        if (txtManualRuta != null) {
-            tallerExistente.setManualRuta(txtManualRuta.getText().trim());
-        }
-
-        tallerExistente.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usa el nombre correcto de tu JComboBox de estado
-
-        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
-        tallerExistente.setIdUsuarioProponente(ponenteSeleccionado);
-
-        tallerExistente.setUltimaModificacion(new Date()); // Actualizar fecha de modificación
-
-        // 3. Persistir los cambios
-        try {
-            controller.edit(tallerExistente);
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + tallerExistente.getNombre() + "' actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            cargarTalleresEnTabla(); // Refresca la tabla
-            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al actualizar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnActualizarTallerActionPerformed
-
-    private void btnElliminarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElliminarTallerActionPerformed
-        // --- Obtener el ID del taller seleccionado ---
-        // Usaremos la misma lógica que en btnActualizarTallerActionPerformed para obtener el ID.
-        // Opción B: Obtener el ID directamente de la tabla (menos robusto si hay ediciones sin reseleccionar)
-        int filaSeleccionada = tblTalleres.getSelectedRow();
-        String idTallerStr;
-
-        if (filaSeleccionada != -1) {
-            // Asumiendo que la columna 0 de tblTalleres contiene el ID
-            Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
-            if (idObjeto == null) {
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "ID No Encontrado", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            idTallerStr = idObjeto.toString();
-        } else {
-            // Opción A: Si usas un JTextField no editable como txtIdTallerDialogo que se llena con tblTalleresMouseClicked
-            // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
-            //     idTallerStr = txtIdTallerDialogo.getText();
-            // } else {
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para eliminar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
-                return;
-            // }
-        }
-        // --- Fin de la obtención del ID ---
-
-        int idTaller;
-        try {
-            idTaller = Integer.parseInt(idTallerStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(DialogGestionTalleres,
-            "¿Está seguro de que desea eliminar el taller con ID: " + idTaller + "?\nEsta acción podría eliminar también comentarios y participaciones asociadas.",
-            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
-            try {
-                controller.destroy(idTaller); // El método destroy del JpaController maneja las relaciones
-
-                cargarTalleresEnTabla();       // Actualiza la tabla de talleres
-                limpiarCamposFormularioTaller(); // Limpia los campos del formulario
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller eliminado exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (IllegalOrphanException ex) {
-                // Esta excepción es lanzada por el JpaController si encuentra "huérfanos ilegales".
-                // Por ejemplo, si un ComentarioRevisionTaller tiene su campo idTaller como non-nullable
-                // y CascadeType.ALL no está funcionando como se espera o la comprobación del controller es muy estricta.
-                System.err.println("Detalles de IllegalOrphanException: " + ex.getMessages());
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(DialogGestionTalleres, 
-                    "No se puede eliminar el taller porque tiene registros asociados que no pueden ser eliminados o desvinculados automáticamente.\nDetalle: " + ex.getMessage(), 
-                    "Error de Eliminación (Dependencias)", 
-                    JOptionPane.ERROR_MESSAGE);
-            } catch (NonexistentEntityException ex) {
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "El taller que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
-            } catch (Exception e) { // Captura otras posibles excepciones
-                JOptionPane.showMessageDialog(DialogGestionTalleres, "Ocurrió un error al intentar eliminar el taller: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_btnElliminarTallerActionPerformed
 
     private void tblConvocatoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConvocatoriasMouseClicked
         int filaSeleccionada = tblConvocatorias.getSelectedRow();
@@ -2613,10 +2365,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnLimpiarConvocatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarConvocatoriasActionPerformed
         limpiarCamposFormularioConvocatoria();
     }//GEN-LAST:event_btnLimpiarConvocatoriasActionPerformed
-
-    private void btnLimpiarTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTalleresActionPerformed
-        limpiarCamposFormularioTaller();
-    }//GEN-LAST:event_btnLimpiarTalleresActionPerformed
 
     private void btnEventoSubirEvidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoSubirEvidenciaActionPerformed
         int filaSeleccionada = ttEventos.getSelectedRow();
@@ -3024,6 +2772,365 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
+
+    private void btnLimpiarTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTalleresActionPerformed
+        limpiarCamposFormularioTaller();
+    }//GEN-LAST:event_btnLimpiarTalleresActionPerformed
+
+    private void btnElliminarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElliminarTallerActionPerformed
+        // --- Obtener el ID del taller seleccionado ---
+        // Usaremos la misma lógica que en btnActualizarTallerActionPerformed para obtener el ID.
+        // Opción B: Obtener el ID directamente de la tabla (menos robusto si hay ediciones sin reseleccionar)
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+        String idTallerStr;
+
+        if (filaSeleccionada != -1) {
+            // Asumiendo que la columna 0 de tblTalleres contiene el ID
+            Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+            if (idObjeto == null) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "ID No Encontrado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            idTallerStr = idObjeto.toString();
+        } else {
+            // Opción A: Si usas un JTextField no editable como txtIdTallerDialogo que se llena con tblTalleresMouseClicked
+            // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
+                //     idTallerStr = txtIdTallerDialogo.getText();
+                // } else {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para eliminar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+                // }
+        }
+        // --- Fin de la obtención del ID ---
+
+        int idTaller;
+        try {
+            idTaller = Integer.parseInt(idTallerStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(DialogGestionTalleres,
+            "¿Está seguro de que desea eliminar el taller con ID: " + idTaller + "?\nEsta acción podría eliminar también comentarios y participaciones asociadas.",
+            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+            try {
+                controller.destroy(idTaller); // El método destroy del JpaController maneja las relaciones
+
+                cargarTalleresEnTabla();       // Actualiza la tabla de talleres
+                limpiarCamposFormularioTaller(); // Limpia los campos del formulario
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller eliminado exitosamente.", "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IllegalOrphanException ex) {
+                // Esta excepción es lanzada por el JpaController si encuentra "huérfanos ilegales".
+                // Por ejemplo, si un ComentarioRevisionTaller tiene su campo idTaller como non-nullable
+                // y CascadeType.ALL no está funcionando como se espera o la comprobación del controller es muy estricta.
+                System.err.println("Detalles de IllegalOrphanException: " + ex.getMessages());
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(DialogGestionTalleres,
+                    "No se puede eliminar el taller porque tiene registros asociados que no pueden ser eliminados o desvinculados automáticamente.\nDetalle: " + ex.getMessage(),
+                    "Error de Eliminación (Dependencias)",
+                    JOptionPane.ERROR_MESSAGE);
+            } catch (NonexistentEntityException ex) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "El taller que intenta eliminar ya no existe.", "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            } catch (Exception e) { // Captura otras posibles excepciones
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Ocurrió un error al intentar eliminar el taller: " + e.getMessage(), "Error de Eliminación", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnElliminarTallerActionPerformed
+
+    private void btnAgregarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTallerActionPerformed
+        // 1. Validar campos obligatorios
+        String nombreTaller = txtFieldNombreTaller.getText().trim();
+        if (nombreTaller.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldNombreTaller.requestFocus();
+            return;
+        }
+
+        // Validación para el ponente
+        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
+            // Podrías tener un item placeholder como "Seleccione un ponente..." que sea un String o un Usuario nulo.
+            // Si el item es null o no es una instancia de Usuario, entonces no es válido.
+            Object itemPonente = cboPonente.getSelectedItem();
+            if (itemPonente == null || itemPonente.toString().equals("-- Seleccione Ponente --")) { // Ejemplo de placeholder
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            // Si el primer item es un Usuario válido y está seleccionado, esta condición no se cumple.
+            // Si es un String placeholder y se selecciona, !(itemPonente instanceof Usuarios) será true.
+        }
+
+        // Validación para el estado del taller
+        // Asumiendo que cboEstadoTaller2 es tu JComboBox para el estado
+        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || cboEstadoTaller2.getSelectedItem().toString().equals("-- Seleccione Estado --")) { // Ejemplo de placeholder
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Crear y poblar el objeto Talleres
+        Talleres nuevoTaller = new Talleres();
+        nuevoTaller.setNombre(nombreTaller);
+
+        // Campos que existen en la entidad Talleres
+        // Asumiendo que txtDescripcionTaller es tu JTextArea. Si es taDescripcionTaller, usa ese nombre.
+        if (txtDescripcionTaller != null) {
+            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        } else if (txtDescripcionTaller != null) { // Nombre del componente en tu diseño de VentanaPrincipal
+            nuevoTaller.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        }
+
+        nuevoTaller.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
+
+        // Nuevo campo para la ruta del manual
+        if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
+            nuevoTaller.setManualRuta(txtManualRuta.getText().trim());
+        }
+
+        nuevoTaller.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usar el nombre correcto del JComboBox de estado
+
+        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
+        nuevoTaller.setIdUsuarioProponente(ponenteSeleccionado);
+
+        // Establecer fechas de creación y modificación
+        Date fechaActual = new Date();
+        nuevoTaller.setFechaCreacion(fechaActual);
+        nuevoTaller.setUltimaModificacion(fechaActual);
+
+        // Los campos como Cupo, Fecha del Taller, Duración, Evento Asociado directo
+        // han sido omitidos ya que indicaste que eliminaste los que no servían
+        // y estos no tenían correspondencia directa en la entidad Talleres.
+
+        // 3. Persistir el taller
+        try {
+            TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+            controller.create(nuevoTaller);
+
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + nuevoTaller.getNombre() + "' agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarTalleresEnTabla(); // Refresca la tabla de talleres
+            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al guardar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAgregarTallerActionPerformed
+
+    private void btnActualizarTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTallerActionPerformed
+        // 0. Verificar si se ha seleccionado un taller (y por lo tanto, hay un ID)
+        // Asumiré que tienes un JTextField no editable llamado txtIdTallerDialogo para el ID.
+        // Si no tienes un campo para el ID, deberás obtener el ID del taller seleccionado de alguna otra manera.
+        String idTallerStr = ""; // Ejemplo: txtIdTallerDialogo.getText();
+
+        // --- Obtener el ID del taller seleccionado ---
+        // Opción A: Desde un JTextField no editable (recomendado)
+        // if (txtIdTallerDialogo != null && !txtIdTallerDialogo.getText().isEmpty()) {
+            //     idTallerStr = txtIdTallerDialogo.getText();
+            // } else {
+            //     JOptionPane.showMessageDialog(DialogGestionTalleres, "No hay un taller seleccionado para actualizar. Por favor, seleccione un taller de la tabla.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+            //     return;
+            // }
+
+        // Opción B: Si no tienes un campo ID y dependes de la selección de la tabla directamente (menos robusto si el usuario edita campos sin reseleccionar)
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Por favor, seleccione un taller de la tabla para actualizar.", "Taller no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Asumiendo que la columna 0 de tblTalleres contiene el ID
+        Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+        if (idObjeto == null) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        idTallerStr = idObjeto.toString();
+        // --- Fin de la obtención del ID ---
+
+        int idTaller;
+        try {
+            idTaller = Integer.parseInt(idTallerStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller no es válido.", "Error de ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 1. Validar campos obligatorios del formulario
+        String nombreTaller = txtFieldNombreTaller.getText().trim();
+        if (nombreTaller.isEmpty()) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "El nombre del taller es obligatorio.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
+            txtFieldNombreTaller.requestFocus();
+            return;
+        }
+
+        if (cboPonente.getSelectedItem() == null || !(cboPonente.getSelectedItem() instanceof Usuarios)) {
+            Object itemPonente = cboPonente.getSelectedItem();
+            if (itemPonente == null || (itemPonente instanceof String && itemPonente.toString().startsWith("--"))) { // Asumiendo placeholder
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un ponente válido.", "Ponente no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        if (cboEstadoTaller2.getSelectedItem() == null || cboEstadoTaller2.getSelectedItem().toString().trim().isEmpty() || (cboEstadoTaller2.getSelectedItem() instanceof String && cboEstadoTaller2.getSelectedItem().toString().startsWith("--"))) { // Asumiendo placeholder
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Debe seleccionar un estado para el taller.", "Estado no seleccionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Obtener la entidad Talleres existente y actualizarla
+        TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+        Talleres tallerExistente = controller.findTalleres(idTaller);
+
+        if (tallerExistente == null) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller + " en la base de datos.", "Taller No Encontrado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Actualizar los campos del objeto tallerExistente
+        tallerExistente.setNombre(nombreTaller);
+
+        // Usar el nombre correcto de tu JTextArea
+        if (txtDescripcionTaller != null) {
+            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        } else if (txtDescripcionTaller != null) {
+            tallerExistente.setDescripcionPublica(txtDescripcionTaller.getText().trim());
+        }
+
+        tallerExistente.setRequisitosMateriales(txtFieldMaterial_Req.getText().trim());
+
+        if (txtManualRuta != null) {
+            tallerExistente.setManualRuta(txtManualRuta.getText().trim());
+        }
+
+        tallerExistente.setEstado((String) cboEstadoTaller2.getSelectedItem()); // Usa el nombre correcto de tu JComboBox de estado
+
+        Usuarios ponenteSeleccionado = (Usuarios) cboPonente.getSelectedItem();
+        tallerExistente.setIdUsuarioProponente(ponenteSeleccionado);
+
+        tallerExistente.setUltimaModificacion(new Date()); // Actualizar fecha de modificación
+
+        // 3. Persistir los cambios
+        try {
+            controller.edit(tallerExistente);
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Taller '" + tallerExistente.getNombre() + "' actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            cargarTalleresEnTabla(); // Refresca la tabla
+            limpiarCamposFormularioTaller(); // Limpia los campos del formulario
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al actualizar el taller: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnActualizarTallerActionPerformed
+
+    private void txtManualRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManualRutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtManualRutaActionPerformed
+
+    private void cboEstadoTaller2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoTaller2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoTaller2ActionPerformed
+
+    private void tblTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTalleresMouseClicked
+
+        int filaSeleccionada = tblTalleres.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            try {
+                // Asumimos que la columna 0 de tblTalleres contiene el ID del Taller
+                Object idObjeto = tblTalleres.getValueAt(filaSeleccionada, 0);
+                if (idObjeto == null) {
+                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se pudo obtener el ID del taller seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int idTaller = Integer.parseInt(idObjeto.toString());
+
+                // Opcional: Si tienes un JTextField para el ID del taller en el formulario:
+                // if (txtIdTallerDialog != null) {
+                    //    txtIdTallerDialog.setText(String.valueOf(idTaller));
+                    // }
+
+                TalleresJpaController controller = new TalleresJpaController(Conexion.getEMF());
+                Talleres tallerSeleccionado = controller.findTalleres(idTaller);
+
+                if (tallerSeleccionado != null) {
+                    // --- Poblar campos que SÍ existen en la entidad Talleres ---
+                    txtFieldNombreTaller.setText(tallerSeleccionado.getNombre());
+
+                    // JTextArea descripción
+                    if (txtDescripcionTaller != null) {
+                        txtDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
+                    }
+                    // else if (taDescripcionTaller != null) { // Si el nombre del componente es diferente
+                        //    taDescripcionTaller.setText(tallerSeleccionado.getDescripcionPublica());
+                        // }
+
+                    txtFieldMaterial_Req.setText(tallerSeleccionado.getRequisitosMateriales());
+
+                    // Nuevo campo: Ruta del Manual
+                    if (txtManualRuta != null) { // Asegúrate que txtManualRuta existe en tu UI
+                        txtManualRuta.setText(tallerSeleccionado.getManualRuta());
+                    }
+
+                    // ComboBox Ponente (Usuarios)
+                    if (cboPonente != null && tallerSeleccionado.getIdUsuarioProponente() != null) {
+                        Usuarios ponenteDelTaller = tallerSeleccionado.getIdUsuarioProponente();
+                        DefaultComboBoxModel<Usuarios> modeloPonente = (DefaultComboBoxModel<Usuarios>) cboPonente.getModel();
+                        boolean ponenteEncontrado = false;
+                        for (int i = 0; i < modeloPonente.getSize(); i++) {
+                            Usuarios usuarioEnCombo = modeloPonente.getElementAt(i);
+                            if (usuarioEnCombo != null && usuarioEnCombo.getIdUsuario().equals(ponenteDelTaller.getIdUsuario())) {
+                                cboPonente.setSelectedIndex(i);
+                                ponenteEncontrado = true;
+                                break;
+                            }
+                        }
+                        if (!ponenteEncontrado) {
+                            cboPonente.setSelectedItem(null); // O el índice de un item placeholder
+                        }
+                    } else if (cboPonente != null) {
+                        cboPonente.setSelectedItem(null); // O el índice de un item placeholder
+                    }
+
+                    // ComboBox Estado Taller (Strings)
+                    if (cboEstadoTaller2 != null) {
+                        cboEstadoTaller2.setSelectedItem(tallerSeleccionado.getEstado());
+                    }
+                    // else if (cboEventoAsociado2 != null) { // Si el nombre del componente es diferente
+                        //    cboEventoAsociado2.setSelectedItem(tallerSeleccionado.getEstado());
+                        // }
+
+                } else {
+                    JOptionPane.showMessageDialog(DialogGestionTalleres, "No se encontró el taller con ID: " + idTaller, "Taller No Encontrado", JOptionPane.WARNING_MESSAGE);
+                    limpiarCamposFormularioTaller(); // Limpiar campos si no se encuentra
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "El ID del taller en la tabla no es un número válido.", "Error de ID en Tabla", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+                limpiarCamposFormularioTaller();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DialogGestionTalleres, "Error al cargar datos del taller: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                limpiarCamposFormularioTaller();
+            }
+        } else {
+            // Opcional: Limpiar los campos si no se selecciona ninguna fila válida
+            // limpiarCamposFormularioTaller();
+        }
+    }//GEN-LAST:event_tblTalleresMouseClicked
+
+    private void txtFieldMaterial_ReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMaterial_ReqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldMaterial_ReqActionPerformed
+
+    private void txtFieldNombreTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreTallerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldNombreTallerActionPerformed
     
     // -------------------------------------------------------------------------
     // Manipulacion de DialogGestionUsuarios
@@ -3306,7 +3413,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         limpiarCamposFormularioEvidencia(); // Limpia el formulario de subida
 
         DialogGestionEvidencias.pack();
-        DialogGestionEvidencias.setLocationRelativeTo(this); // O el diálogo padre si es modal a otro diálogo
+        DialogGestionEvidencias.setLocationRelativeTo(null); // O el diálogo padre si es modal a otro diálogo
+        DialogGestionEvidencias.setSize(1000, 500);
         DialogGestionEvidencias.setVisible(true);
     }
         
@@ -3755,6 +3863,7 @@ private void cargarTalleresParaAsignacionComboBox() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -3784,12 +3893,18 @@ private void cargarTalleresParaAsignacionComboBox() {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblEventoAsignar;
