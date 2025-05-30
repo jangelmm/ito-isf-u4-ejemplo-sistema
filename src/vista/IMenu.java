@@ -181,13 +181,11 @@ private MTtutoria modeloTablaAdmTutorias;
         jPanel1 = new javax.swing.JPanel();
         btnAdmCitas1 = new javax.swing.JButton();
         btnAdmRealizarTutoria1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         panelEncabezado = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 750));
 
         Menu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -232,18 +230,17 @@ private MTtutoria modeloTablaAdmTutorias;
                 .addGap(21, 21, 21)
                 .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSeparator1)
-                    .addGroup(panelVerCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane8)
-                        .addGroup(panelVerCitasLayout.createSequentialGroup()
-                            .addComponent(jLabel21)
-                            .addGap(45, 45, 45)
-                            .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVerCitasBuscar))
-                        .addGroup(panelVerCitasLayout.createSequentialGroup()
-                            .addGap(326, 326, 326)
-                            .addComponent(jLabel12)
-                            .addGap(409, 409, 409))))
+                    .addComponent(jScrollPane8)
+                    .addGroup(panelVerCitasLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(45, 45, 45)
+                        .addComponent(txtVerCitasNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVerCitasBuscar))
+                    .addGroup(panelVerCitasLayout.createSequentialGroup()
+                        .addGap(326, 326, 326)
+                        .addComponent(jLabel12)
+                        .addGap(409, 409, 409)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         panelVerCitasLayout.setVerticalGroup(
@@ -496,8 +493,6 @@ private MTtutoria modeloTablaAdmTutorias;
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/roles.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -507,23 +502,16 @@ private MTtutoria modeloTablaAdmTutorias;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAdmCitas1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                     .addComponent(btnAdmRealizarTutoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(86, 86, 86)
-                .addComponent(jLabel3)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(736, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btnAdmCitas1)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnAdmRealizarTutoria1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel3)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(btnAdmCitas1)
+                .addGap(26, 26, 26)
+                .addComponent(btnAdmRealizarTutoria1)
+                .addContainerGap(542, Short.MAX_VALUE))
         );
 
         tabTutor.addTab("Opciones", jPanel1);
@@ -785,7 +773,6 @@ private MTtutoria modeloTablaAdmTutorias;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
