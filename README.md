@@ -1,10 +1,60 @@
 # Sistema de Gestión de Tutorías Académicas (SGTA)
 
+## Video Demostrativo
+
+
+<iframe width="1897" height="755" src="https://www.youtube.com/embed/5Rt42Eupy0g" title="Demostración Funcionamiento - Sistema Tutorías" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Descripción
 
 El Sistema de Gestión de Tutorías Académicas (SGTA) es una aplicación de escritorio desarrollada en Java Swing, diseñada para administrar eficientemente el proceso de tutorías en una institución educativa. Permite gestionar la información de coordinadores, tutores y tutorados, así como la programación de citas, el registro de las sesiones de tutoría y el seguimiento de las acciones derivadas.
 
 La aplicación ofrece diferentes interfaces y funcionalidades adaptadas a los roles de Coordinador, Tutor y Tutorado, centralizadas a través de un menú principal (`IMenu.java`) y ventanas de diálogo o formularios específicos para cada tarea de gestión.
+
+## Diseño de la Base de Datos
+
+```mermaid
+erDiagram
+    tutor {
+        int id_persona PK
+        int num_tarjeta
+        varchar_30_ nombre
+        varchar_50_ carrera
+        varchar_10_ dias
+        varchar_10_ horas
+    }
+
+    tutorado {
+        int id_tutorado PK
+        varchar_8_ nc
+        varchar_30_ nombre
+        char_1_ genero
+        varchar_10_ dias
+        date fecha_nacimiento
+        int id_tutor FK
+    }
+
+    cita {
+        int id_cita PK
+        date fecha
+        int hora
+        varchar_50_ asunto
+        varchar_20_ estado "NOT NULL, DEFAULT 'PENDIENTE'"
+        int id_tutor FK
+    }
+
+    tutoria {
+        int id_tutoria PK
+        text acciones "NOT NULL"
+        int id_cita "NOT NULL, FK"
+        int id_tutorado "NOT NULL, FK"
+    }
+
+    tutor ||--o{ tutorado : "tiene asignados"
+    tutor ||--o{ cita : "realiza"
+    cita  ||--o{ tutoria : "registra"
+    tutorado ||--o{ tutoria : "participa en"
+```
 
 ## Características Principales
 
