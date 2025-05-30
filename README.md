@@ -1,9 +1,9 @@
 # Sistema de Gestión de Tutorías Académicas (SGTA)
 
 ## Video Demostrativo
+De click sobre la Imagen.
 
-
-<iframe width="1897" height="755" src="https://www.youtube.com/embed/5Rt42Eupy0g" title="Demostración Funcionamiento - Sistema Tutorías" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Título del video](/miniatura.png)](https://www.youtube.com/embed/5Rt42Eupy0g)
 
 ## Descripción
 
