@@ -85,9 +85,7 @@ private MTtutorado modeloTablaAdmEstudiantes;
 private MTcita modeloTablaAdmCitas;
 private MTtutoria modeloTablaAdmTutorias;
 
-    /**
-     * Creates new form IMenuTutorias
-     */
+    //
     public IMenu() {
         initComponents();
         
@@ -135,6 +133,63 @@ private MTtutoria modeloTablaAdmTutorias;
         tabAdmTutorias.setModel(modeloTablaAdmTutorias);
 
     }
+    
+    public IMenu(Object usuario) {
+        initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        adm = new AdmDatos();
+        cTutor = new TutorJpaController(AdmDatos.getEnf());
+        tutores = cTutor.findTutorEntities();
+        cTutorado = new TutoradoJpaController(AdmDatos.getEnf());
+        tutorados = cTutorado.findTutoradoEntities();
+        cCita = new CitaJpaController(AdmDatos.getEnf());
+        citas = cCita.findCitaEntities();
+        cTutoria =  new TutoriaJpaController(AdmDatos.getEnf());
+        // Inicializacion de Agregar Tutor
+        mtt = new MTtutor(tutores);
+        tabAdmTutores.setModel(mtt);
+
+        // Inicializacion de Crear Tutoria
+        //FechaActual.setText("Fecha: " + getFecha());
+        //cargarTutoresCita();   
+        //Inicializacion de Asignar Tutor
+        //cargarTutores();
+        cargarEstudiantes();
+        //estudiantes.setModel(mestudiantes);
+        //estudiantes.setSelectionMode(1);
+        //tutoradoss.setModel(mtutorados);
+        iconMiniatura = redimensionarImagen("imagenes/icono.png", 350, 500); // NUEVA LÍNEA (relativa al paquete 'vista')
+        //ImagenTutor.setIcon(iconMiniatura);
+       
+        citasDelTutorado = new ArrayList<>(); // Inicializa la lista
+        modeloTablaVerCitas = new MTcita(citasDelTutorado); // Usa tu TableModel para citas (MTcita o uno nuevo)
+        tabVerCitasCitas.setModel(modeloTablaVerCitas);
+        
+        modeloTablaAdmTutores = new MTtutor(this.tutores); // 'this.tutores' es tu List<Tutor>
+        tabAdmTutores.setModel(modeloTablaAdmTutores);
+
+        modeloTablaAdmEstudiantes = new MTtutorado(this.tutorados); // 'this.tutorados' es tu List<Tutorado>
+        tabAdmEstudiantes.setModel(modeloTablaAdmEstudiantes);
+
+        modeloTablaAdmCitas = new MTcita(this.citas); // 'this.citas' es tu List<Cita>
+        tabAdmCitas.setModel(modeloTablaAdmCitas);
+
+        this.tutorias = cTutoria.findTutoriaEntities(); // Asegúrate de que 'tutorias' se carga
+        modeloTablaAdmTutorias = new MTtutoria(this.tutorias); // 'this.tutorias' es tu List<Tutoria>
+        tabAdmTutorias.setModel(modeloTablaAdmTutorias);
+        
+        if(usuario instanceof Tutor){
+            Menu.removeTabAt(0);
+            Menu.removeTabAt(0);
+
+        }
+        if(usuario instanceof Tutorado){
+            Menu.removeTabAt(1);
+            Menu.removeTabAt(1);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -145,6 +200,7 @@ private MTtutoria modeloTablaAdmTutorias;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         Menu = new javax.swing.JTabbedPane();
         panelTutorados = new javax.swing.JPanel();
         tabVerCitas = new javax.swing.JTabbedPane();
@@ -184,8 +240,14 @@ private MTtutoria modeloTablaAdmTutorias;
         panelEncabezado = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        btnCerrarSesion = new javax.swing.JMenu();
+        btnSalir = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Menu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -257,7 +319,7 @@ private MTtutoria modeloTablaAdmTutorias;
                     .addComponent(btnVerCitasBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         tabVerCitas.addTab("VerCitas", panelVerCitas);
@@ -458,7 +520,7 @@ private MTtutoria modeloTablaAdmTutorias;
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdmRealizarTutoria))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         tabAdministrador.addTab("Control", panelAdmControl);
@@ -479,12 +541,15 @@ private MTtutoria modeloTablaAdmTutorias;
 
         Menu.addTab("Administrador", panelTutores);
 
+        jPanel1.setLayout(new java.awt.GridLayout());
+
         btnAdmCitas1.setText("Realizar una Cita");
         btnAdmCitas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdmCitas1ActionPerformed(evt);
             }
         });
+        jPanel1.add(btnAdmCitas1);
 
         btnAdmRealizarTutoria1.setText("Realizar una Tutoria");
         btnAdmRealizarTutoria1.addActionListener(new java.awt.event.ActionListener() {
@@ -492,27 +557,7 @@ private MTtutoria modeloTablaAdmTutorias;
                 btnAdmRealizarTutoria1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAdmCitas1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(btnAdmRealizarTutoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(736, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(btnAdmCitas1)
-                .addGap(26, 26, 26)
-                .addComponent(btnAdmRealizarTutoria1)
-                .addContainerGap(542, Short.MAX_VALUE))
-        );
+        jPanel1.add(btnAdmRealizarTutoria1);
 
         tabTutor.addTab("Opciones", jPanel1);
 
@@ -546,6 +591,24 @@ private MTtutoria modeloTablaAdmTutorias;
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(btnCerrarSesion);
+
+        btnSalir.setText("Salir del Sistema");
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(btnSalir);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -684,6 +747,18 @@ private MTtutoria modeloTablaAdmTutorias;
         ITutoria ventana = new ITutoria();
         ventana.setVisible(true);
     }//GEN-LAST:event_btnAdmRealizarTutoria1ActionPerformed
+
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        // TODO add your handling code here:
+        ILogin login = new ILogin();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirMouseClicked
     public String getFecha(){
         fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -767,6 +842,8 @@ private MTtutoria modeloTablaAdmTutorias;
     private javax.swing.JButton btnAdmRealizarTutoria1;
     private javax.swing.JButton btnAdmTutor;
     private javax.swing.JButton btnAdmTutorados;
+    private javax.swing.JMenu btnCerrarSesion;
+    private javax.swing.JMenu btnSalir;
     private javax.swing.JButton btnVerCitasBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -777,6 +854,8 @@ private MTtutoria modeloTablaAdmTutorias;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;

@@ -57,6 +57,8 @@ public class ILogin extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Tutorias");
+        setResizable(false);
 
         jLabel1.setText("Tipo de Usuario:");
 
@@ -214,6 +216,13 @@ public class ILogin extends javax.swing.JFrame {
                         loginExitoso = true;
                         nombreUsuarioLogueado = tutorEncontrado.getNombre();
                         JOptionPane.showMessageDialog(this, "Bienvenido Tutor: " + nombreUsuarioLogueado, "Login Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        // Abrir IMenu
+                        IMenu ventanaMenu = new IMenu(tutorEncontrado);
+                        ventanaMenu.setLocationRelativeTo(null);ventanaMenu.setSize(1000, 400);
+                        ventanaMenu.setVisible(true);
+                        this.dispose(); // Cierra la ventana de login actual
+                        return; // Salir del método después de abrir la nueva ventana
                     }
                 }
             } catch (NumberFormatException e) {
@@ -242,6 +251,11 @@ public class ILogin extends javax.swing.JFrame {
                         // Aquí abrirías la interfaz específica para Tutorado
                         JOptionPane.showMessageDialog(this, "Bienvenido Tutorado: " + nombreUsuarioLogueado, "Login Exitoso", JOptionPane.INFORMATION_MESSAGE);
                         
+                        IMenu ventanaMenu = new IMenu(tutoradoEncontrado);
+                        ventanaMenu.setLocationRelativeTo(null);
+                        ventanaMenu.setVisible(true);
+                        this.dispose(); // Cierra la ventana de login actual
+                        return; // Salir del método después de abrir la nueva ventana
                         
                     }
                 }
